@@ -1,0 +1,127 @@
+<div class="row justify-content-center" *ngIf="userInfo">
+  <div class="col col-12 col-xl-8">
+    <form
+      [formGroup]="userForm"
+      novalidate
+      class="new-doctor-form mb-4"
+      (ngSubmit)="saveData(userForm)"
+    >
+      <tc-form-group>
+        <tc-form-label>Foto</tc-form-label>
+        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+
+        <div class="d-flex align-items-center">
+          <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+          <button
+            tc-button
+            [type]="'button'"
+            [afterIcon]="'icofont-ui-user'"
+            [view]="'accent'"
+            [outline]="true"
+            (click)="fileInput.click()"
+          >
+            Cambiar foto
+          </button>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Nombre</tc-form-label>
+        <tc-input [placeholder]="'Nombre'" formControlName="firstName"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Apellido</tc-form-label>
+        <tc-input [placeholder]="'Apellido'" formControlName="lastName"></tc-input>
+      </tc-form-group>
+
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Años</tc-form-label>
+            <tc-input [placeholder]="'Años'" formControlName="age" [type]="'number'"></tc-input>
+          </tc-form-group>
+        </div>
+
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Genero</tc-form-label>
+            <tc-select [placeholder]="'Genero'" formControlName="gender" [options]="gender"></tc-select>
+          </tc-form-group>
+        </div>
+      </div>
+
+      <tc-form-group>
+        <tc-form-label>Teléfono</tc-form-label>
+        <tc-input [placeholder]="'Teléfono'" formControlName="number"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Dirección</tc-form-label>
+        <tc-textarea [placeholder]="'Dirección'" formControlName="address"></tc-textarea>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Ultimas visitas</tc-form-label>
+        <tc-input [placeholder]="'Ultimas visitas'" formControlName="lastVisit" [readonly]="true"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Estatus</tc-form-label>
+        <tc-select [placeholder]="'Estatus'" formControlName="status" [options]="status"></tc-select>
+      </tc-form-group>
+
+      <div class="row">
+        <div class="col">
+          <button tc-button [view]="'success'" [disabled]="!changes || userForm.invalid">
+            Guardar
+          </button>
+        </div>
+        <div class="col text-right">
+          <button
+            tc-button
+            [type]="'button'"
+            [view]="'error'"
+            [outline]="true"
+          >
+            Eliminar cuenta
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr>
+
+    <h4>Cambiar contraseña</h4>
+
+    <form novalidate>
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Contraseña actual</tc-form-label>
+            <tc-input [placeholder]="'Contraseña actual'"></tc-input>
+          </tc-form-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Nueva contraseña<area shape="" coords="" href="" alt=""></tc-form-label>
+            <tc-input [placeholder]="'Nueva contraseña'"></tc-input>
+          </tc-form-group>
+        </div>
+
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Confirmar nueva contraseña</tc-form-label>
+            <tc-input [placeholder]="'Confirmar nueva contraseña'"></tc-input>
+          </tc-form-group>
+        </div>
+      </div>
+
+      <button tc-button [view]="'default'" [outline]="true" [type]="'button'">
+        Cambiar contraseña
+      </button>
+    </form>
+  </div>
+</div>

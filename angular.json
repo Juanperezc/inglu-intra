@@ -1,0 +1,167 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "inglu-intra": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/inglu-intra",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/assets/sass/bootstrap.scss",
+              "src/assets/sass/simple-line-icons.scss",
+              "src/assets/css/icofont.min.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
+              "node_modules/fullcalendar/dist/fullcalendar.css",
+              "node_modules/animate.css/animate.min.css",
+              "src/assets/sass/loader.scss",
+              "src/assets/sass/styles.scss",
+              "src/assets/css/demo3.css"
+            ],
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js",
+              "src/assets/js/modernizr-2.6.2.min.js",
+              "src/assets/js/polyfills.js",
+              "src/assets/js/demo1.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "30mb",
+                  "maximumError": "50mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "inglu-intra:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "inglu-intra:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "inglu-intra:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
+            "styles": [
+              "src/assets/sass/bootstrap.scss",
+              "src/assets/sass/simple-line-icons.scss",
+              "src/assets/css/icofont.min.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
+              "node_modules/fullcalendar/dist/fullcalendar.css",
+              "node_modules/animate.css/animate.min.css",
+              "src/assets/sass/loader.scss",
+              "src/assets/sass/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"
+            ],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "inglu-intra-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "inglu-intra:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "inglu-intra:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "inglu-intra"
+}

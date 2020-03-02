@@ -1,0 +1,32 @@
+<!-- sign in start -->
+<section class="authentication-form">
+  <div class="innerpage-decor">
+  <!--   <div class="innerpage-circle1"><img src="assets/img/tovo/Testimonial2.png" alt=""></div>
+    <div class="innerpage-circle2"><img src="assets/img/tovo/Testimonial1.png" alt=""></div> -->
+  </div>
+  <div>
+    <h2 class="title text-center"><span> Login</span></h2>
+    <p class="text-center"><!-- Welcome to tovo, Please Login with your personal account information. --></p>
+    <div class="card">
+      <form class="theme-form">
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Correo" required="required">
+        </div>
+        <div class="form-group">
+          <input required="" name="Contraseña" [type]="show ? 'text' : 'password'" class="form-control" placeholder="Password">
+          <div class="show-hide" (click)="password()">
+            <span class="show"></span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <a [routerLink]="'pages/forget-password'" class="text-right col-6 theme-link">Olvide mi contraseña</a>
+        </div>
+        <div class="form-button text-center">
+          <button type="submit" routerLink="/vertical/default-dashboard" class="btn btn-custom btn-lg theme-color">Login</button>
+          <button type="submit" class="btn btn-custom fb"  routerLink="/public/sign-up" >Registrarse</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<!-- sign in end-->

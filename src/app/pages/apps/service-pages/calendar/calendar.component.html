@@ -1,0 +1,32 @@
+<div *ngIf="calendarOptions">
+  <ng-fullcalendar
+    #ucCalendar
+    [options]="calendarOptions"
+    (eventClick)="eventClick($event.detail)"
+  ></ng-fullcalendar>
+</div>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <h4 [tcColor]="eventBody.color ? eventBody.color : '#336cfb'" class="mt-0">{{ eventBody.title }}</h4>
+
+    <div><strong>Periodo del evento</strong></div>
+    <p><i>Desde:</i> {{ eventBody.from }} - <i> Hasta:</i> {{ eventBody.to }}</p>
+
+    <ng-container *ngIf="eventBody.desc">
+      <div><strong>Descripción del evento</strong></div>
+      <p>{{ eventBody.desc }}</p>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cerrar</button>
+      <button tc-button [view]="'info'">
+       Cambiar actividad
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

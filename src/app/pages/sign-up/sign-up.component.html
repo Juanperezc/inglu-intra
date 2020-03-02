@@ -1,0 +1,41 @@
+<!-- sign up start-->
+<section class="authentication-form">
+  <div class="innerpage-decor">
+    <div class="innerpage-circle1"><img src="assets/img/tovo/Testimonial2.png" alt=""></div>
+    <div class="innerpage-circle2"><img src="assets/img/tovoTestimonial1.png" alt=""></div>
+  </div>
+  <div>
+    <h2 class="title text-center">Registrate</h2>
+  <!--   <p class="text-center">Welcome to tovo, Please join us with your personal account information.</p> -->
+    <div class="card">
+      <form class="theme-form">
+        <div class="form-group">
+          <div class="md-fgrup-margin">
+            <input type="text" class="form-control" placeholder="Nombre" required="required">
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" placeholder="Apellido" required="required">
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Correo electrónico" required="required">
+        </div>
+        <div class="form-group">
+          <input required="" type="password" class="form-control" placeholder="Contraseña">
+        </div>
+        <div class="form-group">
+          <input type="password" name="cpassword" [type]="show ? 'text' : 'Repetir Contraseña'" class="form-control" placeholder="Conform password" required="required">
+          <div class="show-hide" (click)="password()">
+            <span class="show"></span>
+          </div>
+        </div>
+        
+        <div class="form-button text-center">
+          <button type="submit" routerLink="/vertical/default-dashboard"   class="btn btn-custom theme-color">Registrarse</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+<!-- sign up end-->

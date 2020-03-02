@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Servicios",
+    "groupTitle": true
+  },
+  {
+    "title": "Inicio",
+    "icon": {
+      "class": "icofont-thermometer-alt"
+    },
+    "routing": "default-dashboard"
+  },
+  {
+    "title": "Citas medicas",
+    "icon": {
+      "class": "icofont-stethoscope-alt"
+    },
+    "routing": "appointments"
+  },
+  {
+    "title": "Personal médico",
+    "icon": {
+      "class": "icofont-doctor"
+    },
+    "routing": "doctors"
+  },
+  {
+    "title": "Especialidades",
+    "icon": {
+      "class": "icofont-nurse"
+    },
+    "routing": "departments"
+  },
+
+  {
+    "title": "Pacientes",
+    "icon": {
+      "class": "icofont-paralysis-disability"
+    },
+    "routing": "patients"
+  },
+  {
+    "title": "Actividades",
+    "routing": "events-calendar",
+    "icon": {
+      "class": "icofont-calendar"
+    }
+  },
+  {
+    "title": "Blog",
+    "groupTitle": true
+  },
+  {
+    "title": "Notificaciones",
+    "groupTitle": true
+  }
+
+]
