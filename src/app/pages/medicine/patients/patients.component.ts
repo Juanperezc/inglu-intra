@@ -49,11 +49,11 @@ export class PagePatientsComponent extends BasePageComponent implements OnInit, 
     this.patients = [];
     this.gender = [
       {
-        label: 'Male',
+        label: 'Masculino',
         value: 'male'
       },
       {
-        label: 'Female',
+        label: 'Femenino',
         value: 'female'
       }
     ];

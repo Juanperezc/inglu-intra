@@ -98,48 +98,48 @@
           [outline]="true"
           (click)="fileInput.click()"
         >
-          Select image
+          Seleccionar imagen
         </button>
       </tc-form-group>
 
       <tc-form-group>
-        <tc-input [placeholder]="'Name'" formControlName="name"></tc-input>
+        <tc-input [placeholder]="'Nombre'" formControlName="name"></tc-input>
       </tc-form-group>
 
       <tc-form-group>
-        <tc-input [placeholder]="'Number'" [type]="'number'" formControlName="number"></tc-input>
+        <tc-input [placeholder]="'Teléfono'" [type]="'number'" formControlName="number"></tc-input>
       </tc-form-group>
 
       <div class="row">
         <div class="col-12 col-sm-6">
           <tc-form-group>
-            <tc-input [placeholder]="'Age'" [type]="'number'" formControlName="age"></tc-input>
+            <tc-input [placeholder]="'Edad'" [type]="'number'" formControlName="age"></tc-input>
           </tc-form-group>
         </div>
 
         <div class="col-12 col-sm-6">
           <tc-form-group>
-            <tc-select [placeholder]="'Gender'" formControlName="gender" [options]="gender"></tc-select>
+            <tc-select [placeholder]="'Genero'" formControlName="gender" [options]="gender"></tc-select>
           </tc-form-group>
         </div>
       </div>
 
       <tc-form-group>
-        <tc-select [placeholder]="'Status'" formControlName="status" [options]="status"></tc-select>
+        <tc-select [placeholder]="'Estatus'" formControlName="status" [options]="status"></tc-select>
       </tc-form-group>
 
       <tc-form-group class="mb-0">
-        <tc-textarea [placeholder]="'Address'" formControlName="address"></tc-textarea>
+        <tc-textarea [placeholder]="'Dirección'" formControlName="address"></tc-textarea>
       </tc-form-group>
     </form>
   </ng-template>
 
   <ng-template #modalFooter>
     <div class="actions justify-content-between">
-      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancelar</button>
       <button tc-button [view]="'info'" [disabled]="patientForm.invalid"
       (click)="updatePatient(patientForm)">
-        Update patient
+        Actualizar paciente
       </button>
     </div>
   </ng-template>

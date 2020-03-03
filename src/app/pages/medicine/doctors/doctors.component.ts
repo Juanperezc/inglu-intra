@@ -35,11 +35,11 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
       title: 'Personal del club',
       breadcrumbs: [
         {
-          title: 'Medicine',
+          title: 'Servicios',
           route: 'default-dashboard'
         },
         {
-          title: 'Doctors'
+          title: 'Personal del club'
         }
       ]
     };

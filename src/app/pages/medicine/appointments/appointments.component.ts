@@ -105,7 +105,7 @@ export class PageAppointmentsComponent extends BasePageComponent implements OnIn
 
   // edit appointment
   edit(row: any) {
-    this.openModal(this.modalBody, 'Add appointment', this.modalFooter, row);
+    this.openModal(this.modalBody, 'Editar cita medica', this.modalFooter, row);
   }
 
   // remove appointment
