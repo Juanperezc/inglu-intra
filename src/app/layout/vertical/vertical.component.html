@@ -68,7 +68,9 @@
         <h1 class="page-title">{{ pageData.title }}</h1>
       </header>
 
-      <router-outlet></router-outlet>
+      <router-outlet>
+        <ngx-spinner></ngx-spinner>
+      </router-outlet>
     </div>
   </main>
 
@@ -133,5 +135,4 @@
       </button>
     </div>
   </ng-template>
-</ng-container>
 <!-- end Modal window -->

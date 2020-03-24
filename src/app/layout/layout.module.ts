@@ -21,12 +21,13 @@ import { LoginFormComponent } from './components/login-form';
 import { RegisterFormComponent } from './components/register-form';
 import { NavbarSkeletonComponent } from './components/navbar-skeleton';
 import { SettingsComponent } from './components/settings';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    NgxSpinnerModule,
     ReactiveFormsModule,
     MalihuScrollbarModule.forRoot(),
     UIModule

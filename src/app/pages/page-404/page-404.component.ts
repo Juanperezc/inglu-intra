@@ -17,7 +17,7 @@ export class Page404Component extends BasePageComponent implements OnInit, OnDes
     super(store, httpSv);
 
     this.pageData = {
-      title: 'Page not found!',
+      title: 'Pagina no encontrada',
       loaded: true,
       breadcrumbs: [
         {

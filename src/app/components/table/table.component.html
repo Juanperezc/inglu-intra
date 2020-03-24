@@ -1,0 +1,93 @@
+<tc-card>
+<tc-table 
+(handleSearch)="handleSearch($event)"
+(handleChangePage)="handleChangePage($event)"
+[rows]="rows" 
+[pagesCount]="pagination && pagination.last_page"
+[page]="pagination && pagination.current_page"
+[hovered]="true" 
+[pagination]="true"
+[search]="true"
+>
+  <tc-table-col *ngFor="let header of headers" [columnTitle]="header.columnTitle" [columnName]="header.columnName">
+    <ng-template #tableTDTemplate let-value *ngIf = "header.tcType != 'actions'">
+      <tc-avatar *ngIf="header.tcType == 'img'"[src]="value"></tc-avatar>
+      <strong *ngIf="header.tcType == 'text'">{{ value }}</strong>
+    </ng-template>
+    <ng-template *ngIf = "header.tcType == 'actions'" #tableTDTemplate let-row="row">
+   
+        <div class="actions">
+          <button
+          *ngFor="let action of header.tcActions"
+            tc-button
+            [afterIcon]="action.afterIcon"
+            [view]="action.view"
+            [square]="true"
+            [tcShape]="500"
+            [size]="action.size"
+            (click)="handleAction(action.handleClick)"
+          ></button>
+   
+        </div>
+   
+    </ng-template>
+  </tc-table-col>
+  <!-- <tc-table-col [columnTitle]="'Nombre'" [columnName]="'name'" [enableSorting]="true">
+    <ng-template #tableTDTemplate let-value>
+      <strong>{{ value }}</strong>
+    </ng-template>
+  </tc-table-col>
+  <tc-table-col [columnTitle]="'Correo'" [columnName]="'email'" [enableSorting]="true">
+    <ng-template #tableTDTemplate let-value>
+      <span class="d-flex align-items-center nowrap" [tcColor]="'#336cfb'">
+        <tc-icon [iconClass]="'icofont-ui-email'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon> {{ value }}
+      </span>
+    </ng-template>
+  </tc-table-col>
+  <tc-table-col [columnTitle]="'Fecha'" [columnName]="'date'" [enableSorting]="true">
+    <ng-template #tableTDTemplate let-value>
+      <span class="nowrap" [tcColor]="'#a5a5a5'">{{ value }}</span>
+    </ng-template>
+  </tc-table-col>
+  <tc-table-col [columnTitle]="'Hora'" [columnName]="'fromTo'" [enableSorting]="true">
+    <ng-template #tableTDTemplate let-value>
+      <span class="nowrap" [tcColor]="'#a5a5a5'">{{ value }}</span>
+    </ng-template>
+  </tc-table-col>
+  <tc-table-col [columnTitle]="'Teléfono'" [columnName]="'number'">
+    <ng-template #tableTDTemplate let-value>
+      <span class="d-flex align-items-center nowrap" [tcColor]="'#336cfb'">
+        <tc-icon [iconClass]="'icofont-ui-cell-phone'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon>
+        {{ value }}
+      </span>
+    </ng-template>
+  </tc-table-col>
+  <tc-table-col [columnTitle]="'Doctor'" [columnName]="'doctor'" [enableSorting]="true"></tc-table-col>
+  <tc-table-col [columnTitle]="'Condición'" [columnName]="'injury'" [enableSorting]="true"></tc-table-col> -->
+<!--   <tc-table-col [columnTitle]="'Acciones'" [columnName]="'actions'">
+    <ng-template #tableTDTemplate let-row="row">
+      <div class="actions">
+        <button
+          tc-button
+          [afterIcon]="'icofont-ui-edit'"
+          [view]="'info'"
+          [square]="true"
+          [tcShape]="500"
+          [size]="'sm'"
+          (click)="edit(row)"
+        ></button>
+
+        <button
+          tc-button
+          [afterIcon]="'icofont-ui-delete'"
+          [view]="'error'"
+          [square]="true"
+          [tcShape]="500"
+          [size]="'sm'"
+          (click)="remove(row)"
+        ></button>
+      </div>
+    </ng-template>
+  </tc-table-col> -->
+</tc-table>
+</tc-card>

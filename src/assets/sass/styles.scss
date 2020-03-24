@@ -6,3 +6,13 @@
 @import './typography';
 @import './full-calendar';
 @import './helpers';
+// regular style toast 
+/* @import '~ngx-toastr/toastr'; */
+/* @import "toastr"; */
+
+.ng-invalid {
+    span{
+        font-size: 10px;
+        color: red;
+    }
+}

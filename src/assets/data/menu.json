@@ -47,8 +47,36 @@
     }
   },
   {
-    "title": "Blog",
+    "title": "Portal",
     "groupTitle": true
+  },
+  {
+    "title": "Publicaciones",
+    "routing": "posts",
+    "icon": {
+      "class": "icofont-blogger"
+    }
+  },
+  {
+    "title": "Reclamos",
+    "routing": "posts",
+    "icon": {
+      "class": "icofont-support"
+    }
+  },
+  {
+    "title": "Preguntas frecuentes",
+    "routing": "faq",
+    "icon": {
+      "class": "icofont-support-faq"
+    }
+  },
+  {
+    "title": "Configuracion general",
+    "routing": "settings",
+    "icon": {
+      "class": "icofont-setting-alt"
+    }
   },
   {
     "title": "Notificaciones",

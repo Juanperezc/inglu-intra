@@ -58,6 +58,8 @@ import { PageSignUpComponent } from '../pages/apps/sessions/sign-up';
 import { PageSettingsComponent } from '../pages/settings';
 import { SignInComponent } from '../pages/sign-in/sign-in.component';
 import { SignUpComponent } from '../pages/sign-up/sign-up.component';
+import { PagePostComponent } from '../pages/portal/posts';
+import { AuthGuardService } from '../services/util/auth-guard.service';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -68,7 +70,6 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'payments', component: PagePaymentsComponent },
   { path: 'appointments', component: PageAppointmentsComponent },
   { path: 'departments', component: PageDepartmentsComponent },
-
   { path: 'alerts', component: PageAlertsComponent },
   { path: 'buttons', component: PageButtonsComponent },
   { path: 'cards', component: PageCardsComponent },
@@ -102,7 +103,6 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'icons-options', component: PageIconsOptionsComponent },
   { path: 'icons-if', component: PageIconsIfComponent },
   { path: 'icons-sli', component: PageIconsSliComponent },
-
   { path: 'invoices', component: PageInvoiceComponent },
   { path: 'pricing', component: PagePricingComponent },
   { path: 'events-timeline', component: PageTimelineComponent },
@@ -110,7 +110,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'edit-account', component: PageEditAccountComponent },
   { path: 'events-calendar', component: PageCalendarComponent },
   { path: 'settings', component: PageSettingsComponent },
-
+  { path: 'posts', component: PagePostComponent },
   { path: '**', component: Page404Component }
 ];
 
@@ -123,12 +123,19 @@ export const ROUTES: Routes = [
   {
     path: '',
    /*  redirectTo: '/vertical/default-dashboard', */
-   redirectTo: '/public/sign-in',
+   redirectTo: '/vertical/default-dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: 'vertical',
+   /*  redirectTo: '/vertical/default-dashboard', */
+   redirectTo: '/vertical/default-dashboard',
     pathMatch: 'full'
   },
   {
     path: 'vertical',
     component: VerticalLayoutComponent,
+    canActivate: [AuthGuardService],
     children: VERTICAL_ROUTES
   },
   {

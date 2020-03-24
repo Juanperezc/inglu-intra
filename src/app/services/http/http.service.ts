@@ -1,20 +1,24 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-import { throwError as observableThrowError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { throwError as observableThrowError } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class HttpService {
   constructor(private http: HttpClient) {}
 
-  getData(source: string) {
-    return this.http.get(source).pipe(
-      tap((res: any) => res),
-      catchError(this.handleError)
-    );
+  getData(source: string, params: any = null) {
+    return this.http
+      .get(source, {
+        params: params
+      })
+      .pipe(
+        tap((res: any) => res),
+        catchError(this.handleError)
+      );
   }
   postData(source: string, data: any, isFormData?: any) {
     let headers = new HttpHeaders();
@@ -22,7 +26,7 @@ export class HttpService {
     return this.http.post(source, data, { headers: headers }).pipe(
       tap((res: any) => {
         console.log(res);
-         // return [null, res];
+        // return [null, res];
       }),
       catchError(this.handleError)
     );
@@ -48,7 +52,7 @@ export class HttpService {
     const httpOptions = {
       headers: this.apiHeaders(headers),
       body: data
-  };
+    };
     return this.http.delete(source, httpOptions).pipe(
       tap((res: any) => res),
       catchError(this.handleError)
@@ -56,16 +60,16 @@ export class HttpService {
   }
   apiHeaders(headers: any, isFormData?: any) {
     if (isFormData !== undefined) {
-      headers = headers.append('mimeType', 'multipart/form-data');
+      headers = headers.append("mimeType", "multipart/form-data");
     } else {
-      headers = headers.append('Content-Type', 'application/json');
+      headers = headers.append("Content-Type", "application/json");
     }
-    headers = headers.append('Authorization', 'acbmyui-234rv');
+    headers = headers.append("Authorization", "acbmyui-234rv");
     console.log(headers);
     return headers;
   }
 
   private handleError(error: any) {
-    return [observableThrowError(error.error || 'Server error'), null];
+    return [observableThrowError(error.error || "Server error"), null];
   }
 }

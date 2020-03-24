@@ -1,13 +1,23 @@
 <tc-form-group *ngIf="search">
-	<tc-input
-		[placeholder]="'Seach in table'"
-		[tcFilterTable]="config.filtering"
-		(tableChanged)="onChangeTable(config)"
-		[suffixIcon]="'icofont-search-document'"
-	></tc-input>
-</tc-form-group>
+  <div class="col-md-12" style="display: flex;">
+    <div class="col-md-10">
+      <tc-input
+      [placeholder]="'Buscar'"
+      [tcFilterTable]="config.filtering"
+      [suffixIcon]="'icofont-search-document'"
+    ></tc-input>
+    </div>
+    <div class="col-md-2">
+      <button
+      tc-button
+      [beforeIcon]="'icofont-search'"
+      (click)="onChangeTable(config)"
+    >Buscar</button>
+    </div>
+  </div>
+ </tc-form-group>
 
-<div class="table-wrap" *ngIf="rows.length">
+<div class="table-wrap" *ngIf="rows && rows.length">
 	<table class="table-box">
     <thead>
       <tr>

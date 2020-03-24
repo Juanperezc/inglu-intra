@@ -51,7 +51,7 @@
 <tc-dropdown class="item" [close]="closeDropdown">
   <tc-dropdown-button>
     <div class="d-flex align-items-center">
-      <tc-avatar [src]="'/assets/content/user-400-1.jpg'" class="mr-1"></tc-avatar>
+      <tc-avatar [src]="'/assets/content/avatar.jpeg'" class="mr-1"></tc-avatar>
       <i class="icofont-simple-down"></i>
     </div>
   </tc-dropdown-button>
@@ -87,7 +87,7 @@
       </li> -->
 
       <li>
-        <a href="#" (click)="goTo($event, 'sign-in', '../public/')" class="align-items-center">
+        <a href="#" (click)="logout()" class="align-items-center">
           <span class="icon icofont-logout"></span>
           Salir
         </a>
