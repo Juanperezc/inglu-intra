@@ -1,0 +1,39 @@
+
+<table-component [url]="'/claims'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-support'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createClaimTypes()"
+  ></button>
+</div> 
+
+<!-- Modal window -->
+<ng-container  *ngIf="claimTypesForm">
+  <ng-template #modalBody>
+    <form [formGroup]="claimTypesForm" novalidate>
+
+      <tc-form-group>
+        <tc-input  [placeholder]="'Tipo'" formControlName="type"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-textarea [placeholder]="'Descripción'" formControlName="description"  ></tc-textarea>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="claimTypesForm.invalid" (click)="saveClaimTypes(claimTypesForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

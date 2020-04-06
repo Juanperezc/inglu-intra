@@ -54,7 +54,7 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
         value: 'female'
       }
     ];
-    this.defaultAvatar = 'assets/content/anonymous-400.jpg';
+    this.defaultAvatar = 'assets/content/avatar.jpeg';
     this.currentAvatar = this.defaultAvatar;
     this.specialists = [];
   }

@@ -5,6 +5,7 @@ export interface IMenuItem {
   active?: boolean,
   disabled?: boolean,
   groupTitle?: boolean,
+  largeTitle?: boolean,
   routing?: string,
   externalLink?: string,
   layout?: string;

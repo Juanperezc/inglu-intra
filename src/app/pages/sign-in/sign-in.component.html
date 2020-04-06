@@ -8,22 +8,37 @@
     <h2 class="title text-center"><span> Login</span></h2>
     <p class="text-center"><!-- Welcome to tovo, Please Login with your personal account information. --></p>
     <div class="card">
-      <form class="theme-form">
+      <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()" class="theme-form">
         <div class="form-group">
-          <input type="email" class="form-control" placeholder="Correo" required="required">
+          <input type="email" formControlName="email" class="form-control" placeholder="Correo" >
+          <span
+          *ngIf="(email.dirty || email.touched) && email.invalid && email.errors.required"
+        >
+          Correo es requerido
+        </span>
+        <span
+          *ngIf="(email.dirty || email.touched) && email.invalid && email.errors.email"
+        >
+          El valor tiene que ser un email valido
+        </span>
         </div>
         <div class="form-group">
-          <input required="" name="Contraseña" [type]="show ? 'text' : 'password'" class="form-control" placeholder="Password">
-          <div class="show-hide" (click)="password()">
+          <input formControlName="password" name="password" [type]="show ? 'text' : 'password'" class="form-control" placeholder="Contraseña">
+          <div class="show-hide" (click)="eyePassword()">
             <span class="show"></span>
           </div>
+          <span
+          *ngIf="(password.dirty || password.touched) && password.invalid && password.errors.required"
+        >
+          Contraseña es requerida
+        </span>
         </div>
         <div class="form-group row">
           <a [routerLink]="'pages/forget-password'" class="text-right col-6 theme-link">Olvide mi contraseña</a>
         </div>
         <div class="form-button text-center">
-          <button type="submit" routerLink="/vertical/default-dashboard" class="btn btn-custom btn-lg theme-color">Login</button>
-          <button type="submit" class="btn btn-custom fb"  routerLink="/public/sign-up" >Registrarse</button>
+        <!-- routerLink="/vertical/default-dashboard" --> 
+         <button type="submit"  class="btn btn-custom btn-lg theme-color">Login</button>
         </div>
       </form>
     </div>

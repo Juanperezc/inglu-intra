@@ -48,7 +48,7 @@ export class VerticalLayoutComponent extends BaseLayoutComponent implements OnIn
         value: 'female'
       }
     ];
-    this.defaultAvatar = 'assets/content/anonymous-400.jpg';
+    this.defaultAvatar = 'assets/content/avatar.jpeg';
     this.currentAvatar = this.defaultAvatar;
   }
 

@@ -1,0 +1,57 @@
+
+<table-component [url]="'/posts'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-blogger'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createPost()"
+  ></button>
+</div>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="postForm" novalidate>
+      <tc-form-group class="avatar-box d-flex">
+        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+
+        <tc-avatar [src]="postForm.value.photo ? postForm.value.photo : 'https://via.placeholder.com/150'"></tc-avatar>
+        <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true" (click)="fileInput.click()">
+         Seleccionar imagen
+        </button>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Titulo'" formControlName="title"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-textarea [placeholder]="'Descripción'" formControlName="description"  ></tc-textarea>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-select
+        [placeholder]="'Categoría'"
+        [options]="categoriesOption"
+        [selected]="postForm.value.category_id"
+        [tcShape]="6"
+        formControlName="category_id"
+      ></tc-select>
+    <!--   [selected]="['northAmerica', 'southAmerica']" -->
+      </tc-form-group>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="postForm.invalid" (click)="savePost(postForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

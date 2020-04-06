@@ -6,7 +6,7 @@ $_animation: $animation;
 //item
 $_item-color: currentColor;
 $_item-hover-color: accent-palette(500);
-$_item-active-color: accent-palette(500);
+$_item-active-color: #ffed00;
 $_item-group-color: currentColor;
 $_item-bg: transparent;
 $_item-hover-bg: transparent;
@@ -47,6 +47,7 @@ $_sub-separator: main-palette(300);
       padding: ($module-rem * 3) ($module-rem * 2) 0;
 
       .menu-item {
+        color: white;
         font-weight: 700;
         padding: 0 ($module-rem * 1.5);
         position: relative;
@@ -98,7 +99,7 @@ $_sub-separator: main-palette(300);
           }
           &:hover {
             background: $_item-hover-bg;
-            color: $_item-hover-color;
+            color: yellow;
           }
         }
         .sub {
@@ -124,6 +125,7 @@ $_sub-separator: main-palette(300);
             transition: .2s transform .2s $_animation;
           }
           > .item-link {
+
             color: $_item-active-color;
 
             .link-caret {

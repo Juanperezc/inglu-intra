@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,6 +12,7 @@ import { FullCalendarModule } from 'ng-fullcalendar';
 
 import { environment } from '../../environments/environment';
 import { UIModule } from '../ui/ui.module';
+import { ComponentsModule } from '../components/components.module';
 import { LayoutModule } from '../layout/layout.module';
 import { BasePageComponent } from './base-page';
 
@@ -61,13 +62,18 @@ import { PageInvoiceComponent } from './apps/service-pages/invoice';
 import { PagePricingComponent } from './apps/service-pages/pricing';
 import { PageTimelineComponent } from './apps/service-pages/timeline';
 import { PageUserProfileComponent } from './apps/service-pages/user-profile';
-import { PageEditAccountComponent } from './apps/service-pages/edit-account';
+import { PageAccountComponent } from './apps/service-pages/account';
 import { PageCalendarComponent } from './apps/service-pages/calendar';
 import { PageSignInComponent } from './apps/sessions/sign-in';
 import { PageSignUpComponent } from './apps/sessions/sign-up';
 import { PageSettingsComponent } from './settings';
+import { PagePostComponent } from './portal/posts';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { PageFaqsComponent } from './portal/faqs';
+import { PageClaimsComponent } from './portal/claims';
+import { PageSuggestionsComponent } from './portal/suggestions';
+import { PageClaimTypesComponent } from './portal/claim_types';
 
 @NgModule({
   imports: [
@@ -84,7 +90,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     }),
     LeafletModule,
     FullCalendarModule,
-
+    ComponentsModule,
     UIModule,
     LayoutModule
   ],
@@ -138,11 +144,16 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     PagePricingComponent,
     PageTimelineComponent,
     PageUserProfileComponent,
-    PageEditAccountComponent,
+    PageAccountComponent,
     PageCalendarComponent,
     PageSignInComponent,
     PageSignUpComponent,
-    PageSettingsComponent
+    PageSettingsComponent,
+    PagePostComponent,
+    PageFaqsComponent,
+    PageClaimsComponent,
+    PageClaimTypesComponent,
+    PageSuggestionsComponent
   ],
   exports: [ ],
   entryComponents: [ ]

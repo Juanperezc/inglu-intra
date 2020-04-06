@@ -19,15 +19,15 @@ export class PageSettingsComponent extends BasePageComponent implements OnInit {
     super(store, httpSv);
 
     this.pageData = {
-      title: 'Settings',
+      title: 'Configuración General',
       loaded: false,
       breadcrumbs: [
         {
-          title: 'Dashboards',
+          title: 'Configuración General',
           route: 'default-dashboard'
         },
         {
-          title: 'Settings'
+          title: 'Portal'
         }
       ]
     };

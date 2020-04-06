@@ -30,7 +30,7 @@ export class PageCalendarComponent extends BasePageComponent implements OnInit, 
     super(store, httpSv);
 
     this.pageData = {
-      title: 'Actividades',
+      title: 'Calendario',
       loaded: true,
       breadcrumbs: [
      
@@ -39,7 +39,7 @@ export class PageCalendarComponent extends BasePageComponent implements OnInit, 
           route: 'default-dashboard'
         },
         {
-          title: 'Actividades'
+          title: 'Calendario'
         }
       ]
     };

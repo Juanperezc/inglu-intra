@@ -20,7 +20,7 @@ export class PageSearchTableComponent extends BasePageComponent implements OnIni
     super(store, httpSv);
 
     this.pageData = {
-      title: 'Search tables',
+      title: 'Buscar',
       loaded: true,
       breadcrumbs: [
         {

@@ -44,12 +44,16 @@ import { TCModalComponent } from './components/modal';
 import { TCColorPickerComponent } from './components/color-picker/color-picker.component';
 import { TCPickerComponent } from './components/color-picker/picker/picker.component';
 
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TCDatePickerComponent } from './components/datepicker';
 @NgModule({
   imports: [
     CommonModule,
 		FormsModule,
     RouterModule,
     ReactiveFormsModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
     DragulaModule.forRoot()
   ],
   declarations: [
@@ -69,6 +73,7 @@ import { TCPickerComponent } from './components/color-picker/picker/picker.compo
     TCCardComponent,
     TCTableComponent, TCTableColComponent,
     TCInputComponent,
+    TCDatePickerComponent,
     TCTextareaComponent,
     TCFormDescriptionComponent,
     TCFormGroupComponent,
@@ -106,6 +111,7 @@ import { TCPickerComponent } from './components/color-picker/picker/picker.compo
     TCCardComponent,
     TCTableComponent, TCTableColComponent,
     TCInputComponent,
+    TCDatePickerComponent,
     TCTextareaComponent,
     TCFormDescriptionComponent,
     TCFormGroupComponent,

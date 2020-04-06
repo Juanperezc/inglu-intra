@@ -1,13 +1,23 @@
 <tc-form-group *ngIf="search">
-	<tc-input
-		[placeholder]="'Seach in table'"
-		[tcFilterTable]="config.filtering"
-		(tableChanged)="onChangeTable(config)"
-		[suffixIcon]="'icofont-search-document'"
-	></tc-input>
-</tc-form-group>
+  <div class="col-md-12" style="display: flex;">
+    <div class="col-md-10">
+      <tc-input
+      [placeholder]="'Buscar'"
+      [tcFilterTable]="config.filtering"
+      [suffixIcon]="'icofont-search-document'"
+    ></tc-input>
+    </div>
+    <div class="col-md-2">
+      <button
+      tc-button
+      [beforeIcon]="'icofont-search'"
+      (click)="onChangeTable(config)"
+    >Buscar</button>
+    </div>
+  </div>
+ </tc-form-group>
 
-<div class="table-wrap" *ngIf="rows.length">
+<div class="table-wrap" *ngIf="rows && rows.length">
 	<table class="table-box">
     <thead>
       <tr>
@@ -25,7 +35,7 @@
                 <button class="no-style icofont-simple-up up" [ngClass]="{ 'active': c.config.sort === 'asc' }"></button>
                 <button class="no-style icofont-simple-down down" [ngClass]="{ 'active': c.config.sort === 'desc' }"></button>
               </span>
-
+              
               <ng-container *ngIf="!c.enableFiltering">
                 <span class="title" [tcColor]="headerColor">{{ c.config.title }}</span>
               </ng-container>
@@ -65,7 +75,7 @@
     </tbody>
 	</table>
 
-  <div class="no-data" *ngIf="!rows">No table's data</div>
+  <div class="no-data" *ngIf="!rows">No se encontraron datos</div>
 </div>
 
 <tc-pagination

@@ -6,3 +6,28 @@
 @import './typography';
 @import './full-calendar';
 @import './helpers';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+// regular style toast 
+/* @import '~ngx-toastr/toastr'; */
+/* @import "toastr"; */
+.swal2-container{
+    z-index: 100000 !important;
+}
+.ng-invalid {
+    span{
+        font-size: 10px;
+        color: red;
+    }
+}
+.main-menu-wrap .menu-ul .menu-item .group-title{
+    padding-top: 12px !important;
+}
+.large-title{
+    color: #009CDE !important;
+    opacity: initial !important;
+}
+body{
+     .swal2-height-auto{
+    height: -webkit-fill-available !important;
+}
+}

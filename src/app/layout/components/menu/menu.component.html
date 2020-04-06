@@ -9,7 +9,7 @@
 
       <!-- Group title -->
       <ng-template #group>
-        <span class="group-title">{{ item.title }}</span>
+        <span [ngClass]="item.largeTitle ? 'large-title group-title' : 'group-title'" >{{ item.title }}</span>
       </ng-template>
       <!-- end Group title -->
 

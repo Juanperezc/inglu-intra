@@ -1,0 +1,55 @@
+
+<table-component [url]="'/claim_user'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<!-- <div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-blogger'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createClaim()"
+  ></button>
+</div> -->
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="claimForm" novalidate>
+     
+
+      <tc-form-group>
+        <tc-input  [disabled]="true" [placeholder]="'Texto'" formControlName="text"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-textarea [disabled]="true" [placeholder]="'Descripción'" formControlName="description"  ></tc-textarea>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-input [disabled]="true" [placeholder]="'Usuario'" formControlName="user"  ></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-select
+        [placeholder]="'Selecciona un estatus'"
+        [options]="statuses"
+        [selected]="claimForm.value.status"
+        formControlName="status"
+      ></tc-select>
+       <!--  <tc-textarea  [placeholder]="'Estatus'" formControlName="status"  ></tc-textarea> -->
+      </tc-form-group>
+
+
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="claimForm.invalid" (click)="saveClaim(claimForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->
