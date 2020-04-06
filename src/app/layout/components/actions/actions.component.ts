@@ -12,6 +12,7 @@ import { UserStorage } from '../../../services/util/UserStorage.service';
   styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent implements OnInit {
+  user : any;
   notifications: any[];
   messages: any[];
   files: any[];
@@ -31,7 +32,8 @@ export class ActionsComponent implements OnInit {
     this.layout = 'vertical';
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = await UserStorage.getUser();
     this.getData('assets/data/navbar-notifications.json', 'notifications');
     this.getData('assets/data/navbar-messages.json', 'messages');
     this.getData('assets/data/navbar-files.json', 'files');

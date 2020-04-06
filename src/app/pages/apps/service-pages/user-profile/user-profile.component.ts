@@ -64,7 +64,7 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
         value: 'pending'
       }
     ];
-    this.defaultAvatar = 'assets/content/anonymous-400.jpg';
+    this.defaultAvatar = 'assets/content/avatar.jpeg';
     this.currentAvatar = this.defaultAvatar;
     this.changes = false;
   }

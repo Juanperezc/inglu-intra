@@ -18,6 +18,14 @@ export class UserService {
     return await this.http.delete(environment.endpoint + `/logout`).toPromise();
   }
 
+  async update(id: number,data: any) {
+    return await this.http.put(environment.endpoint + `/users/` + id, data).toPromise();
+  }
+
+  async change_password(data: any) {
+    return await this.http.post(environment.endpoint + `/user/change_password`, data).toPromise();
+  }
+
   async me() {
     return await this.http.get(environment.endpoint + `/user/me`).toPromise();
   }

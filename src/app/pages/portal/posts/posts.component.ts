@@ -7,7 +7,11 @@ import { HttpService } from '../../../services/http/http.service';
 import { TCModalService } from '../../../ui/services/modal/modal.service';
 import { IUser } from '../../../ui/interfaces/user';
 import { ITableHeaders } from '../../../interfaces/table-headers';
-import Swal from 'sweetalert2';
+import { GlobalService } from '../../../services/util/GlobalService.service';
+import { IHandleAction } from '../../../interfaces/handle-action';
+import { IOption } from '../../../ui/interfaces/option';
+import { PostService } from '../../../services/http/PostService.service';
+import { FileService } from '../../../services/http/FileService.service';
 
 @Component({
   selector: 'post-component',
@@ -18,9 +22,11 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
   @ViewChild('modalBody') modalBody: ElementRef<any>;
   @ViewChild('modalFooter') modalFooter: ElementRef<any>;
 
-  appointments: any[];
-  appointmentForm: FormGroup;
-  currentAvatar: string | ArrayBuffer;
+  data: any[];
+  categoriesOption: Array<IOption> = new Array<IOption>();
+  postForm: FormGroup;
+  currentPhoto: string | ArrayBuffer;
+  reload : number = 1;
   defaultAvatar: string;
   doctors: IUser[];
   headers : Array<ITableHeaders>;
@@ -28,7 +34,9 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
     store: Store<IAppState>,
     httpSv: HttpService,
     private modal: TCModalService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private postService: PostService,
+    private fileService: FileService
   ) {
     super(store, httpSv);
 
@@ -60,13 +68,38 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
       tcActions: []
     },
     {
+      columnName: "category",
+      columnTitle: "Categoría",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
+      columnName: "updated_at",
+      columnTitle: "Ultima actualización",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
       columnName: "actions",
       columnTitle: "Acciones",
       iconClass: null,
       tcColor: null,
       tcFontSize: null,
       tcType: 'actions',
-      tcActions: [{
+      tcActions: [
+        {
+          afterIcon: 'icofont-eye',
+          view: 'success',
+          size: 'sm',
+          handleClick: 'view'
+        },
+        {
         afterIcon: 'icofont-ui-edit',
         view: 'info',
         size: 'sm',
@@ -92,19 +125,32 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
       }
     ]
     };
-    this.appointments = [];
     this.doctors = [];
-    this.defaultAvatar = 'assets/content/anonymous-400.jpg';
-    this.currentAvatar = this.defaultAvatar;
+    this.defaultAvatar = 'assets/content/avatar.jpeg';
+    this.currentPhoto = this.defaultAvatar;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.loadCategories();
     super.ngOnInit();
-
-    this.getData('assets/data/appointments.json', 'appointments', 'setLoaded');
-    this.getData('assets/data/doctors.json', 'doctors');
+    this.getData('assets/data/appointments.json', 'data', 'setLoaded');
   }
+  async loadCategories(){
+    try {
+      const postCategories: any = await this.postService.all_categories();
+      console.log(postCategories);
+      const data = postCategories.data;
+      if (data.length > 0){
+        data.map((res) => {
+          this.categoriesOption.push({label: res.description, value: res.id})
+        })
+      }
 
+
+    } catch (error) {
+      console.error('error', error);
+    }
+  }
   ngOnDestroy() {
     super.ngOnDestroy();
   }
@@ -112,7 +158,6 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
   // open modal window
   openModal(body: any, header: any = null, footer: any = null, data: any = null) {
     this.initForm(data);
-
     this.modal.open({
       body: body,
       header: header,
@@ -123,77 +168,90 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
   // close modal window
   closeModal() {
     this.modal.close();
-    this.appointmentForm.reset();
+    this.postForm.reset();
   }
-
-  handleActionEmit(event){
+  createPost(){
+    this.currentPhoto = null;
+    this.openModal(this.modalBody, 'Crear publicación', this.modalFooter)
+  }
+  async handleActionEmit(event: IHandleAction){
     console.log('emit', event);
-    switch(event){
+    const row = event.row;
+    const type = event.type;
+    switch(type){
+      case "edit":{
+        this.edit(row);
+        break;
+      }
       case "remove":{
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
-          }
-        })
+       const result = await GlobalService.AlertDelete();
+       if (result.value) 
+       {
+        this.deletePost(row.id);
+       }
+        break;
       }
     }
   }
+
   // init form
   initForm(data: any) {
-    this.appointmentForm = this.formBuilder.group({
-      img: [(data ? data.img : this.currentAvatar)],
-      name: [(data ? data.name : ''), Validators.required],
-      email: [(data ? data.email : ''), Validators.required],
-      date: [(data ? data.date : ''), Validators.required],
-      from: [(data ? data.fromTo.substring(0, (data.fromTo.indexOf('-') - 1)) : ''), Validators.required],
+    /* console.log(data) */
+    const category : any = data && this.categoriesOption &&
+    this.categoriesOption.find((res) => res.label == data.category )
+   /*  console.log(data && category.value) */
+    this.postForm = this.formBuilder.group({
+      id: [(data ? data.id : null)],
+      photo: [(data ? data.photo : this.currentPhoto), Validators.required],
+      title: [(data ? data.title : ''), Validators.required],
+      description: [(data ? data.description : ''), Validators.required],
+      category_id: [(data ? category.value : ''), Validators.required],
+   /*    from: [(data ? data.fromTo.substring(0, (data.fromTo.indexOf('-') - 1)) : ''), Validators.required],
       to: [(data ? data.fromTo.substring((data.fromTo.indexOf('-') + 2), data.fromTo.length) : ''), Validators.required],
       number: [(data ? data.number : ''), Validators.required],
       doctor: [(data ? data.doctor : ''), Validators.required],
-      injury: [(data ? data.injury : ''), Validators.required]
+      injury: [(data ? data.injury : ''), Validators.required] */
     });
   }
 
   // upload new file
-  onFileChanged(inputValue: any) {
+ async onFileChanged(inputValue: any) {
     let file: File = inputValue.target.files[0];
-    let reader: FileReader = new FileReader();
+    console.log(file);
+   /*  let reader: FileReader = new FileReader(); */
+    try {
+    GlobalService.ShowSweetLoading();
+    console.log('test');
+    const service: any = await this.fileService.upload_file(file,"image/post");
+    console.log(service);
+    GlobalService.CloseSweet();
 
-    reader.onloadend = () => {
-      this.currentAvatar = reader.result;
-    };
+    this.currentPhoto = service.urlFinal;
+    this.postForm.controls['photo'].setValue(service.urlFinal);
 
-    reader.readAsDataURL(file);
+    } catch (error) {
+      console.error('error', error);
+       GlobalService.CloseSweet();
+    }
   }
 
   // edit appointment
   edit(row: any) {
-    this.openModal(this.modalBody, 'Editar cita medica', this.modalFooter, row);
+    this.openModal(this.modalBody, 'Editar publicación', this.modalFooter, row);
   }
 
   // remove appointment
   remove(tableRow: any) {
-    this.appointments = this.appointments.filter(row => row !== tableRow);
+    /* this.appointments = this.appointments.filter(row => row !== tableRow); */
   }
 
   // add new appointment
   addAppointment(form: FormGroup) {
     if (form.valid) {
-      let newAppointment: any = form.value;
+   /*    let newAppointment: any = form.value;
 
       newAppointment.fromTo = `${form.value.from} - ${form.value.to}`;
-      newAppointment.img = this.currentAvatar;
+      newAppointment.img = this.currentPhoto;
 
       delete newAppointment.from;
       delete newAppointment.to;
@@ -202,7 +260,60 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
       let newTableData = JSON.parse(JSON.stringify(this.appointments));
 
       this.appointments = newTableData;
+      this.closeModal(); */
+    }
+  }
+
+  async savePost(form: FormGroup) {
+    if (form.valid) {
+      let post: any = form.value;
+      if (post.id == null){
+        delete post.id;
+        await this.storePost(post);
+      }else{
+        const id = post.id;
+        delete post.id;
+        await this.updatePost(id, post);
+      }
+ 
+      console.log(post);
       this.closeModal();
     }
+  }
+  async storePost(postData: any){
+    try {
+      GlobalService.ShowSweetLoading();
+      const post: any = await this.postService.store(postData);
+      GlobalService.SwalCreateItem();
+      this.reload++;
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error);
+      GlobalService.CloseSweet();
+    }
+  }
+  async deletePost(id){
+  try {
+    GlobalService.ShowSweetLoading();
+    const post: any = await this.postService.delete(id);
+    GlobalService.SwalDeleteItem();
+    this.reload++;
+  } catch (error) {
+    console.error('error', error)
+      GlobalService.CloseSweet();
+  }
+  }
+  async updatePost(id, postData: any){
+    try {
+      GlobalService.ShowSweetLoading();
+      const post: any = await this.postService.update(id,postData);
+      GlobalService.SwalUpdateItem();
+      this.reload++;
+     
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error)
+      GlobalService.CloseSweet();
+    } 
   }
 }

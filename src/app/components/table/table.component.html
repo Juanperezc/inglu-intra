@@ -12,7 +12,11 @@
   <tc-table-col *ngFor="let header of headers" [columnTitle]="header.columnTitle" [columnName]="header.columnName">
     <ng-template #tableTDTemplate let-value *ngIf = "header.tcType != 'actions'">
       <tc-avatar *ngIf="header.tcType == 'img'"[src]="value"></tc-avatar>
-      <strong *ngIf="header.tcType == 'text'">{{ value }}</strong>
+      <tc-badge  *ngIf="header.tcType == 'badge'" [view]="valueBadgeView(value)">
+        {{ (value != null) && valueBadgeStr(value)}}
+      </tc-badge>
+     
+      <strong *ngIf="header.tcType == 'text'">{{ value && subStrTable(value) }}</strong>
     </ng-template>
     <ng-template *ngIf = "header.tcType == 'actions'" #tableTDTemplate let-row="row">
    
@@ -25,7 +29,7 @@
             [square]="true"
             [tcShape]="500"
             [size]="action.size"
-            (click)="handleAction(action.handleClick)"
+            (click)="handleAction(action.handleClick,row)"
           ></button>
    
         </div>

@@ -51,7 +51,7 @@ import { PageInvoiceComponent } from '../pages/apps/service-pages/invoice';
 import { PagePricingComponent } from '../pages/apps/service-pages/pricing';
 import { PageTimelineComponent } from '../pages/apps/service-pages/timeline';
 import { PageUserProfileComponent } from '../pages/apps/service-pages/user-profile';
-import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account';
+import { PageAccountComponent } from '../pages/apps/service-pages/account';
 import { PageCalendarComponent } from '../pages/apps/service-pages/calendar';
 import { PageSignInComponent } from '../pages/apps/sessions/sign-in';
 import { PageSignUpComponent } from '../pages/apps/sessions/sign-up';
@@ -60,6 +60,10 @@ import { SignInComponent } from '../pages/sign-in/sign-in.component';
 import { SignUpComponent } from '../pages/sign-up/sign-up.component';
 import { PagePostComponent } from '../pages/portal/posts';
 import { AuthGuardService } from '../services/util/auth-guard.service';
+import { PageFaqsComponent } from '../pages/portal/faqs';
+import { PageClaimsComponent } from '../pages/portal/claims';
+import { PageSuggestionsComponent } from '../pages/portal/suggestions';
+import { PageClaimTypesComponent } from '../pages/portal/claim_types';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -107,10 +111,14 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'pricing', component: PagePricingComponent },
   { path: 'events-timeline', component: PageTimelineComponent },
   { path: 'user-profile', component: PageUserProfileComponent },
-  { path: 'edit-account', component: PageEditAccountComponent },
+  { path: 'edit-account', component: PageAccountComponent },
   { path: 'events-calendar', component: PageCalendarComponent },
   { path: 'settings', component: PageSettingsComponent },
   { path: 'posts', component: PagePostComponent },
+  { path: 'claims', component: PageClaimsComponent },
+  { path: 'claim-types', component: PageClaimTypesComponent },
+  { path: 'suggestions', component: PageSuggestionsComponent },
+  { path: 'faqs', component: PageFaqsComponent },
   { path: '**', component: Page404Component }
 ];
 

@@ -66,7 +66,7 @@ export class PagePatientProfileComponent extends BasePageComponent implements On
         value: 'pending'
       }
     ];
-    this.defaultAvatar = 'assets/content/anonymous-400.jpg';
+    this.defaultAvatar = 'assets/content/avatar.jpeg';
     this.currentAvatar = this.defaultAvatar;
     this.changes = false;
     this.billings = [];

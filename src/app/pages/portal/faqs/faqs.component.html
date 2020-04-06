@@ -1,0 +1,40 @@
+
+<table-component [url]="'/faqs'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-blogger'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createFaq()"
+  ></button>
+</div>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="faqForm" novalidate>
+     
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Pregunta'" formControlName="question"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-textarea [placeholder]="'Respuesta'" formControlName="answer"  ></tc-textarea>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="faqForm.invalid" (click)="saveFaq(faqForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

@@ -1,4 +1,4 @@
-<div class="row justify-content-center" *ngIf="userInfo">
+<div class="row justify-content-center" *ngIf="userInfo && userForm && passwordForm">
   <div class="col col-12 col-xl-8">
     <form
       [formGroup]="userForm"
@@ -11,7 +11,9 @@
         <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
 
         <div class="d-flex align-items-center">
-          <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+          <tc-avatar [src]="userForm.value.profile_pic ? 
+          userForm.value.profile_pic :
+          defaultAvatar" [size]="100"></tc-avatar>
           <button
             tc-button
             [type]="'button'"
@@ -24,25 +26,29 @@
           </button>
         </div>
       </tc-form-group>
-
+      <tc-form-group>
+        <tc-form-label>Correo</tc-form-label>
+        <tc-input [placeholder]="'Correo'" formControlName="email" [disabled]="true"></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Cedula</tc-form-label>
+        <tc-input [placeholder]="'Cedula'" formControlName="id_card" [disabled]="true"></tc-input>
+      </tc-form-group>
       <tc-form-group>
         <tc-form-label>Nombre</tc-form-label>
-        <tc-input [placeholder]="'Nombre'" formControlName="firstName"></tc-input>
+        <tc-input [placeholder]="'Nombre'" formControlName="name"></tc-input>
       </tc-form-group>
-
       <tc-form-group>
         <tc-form-label>Apellido</tc-form-label>
-        <tc-input [placeholder]="'Apellido'" formControlName="lastName"></tc-input>
+        <tc-input [placeholder]="'Apellido'" formControlName="last_name"></tc-input>
       </tc-form-group>
-
       <div class="row">
         <div class="col-12 col-sm-6">
           <tc-form-group>
-            <tc-form-label>Años</tc-form-label>
-            <tc-input [placeholder]="'Años'" formControlName="age" [type]="'number'"></tc-input>
+            <tc-form-label>Fecha de nacimiento</tc-form-label>
+            <tc-datepicker [placeholder]="'Fecha de nacimiento'" formControlName="date_of_birth" [max]="max" ></tc-datepicker>
           </tc-form-group>
         </div>
-
         <div class="col-12 col-sm-6">
           <tc-form-group>
             <tc-form-label>Genero</tc-form-label>
@@ -53,18 +59,18 @@
 
       <tc-form-group>
         <tc-form-label>Teléfono</tc-form-label>
-        <tc-input [placeholder]="'Teléfono'" formControlName="number"></tc-input>
+        <tc-input [placeholder]="'Teléfono'" formControlName="phone"></tc-input>
       </tc-form-group>
 
       <tc-form-group>
         <tc-form-label>Dirección</tc-form-label>
-        <tc-textarea [placeholder]="'Dirección'" formControlName="address"></tc-textarea>
+        <tc-textarea formControlName="address" ></tc-textarea>
       </tc-form-group>
 
-      <tc-form-group>
+  <!--     <tc-form-group>
         <tc-form-label>Ultimas visitas</tc-form-label>
         <tc-input [placeholder]="'Ultimas visitas'" formControlName="lastVisit" [readonly]="true"></tc-input>
-      </tc-form-group>
+      </tc-form-group> -->
 
       <tc-form-group>
         <tc-form-label>Estatus</tc-form-label>
@@ -77,7 +83,7 @@
             Guardar
           </button>
         </div>
-        <div class="col text-right">
+      <!--   <div class="col text-right">
           <button
             tc-button
             [type]="'button'"
@@ -86,7 +92,7 @@
           >
             Eliminar cuenta
           </button>
-        </div>
+        </div> -->
       </div>
     </form>
 
@@ -94,32 +100,40 @@
 
     <h4>Cambiar contraseña</h4>
 
-    <form novalidate>
+    <form
+    [formGroup]="passwordForm"
+    novalidate
+    class="new-doctor-form mb-4"
+    (ngSubmit)="changePassword(passwordForm)"
+    >
       <div class="row">
         <div class="col-12 col-sm-6">
           <tc-form-group>
             <tc-form-label>Contraseña actual</tc-form-label>
-            <tc-input [placeholder]="'Contraseña actual'"></tc-input>
+            <tc-input [placeholder]="'Contraseña actual'" formControlName="password" type="password"></tc-input>
           </tc-form-group>
         </div>
       </div>
       <div class="row">
         <div class="col-12 col-sm-6">
           <tc-form-group>
-            <tc-form-label>Nueva contraseña<area shape="" coords="" href="" alt=""></tc-form-label>
-            <tc-input [placeholder]="'Nueva contraseña'"></tc-input>
+            <tc-form-label>Nueva contraseña <area shape="" coords="" href="" alt=""></tc-form-label>
+            <tc-input [placeholder]="'Nueva contraseña'" formControlName="new_password" type="password"></tc-input>
           </tc-form-group>
         </div>
 
         <div class="col-12 col-sm-6">
           <tc-form-group>
             <tc-form-label>Confirmar nueva contraseña</tc-form-label>
-            <tc-input [placeholder]="'Confirmar nueva contraseña'"></tc-input>
+            <tc-input [placeholder]="'Confirmar nueva contraseña'" formControlName="confirm_password" type="password" ></tc-input>
           </tc-form-group>
         </div>
       </div>
 
-      <button tc-button [view]="'default'" [outline]="true" [type]="'button'">
+      <button tc-button 
+      [view]="'default'" 
+      [outline]="true" 
+      [disabled]="passwordForm.invalid">
         Cambiar contraseña
       </button>
     </form>

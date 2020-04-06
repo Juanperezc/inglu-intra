@@ -35,7 +35,7 @@
                 <button class="no-style icofont-simple-up up" [ngClass]="{ 'active': c.config.sort === 'asc' }"></button>
                 <button class="no-style icofont-simple-down down" [ngClass]="{ 'active': c.config.sort === 'desc' }"></button>
               </span>
-
+              
               <ng-container *ngIf="!c.enableFiltering">
                 <span class="title" [tcColor]="headerColor">{{ c.config.title }}</span>
               </ng-container>
@@ -75,7 +75,7 @@
     </tbody>
 	</table>
 
-  <div class="no-data" *ngIf="!rows">No table's data</div>
+  <div class="no-data" *ngIf="!rows">No se encontraron datos</div>
 </div>
 
 <tc-pagination

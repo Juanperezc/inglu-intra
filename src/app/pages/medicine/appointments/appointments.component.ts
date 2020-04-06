@@ -44,7 +44,7 @@ export class PageAppointmentsComponent extends BasePageComponent implements OnIn
     };
     this.appointments = [];
     this.doctors = [];
-    this.defaultAvatar = 'assets/content/anonymous-400.jpg';
+    this.defaultAvatar = 'assets/content/avatar.jpeg';
     this.currentAvatar = this.defaultAvatar;
   }
 

@@ -1,7 +1,8 @@
 [
   {
     "title": "Servicios",
-    "groupTitle": true
+    "groupTitle": true,
+    "largeTitle" : true
   },
   {
     "title": "Inicio",
@@ -16,6 +17,13 @@
       "class": "icofont-stethoscope-alt"
     },
     "routing": "appointments"
+  },
+  {
+    "title": "Eventos del club",
+    "icon": {
+      "class": "icofont-result-sport"
+    },
+    "routing": "events"
   },
   {
     "title": "Personal médico",
@@ -40,7 +48,7 @@
     "routing": "patients"
   },
   {
-    "title": "Actividades",
+    "title": "Calendario",
     "routing": "events-calendar",
     "icon": {
       "class": "icofont-calendar"
@@ -48,6 +56,11 @@
   },
   {
     "title": "Portal",
+    "groupTitle": true,
+    "largeTitle" : true
+  },
+  {
+    "title": "Publicaciones",
     "groupTitle": true
   },
   {
@@ -58,29 +71,71 @@
     }
   },
   {
+    "title": "Categorias",
+    "routing": "post-categories",
+    "icon": {
+      "class": "icofont-blogger"
+    }
+  },
+  {
     "title": "Reclamos",
-    "routing": "posts",
+    "groupTitle": true
+  },
+  {
+    "title": "Reclamos",
+    "routing": "claims",
     "icon": {
       "class": "icofont-support"
     }
   },
   {
+    "title": "Tipos de Reclamos",
+    "routing": "claim-types",
+    "icon": {
+      "class": "icofont-support"
+    }
+  },
+  {
+    "title": "Sugerencias",
+    "groupTitle": true
+  },
+  {
+    "title": "Sugerencias",
+    "routing": "suggestions",
+    "icon": {
+      "class": "icofont-learn"
+    }
+  },
+  {
+    "title": "Tipos de Sugerencias",
+    "routing": "suggestion-types",
+    "icon": {
+      "class": "icofont-support"
+    }
+  },
+  {
+    "title": "Contenido",
+    "groupTitle": true
+  },
+  {
     "title": "Preguntas frecuentes",
-    "routing": "faq",
+    "routing": "faqs",
     "icon": {
       "class": "icofont-support-faq"
     }
   },
+
   {
-    "title": "Configuracion general",
-    "routing": "settings",
-    "icon": {
-      "class": "icofont-setting-alt"
-    }
+    "title": "Movil",
+    "groupTitle": true,
+    "largeTitle" : true
   },
   {
     "title": "Notificaciones",
-    "groupTitle": true
+    "routing": "notifications",
+    "icon": {
+      "class": "icofont-notification"
+    }
   }
 
 ]

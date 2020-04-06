@@ -14,7 +14,7 @@ import { PagesModule } from './pages/pages.module';
 import { pageDataReducer } from './store/reducers/page-data.reducer';
 import { appSettingsReducer } from './store/reducers/app-settings.reducer';
 import { patientsReducer } from './store/reducers/patients.reducer';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy,PathLocationStrategy, LocationStrategy } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptorService } from './services/util/auth-interceptor.service';
 import { AuthGuardService } from './services/util/auth-guard.service';
@@ -40,7 +40,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     UIModule,
     PagesModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
