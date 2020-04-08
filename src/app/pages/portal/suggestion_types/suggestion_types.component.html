@@ -1,0 +1,39 @@
+
+<table-component [url]="'/suggestions'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-support'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createSuggestionTypes()"
+  ></button>
+</div> 
+
+<!-- Modal window -->
+<ng-container  *ngIf="suggestionTypesForm">
+  <ng-template #modalBody>
+    <form [formGroup]="suggestionTypesForm" novalidate>
+
+      <tc-form-group>
+        <tc-input  [placeholder]="'Tipo'" formControlName="type"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-textarea [placeholder]="'Descripción'" formControlName="description"  ></tc-textarea>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="suggestionTypesForm.invalid" (click)="saveSuggestionTypes(suggestionTypesForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

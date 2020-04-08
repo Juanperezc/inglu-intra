@@ -118,13 +118,40 @@
     "groupTitle": true
   },
   {
+    "title": "Información del club",
+    "routing": "club-information",
+    "icon": {
+      "class": "icofont-info"
+    }
+  },
+  {
+    "title": "Sección de equipo",
+    "routing": "club-team",
+    "icon": {
+      "class": "icofont-ui-user-group"
+    }
+  },
+  {
+    "title": "Sección de imágenes app",
+    "routing": "club-images",
+    "icon": {
+      "class": "icofont-support-faq"
+    }
+  },
+  {
+    "title": "Sección de tareas del club",
+    "routing": "club-tasks",
+    "icon": {
+      "class": "icofont-tasks-alt"
+    }
+  },
+  {
     "title": "Preguntas frecuentes",
     "routing": "faqs",
     "icon": {
       "class": "icofont-support-faq"
     }
   },
-
   {
     "title": "Movil",
     "groupTitle": true,

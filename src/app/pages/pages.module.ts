@@ -74,6 +74,7 @@ import { PageFaqsComponent } from './portal/faqs';
 import { PageClaimsComponent } from './portal/claims';
 import { PageSuggestionsComponent } from './portal/suggestions';
 import { PageClaimTypesComponent } from './portal/claim_types';
+import { PageSuggestionTypesComponent } from './portal/suggestion_types';
 
 @NgModule({
   imports: [
@@ -153,6 +154,7 @@ import { PageClaimTypesComponent } from './portal/claim_types';
     PageFaqsComponent,
     PageClaimsComponent,
     PageClaimTypesComponent,
+    PageSuggestionTypesComponent,
     PageSuggestionsComponent
   ],
   exports: [ ],

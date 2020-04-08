@@ -64,6 +64,7 @@ import { PageFaqsComponent } from '../pages/portal/faqs';
 import { PageClaimsComponent } from '../pages/portal/claims';
 import { PageSuggestionsComponent } from '../pages/portal/suggestions';
 import { PageClaimTypesComponent } from '../pages/portal/claim_types';
+import { PageSuggestionTypesComponent } from '../pages/portal/suggestion_types';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -118,6 +119,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'claims', component: PageClaimsComponent },
   { path: 'claim-types', component: PageClaimTypesComponent },
   { path: 'suggestions', component: PageSuggestionsComponent },
+  { path: 'suggestion-types', component: PageSuggestionTypesComponent },
   { path: 'faqs', component: PageFaqsComponent },
   { path: '**', component: Page404Component }
 ];
