@@ -1,0 +1,40 @@
+
+<table-component [url]="'/contacts'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<!-- <div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-ui-contact-list'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createContact()"
+  ></button>
+</div>  -->
+
+<!-- Modal window -->
+<ng-container  *ngIf="contactForm">
+  <ng-template #modalBody>
+    <form [formGroup]="contactForm" novalidate>
+
+      <tc-form-group>
+        <tc-input  [disabled]="true" [placeholder]="'Tipo'" formControlName="type"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Mensaje</b></span>
+        <tc-textarea [disabled]="true" [placeholder]="'Mensaje'" formControlName="message"  ></tc-textarea>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="contactForm.invalid" (click)="saveContact(contactForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

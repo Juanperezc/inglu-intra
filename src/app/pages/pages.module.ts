@@ -46,7 +46,6 @@ import { PageTypographyComponent } from './ui/typography';
 import { PageIconsOptionsComponent } from './ui/icons/icons-options';
 import { PageIconsIfComponent } from './ui/icons/icons-if';
 import { PageIconsSliComponent } from './ui/icons/icons-sli';
-import { PageContactsComponent } from './ui/components/contacts';
 import { PageModalWindowsComponent } from './ui/components/modal-windows';
 import { PageDoctorsComponent } from './medicine/doctors';
 import { PagePatientsComponent } from './medicine/patients';
@@ -75,6 +74,8 @@ import { PageClaimsComponent } from './portal/claims';
 import { PageSuggestionsComponent } from './portal/suggestions';
 import { PageClaimTypesComponent } from './portal/claim_types';
 import { PageSuggestionTypesComponent } from './portal/suggestion_types';
+import { PagePostCategoryComponent } from './portal/post_category';
+import { PageContactComponent } from './services/contacts';
 
 @NgModule({
   imports: [
@@ -129,7 +130,7 @@ import { PageSuggestionTypesComponent } from './portal/suggestion_types';
     PageIconsOptionsComponent,
     PageIconsIfComponent,
     PageIconsSliComponent,
-    PageContactsComponent,
+    PageContactComponent,
     PageDoctorsComponent,
     PagePatientsComponent,
     PageModalWindowsComponent,
@@ -151,6 +152,7 @@ import { PageSuggestionTypesComponent } from './portal/suggestion_types';
     PageSignUpComponent,
     PageSettingsComponent,
     PagePostComponent,
+    PagePostCategoryComponent,
     PageFaqsComponent,
     PageClaimsComponent,
     PageClaimTypesComponent,

@@ -1,3 +1,4 @@
+<!-- <span class="tc-placeholder" *ngIf="placeholder" > <b>{{ placeholder }} :</b></span> -->
 <div class="tc-input-wrap" (click)="onFocus(disabled || readonly)" [ngStyle]="getStyles()">
   <div
     class="input-prefix input-icon"
@@ -12,6 +13,7 @@
   </div>
 
   <div class="input-infix">
+   
     <input
       type="{{ type }}"
       name="{{ name }}"

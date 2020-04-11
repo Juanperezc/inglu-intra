@@ -47,6 +47,14 @@
     },
     "routing": "patients"
   },
+
+  {
+    "title": "Contactos",
+    "icon": {
+      "class": "icofont-ui-contact-list"
+    },
+    "routing": "contacts"
+  },
   {
     "title": "Calendario",
     "routing": "events-calendar",

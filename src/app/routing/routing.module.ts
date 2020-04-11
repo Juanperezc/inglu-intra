@@ -35,7 +35,7 @@ import { PageTypographyComponent } from '../pages/ui/typography';
 import { PageIconsOptionsComponent } from '../pages/ui/icons/icons-options';
 import { PageIconsIfComponent } from '../pages/ui/icons/icons-if';
 import { PageIconsSliComponent } from '../pages/ui/icons/icons-sli';
-import { PageContactsComponent } from '../pages/ui/components/contacts';
+
 import { PageDoctorsComponent } from '../pages/medicine/doctors';
 import { PagePatientsComponent } from '../pages/medicine/patients';
 import { PageModalWindowsComponent } from '../pages/ui/components/modal-windows';
@@ -65,6 +65,8 @@ import { PageClaimsComponent } from '../pages/portal/claims';
 import { PageSuggestionsComponent } from '../pages/portal/suggestions';
 import { PageClaimTypesComponent } from '../pages/portal/claim_types';
 import { PageSuggestionTypesComponent } from '../pages/portal/suggestion_types';
+import { PagePostCategoryComponent } from '../pages/portal/post_category';
+import { PageContactComponent } from '../pages/services/contacts';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -85,7 +87,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'badges', component: PageBadgesComponent },
   { path: 'ratings', component: PageRatingsComponent },
   { path: 'checkboxes', component: PageCheckboxesComponent },
-  { path: 'contacts', component: PageContactsComponent },
+ /*  { path: 'contacts', component: PageContactsComponent }, */
   { path: 'radio-buttons', component: PageRadioButtonsComponent },
   { path: 'switchers', component: PageSwitchersComponent },
   { path: 'modal-windows', component: PageModalWindowsComponent },
@@ -115,7 +117,9 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'edit-account', component: PageAccountComponent },
   { path: 'events-calendar', component: PageCalendarComponent },
   { path: 'settings', component: PageSettingsComponent },
+  { path: 'contacts', component: PageContactComponent },
   { path: 'posts', component: PagePostComponent },
+  { path: 'post-categories', component: PagePostCategoryComponent },
   { path: 'claims', component: PageClaimsComponent },
   { path: 'claim-types', component: PageClaimTypesComponent },
   { path: 'suggestions', component: PageSuggestionsComponent },

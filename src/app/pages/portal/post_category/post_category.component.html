@@ -1,0 +1,35 @@
+
+<table-component [url]="'/post_category'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-blogger'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createPostCategoryTypes()"
+  ></button>
+</div> 
+
+<!-- Modal window -->
+<ng-container  *ngIf="postCategoryTypesForm">
+  <ng-template #modalBody>
+    <form [formGroup]="postCategoryTypesForm" novalidate>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Descripción'" formControlName="description"  ></tc-input>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="postCategoryTypesForm.invalid" (click)="savePostCategoryTypes(postCategoryTypesForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->
