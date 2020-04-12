@@ -10,20 +10,21 @@ import { ITableHeaders } from '../../../interfaces/table-headers';
 import { GlobalService } from '../../../services/util/GlobalService.service';
 import { IHandleAction } from '../../../interfaces/handle-action';
 import { IOption } from '../../../ui/interfaces/option';
-import { ContactService } from '../../../services/http/ContactService.service';
+import { PatientService } from '../../../services/http/PatientService.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'contacts-component',
-  templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.scss']
+  selector: 'patients-component',
+  templateUrl: './patients.component.html',
+  styleUrls: ['./patients.component.scss']
 })
-export class PageContactComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class PagePatientsComponent extends BasePageComponent implements OnInit, OnDestroy {
   @ViewChild('modalBody') modalBody: ElementRef<any>;
   @ViewChild('modalFooter') modalFooter: ElementRef<any>;
 
   data: any[];
   categoriesOption: Array<IOption> = new Array<IOption>();
-  contactForm: FormGroup;
+  patientForm: FormGroup;
   statuses: Array<IOption>;
   currentPhoto: string | ArrayBuffer;
   reload : number = 1;
@@ -34,8 +35,9 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
     store: Store<IAppState>,
     httpSv: HttpService,
     private modal: TCModalService,
+    private router: Router,
     private formBuilder: FormBuilder,
-    private contactService: ContactService
+    private patientService: PatientService
   ) {
     super(store, httpSv);
     this.statuses = new Array<IOption>();
@@ -80,8 +82,17 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
         tcActions: []
       },
       {
-        columnName: "message",
-        columnTitle: "Mensaje",
+        columnName: "profile_pic",
+        columnTitle: "Foto",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'img',
+        tcActions: []
+      },
+      {
+        columnName: "phone",
+        columnTitle: "Teléfono",
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
@@ -100,7 +111,7 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
       {
         columnName: "status",
         columnTitle: "Estatus",
-        iconClass: "contact",
+        iconClass: "user",
         tcColor: null,
         tcFontSize: null,
         tcType: 'badge',
@@ -131,14 +142,14 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
 
     this.pageData = {
     loaded: true,
-    title: 'Contacto',
+    title: 'Pacientes',
     breadcrumbs: [
       {
         title: 'Portal',
         route: 'default-dashboard'
       },
       {
-        title: 'Contacto'
+        title: 'Pacientes'
       }
     ]
     };
@@ -172,11 +183,11 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
   // close modal window
   closeModal() {
     this.modal.close();
-    this.contactForm.reset();
+    this.patientForm.reset();
   }
-  createContact(){
+  createPatient(){
     this.currentPhoto = null;
-    this.openModal(this.modalBody, 'Crear contacto', this.modalFooter)
+    this.openModal(this.modalBody, 'Crear paciente', this.modalFooter)
   }
   async handleActionEmit(event: IHandleAction){
     console.log('emit', event);
@@ -184,14 +195,15 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
     const type = event.type;
     switch(type){
       case "edit":{
-        this.edit(row);
+        this.router.navigateByUrl("/vertical/account/" + row.id);
+     /*    this.edit(row); */
         break;
       }
       case "remove":{
        const result = await GlobalService.AlertDelete();
        if (result.value) 
        {
-        this.deleteContact(row.id);
+        this.deletePatient(row.id);
        }
         break;
       }
@@ -201,7 +213,7 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
   // init form
   initForm(data: any) {
  
-    this.contactForm = this.formBuilder.group({
+    this.patientForm = this.formBuilder.group({
       id: [(data ? data.id : null)],
       id_card: [(data ? data.id_card : ''), Validators.required],
       gender: [(data ? data.gender : ''), Validators.required],
@@ -222,7 +234,7 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
 
   // edit appointment
   edit(row: any) {
-    this.openModal(this.modalBody, 'Editar contacto', this.modalFooter, row);
+    this.openModal(this.modalBody, 'Editar paciente', this.modalFooter, row);
   }
 
   async createUser(form: FormGroup){
@@ -230,25 +242,26 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
 
     }
   }
-  async saveContact(form: FormGroup) {
+  
+  async savePatient(form: FormGroup) {
     if (form.valid) {
-      let contact: any = form.value;
-      if (contact.id == null){
-        delete contact.id;
-        await this.storeContact(contact);
+      let patient: any = form.value;
+      if (patient.id == null){
+        delete patient.id;
+        await this.storePatient(patient);
       }else{
-        const id = contact.id;
-        delete contact.id;
-        await this.updateContact(id, contact);
+        const id = patient.id;
+        delete patient.id;
+        await this.updatePatient(id, patient);
       }
-      console.log(contact);
+      console.log(patient);
       this.closeModal();
     }
   }
-  async storeContact(contactData: any){
+  async storePatient(patientData: any){
     try {
       GlobalService.ShowSweetLoading();
-      const contact: any = await this.contactService.store(contactData);
+      const patient: any = await this.patientService.store(patientData);
       GlobalService.SwalCreateItem();
       this.reload++;
      /*  GlobalService.CloseSweet(); */
@@ -257,10 +270,10 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
       GlobalService.CloseSweet();
     }
   }
-  async deleteContact(id){
+  async deletePatient(id){
   try {
     GlobalService.ShowSweetLoading();
-    const contact: any = await this.contactService.delete(id);
+    const patient: any = await this.patientService.delete(id);
     GlobalService.SwalDeleteItem();
     this.reload++;
   } catch (error) {
@@ -268,10 +281,10 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
       GlobalService.CloseSweet();
   }
   }
-  async updateContact(id, contactData: any){
+  async updatePatient(id, patientData: any){
     try {
       GlobalService.ShowSweetLoading();
-      const contact: any = await this.contactService.update(id,contactData);
+      const patient: any = await this.patientService.update(id,patientData);
       GlobalService.SwalUpdateItem();
       this.reload++;
     } catch (error) {

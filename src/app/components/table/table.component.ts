@@ -88,24 +88,51 @@ export class TableComponent implements OnInit {
         return "success"
       }
       case 2 : {
-        return "success"
+        return "error"
       }
     }
   }
   valueBadgeStr(value,type = 'default'){
     const valueInt = parseInt(value,10);
-    if (type == "default"){
-   /*    console.log("valueInt", valueInt) */
-      switch(valueInt){
-        case 0: {
-          return "Pendiente";
-        }
-        case 1: {
-          return "Completado";
-        }
-      }
-    }
-   
+  
+    if (type == "contact"){
+      /*    console.log("valueInt", valueInt) */
+         switch(valueInt){
+           case 0: {
+             return "Pendiente";
+           }
+           case 1: {
+             return "Atendido";
+           }
+           case 2: {
+            return "Agendado";
+          }
+         }
+       } else if (type == "user"){
+        /*    console.log("valueInt", valueInt) */
+           switch(valueInt){
+             case 0: {
+               return "Pendiente";
+             }
+             case 1: {
+               return "Activado";
+             }
+             case 2: {
+              return "Desactivado";
+            }
+           }
+         }
+       else {
+             switch(valueInt){
+               case 0: {
+                 return "Pendiente";
+               }
+               case 1: {
+                 return "Completado";
+               }
+             }
+          
+       }
   }
   getData(url: string, dataName: string, callbackFnName?: string, params: any = {}) {
     this.ngxSpinner.show();

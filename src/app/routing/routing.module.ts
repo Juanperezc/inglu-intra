@@ -37,7 +37,7 @@ import { PageIconsIfComponent } from '../pages/ui/icons/icons-if';
 import { PageIconsSliComponent } from '../pages/ui/icons/icons-sli';
 
 import { PageDoctorsComponent } from '../pages/medicine/doctors';
-import { PagePatientsComponent } from '../pages/medicine/patients';
+
 import { PageModalWindowsComponent } from '../pages/ui/components/modal-windows';
 import { PageDoctorProfileComponent } from '../pages/medicine/doctor-profile';
 import { PagePaymentsComponent } from '../pages/medicine/payments';
@@ -67,6 +67,7 @@ import { PageClaimTypesComponent } from '../pages/portal/claim_types';
 import { PageSuggestionTypesComponent } from '../pages/portal/suggestion_types';
 import { PagePostCategoryComponent } from '../pages/portal/post_category';
 import { PageContactComponent } from '../pages/services/contacts';
+import { PagePatientsComponent } from '../pages/services/patients';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -115,6 +116,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'events-timeline', component: PageTimelineComponent },
   { path: 'user-profile', component: PageUserProfileComponent },
   { path: 'edit-account', component: PageAccountComponent },
+  { path: 'account/:id', component: PageAccountComponent },
   { path: 'events-calendar', component: PageCalendarComponent },
   { path: 'settings', component: PageSettingsComponent },
   { path: 'contacts', component: PageContactComponent },

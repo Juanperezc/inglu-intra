@@ -11,9 +11,9 @@
 >
   <tc-table-col *ngFor="let header of headers" [columnTitle]="header.columnTitle" [columnName]="header.columnName">
     <ng-template #tableTDTemplate let-value *ngIf = "header.tcType != 'actions'">
-      <tc-avatar *ngIf="header.tcType == 'img'"[src]="value"></tc-avatar>
+      <tc-avatar *ngIf="header.tcType == 'img'"[src]="(value) ? value : '/assets/content/avatar.jpeg'"></tc-avatar>
       <tc-badge  *ngIf="header.tcType == 'badge'" [view]="valueBadgeView(value)">
-        {{ (value != null) && valueBadgeStr(value)}}
+        {{ (value != null) && valueBadgeStr(value, header && header.iconClass)}}
       </tc-badge>
      
       <strong *ngIf="header.tcType == 'text'">{{ value && subStrTable(value) }}</strong>

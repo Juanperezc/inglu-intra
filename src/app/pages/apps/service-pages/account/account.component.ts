@@ -18,8 +18,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./account.component.scss']
 })
 export class PageAccountComponent extends BasePageComponent implements OnInit, OnDestroy {
+  id: number | string;
   userInfo: any;
   userInfoMock: any;
+  editMe : boolean = false;
+  editAccount : boolean = false;
   passwordForm: FormGroup;
   userForm: FormGroup;
   gender: IOption[];
@@ -41,12 +44,19 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     const lastRoute =  this.activatedRoute.snapshot && 
     this.activatedRoute.snapshot.url
     && this.activatedRoute.snapshot.url[0].path
-   
-    console.log('route', )
+    this.id = this.activatedRoute.snapshot && this.activatedRoute.snapshot.params
+    && this.activatedRoute.snapshot.params['id'];
     let title=null; 
+    console.log('lastRoute', lastRoute, this.id);
     switch(lastRoute){
       case "edit-account": {
         title = "Editar cuenta"
+        this.editMe=true;
+        break;
+      }
+      case "account": {
+        title = "Editar cuenta"
+        this.editAccount=true;
         break;
       }
       case "create-medic": {
@@ -60,7 +70,6 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       title: title,
       loaded: true,
       breadcrumbs: [
-    
         {
           title: 'Servicios',
           route: 'default-dashboard'
@@ -100,9 +109,14 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
 
     this.max = new Date();
     super.ngOnInit();
-
+    if (this.editMe){
+      this.userInfo = await UserStorage.getUser();
+    }else if (this.editAccount){
+      this.userInfo = await this.loadUser(this.id);
+      console.log(this.userInfo)
+    }
     this.getData('assets/data/account-data.json', 'userInfoMock', 'loadedDetect');
-    this.userInfo = await UserStorage.getUser();
+
     /* console.log("this.userInfo", this.userInfo) */
   }
 
@@ -112,7 +126,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
 
   loadedDetect() {
     this.setLoaded();
-    this.currentAvatar = this.userInfo.profile_pic ?
+    this.currentAvatar = this.userInfo && this.userInfo.profile_pic ?
     this.userInfo.profile_pic :
     this.defaultAvatar;
     this.initUserForm(this.userInfo);
@@ -122,7 +136,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   // init form
   initPasswordForm(){
     this.passwordForm = this.formBuilder.group({
-      password: [null, Validators.required],
+      password: [null,this.editAccount ? Validators.required : null],
       confirm_password: [null, Validators.required],
       new_password: [null, Validators.required],
     });
@@ -130,23 +144,36 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   initUserForm(data: any) {
     console.log("data", data);
     this.userForm = this.formBuilder.group({
-      id: [data.id ? data.id : null],
-      name: [data.name, Validators.required],
-      last_name: [data.last_name, Validators.required],
-      id_card: [data.id_card, Validators.required],
-      email: [data.email, Validators.required],
+      id: [data && data.id ? data.id : null],
+      name: [data && data.name, Validators.required],
+      last_name: [data && data.last_name, Validators.required],
+      id_card: [data && data.id_card, Validators.required],
+      email: [data && data.email, Validators.required],
       profile_pic: [this.currentAvatar],
-      date_of_birth: [data.date_of_birth, Validators.required],
-      address: [data.address, Validators.required],
-      phone: [data.phone/* , Validators.required */],
-      gender: [data.gender, Validators.required],
-      status: [data.status && data.status.toString(), Validators.required]
+      date_of_birth: [data && data.date_of_birth, Validators.required],
+      address: [data && data.address, Validators.required],
+      phone: [data && data.phone/* , Validators.required */],
+      gender: [data && data.gender, Validators.required],
+      status: [data && data.status && data.status.toString(), this.editAccount ? Validators.required : null]
     });
     // detect form changes
     this.userForm.valueChanges.subscribe((t) => {
    /*    console.log('change',t) */
       this.changes = true;
     });
+  }
+  async loadUser(id){
+    try {
+      GlobalService.ShowSweetLoading();
+      const user: any = await this.userService.show(id);
+      const dataUser = user.data;
+      GlobalService.CloseSweet();
+      return dataUser;
+    } catch (error) {
+      console.error('error', error)
+      GlobalService.CloseSweet();
+      return null;
+    }
   }
 
   async updateUser(id,data){

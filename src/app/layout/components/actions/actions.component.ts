@@ -50,11 +50,9 @@ export class ActionsComponent implements OnInit {
       if (logoutData){
         this.router.navigateByUrl("/public/sign-in");
       }
-    
     } catch (error) {
       console.error('error', error);
       this.ngxSpinner.hide();
-     
     }
   }
   getData(url: string, dataName: string) {

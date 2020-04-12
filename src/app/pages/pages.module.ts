@@ -48,7 +48,7 @@ import { PageIconsIfComponent } from './ui/icons/icons-if';
 import { PageIconsSliComponent } from './ui/icons/icons-sli';
 import { PageModalWindowsComponent } from './ui/components/modal-windows';
 import { PageDoctorsComponent } from './medicine/doctors';
-import { PagePatientsComponent } from './medicine/patients';
+
 import { PageDoctorProfileComponent } from './medicine/doctor-profile';
 import { PagePaymentsComponent } from './medicine/payments';
 import { PageAppointmentsComponent } from './medicine/appointments';
@@ -76,6 +76,7 @@ import { PageClaimTypesComponent } from './portal/claim_types';
 import { PageSuggestionTypesComponent } from './portal/suggestion_types';
 import { PagePostCategoryComponent } from './portal/post_category';
 import { PageContactComponent } from './services/contacts';
+import { PagePatientsComponent } from './services/patients';
 
 @NgModule({
   imports: [

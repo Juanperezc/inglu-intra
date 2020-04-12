@@ -72,7 +72,7 @@
         <tc-input [placeholder]="'Ultimas visitas'" formControlName="lastVisit" [readonly]="true"></tc-input>
       </tc-form-group> -->
 
-      <tc-form-group>
+      <tc-form-group *ngIf="editAccount">
         <tc-form-label>Estatus</tc-form-label>
         <tc-select [placeholder]="'Estatus'" formControlName="status" [options]="status"></tc-select>
       </tc-form-group>
@@ -97,45 +97,46 @@
     </form>
 
     <hr>
-
-    <h4>Cambiar contraseña</h4>
-
-    <form
-    [formGroup]="passwordForm"
-    novalidate
-    class="new-doctor-form mb-4"
-    (ngSubmit)="changePassword(passwordForm)"
-    >
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Contraseña actual</tc-form-label>
-            <tc-input [placeholder]="'Contraseña actual'" formControlName="password" type="password"></tc-input>
-          </tc-form-group>
+    <div *ngIf="editMe || editAccount">
+      <h4>Cambiar contraseña</h4>
+      <form
+      [formGroup]="passwordForm"
+      novalidate
+      class="new-doctor-form mb-4"
+      (ngSubmit)="changePassword(passwordForm)"
+      >
+        <div class="row" *ngIf="editMe">
+          <div class="col-12 col-sm-6">
+            <tc-form-group>
+              <tc-form-label>Contraseña actual</tc-form-label>
+              <tc-input [placeholder]="'Contraseña actual'" formControlName="password" type="password"></tc-input>
+            </tc-form-group>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Nueva contraseña <area shape="" coords="" href="" alt=""></tc-form-label>
-            <tc-input [placeholder]="'Nueva contraseña'" formControlName="new_password" type="password"></tc-input>
-          </tc-form-group>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <tc-form-group>
+              <tc-form-label>Nueva contraseña <area shape="" coords="" href="" alt=""></tc-form-label>
+              <tc-input [placeholder]="'Nueva contraseña'" formControlName="new_password" type="password"></tc-input>
+            </tc-form-group>
+          </div>
+  
+          <div class="col-12 col-sm-6">
+            <tc-form-group>
+              <tc-form-label>Confirmar nueva contraseña</tc-form-label>
+              <tc-input [placeholder]="'Confirmar nueva contraseña'" formControlName="confirm_password" type="password" ></tc-input>
+            </tc-form-group>
+          </div>
         </div>
-
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Confirmar nueva contraseña</tc-form-label>
-            <tc-input [placeholder]="'Confirmar nueva contraseña'" formControlName="confirm_password" type="password" ></tc-input>
-          </tc-form-group>
-        </div>
-      </div>
-
-      <button tc-button 
-      [view]="'default'" 
-      [outline]="true" 
-      [disabled]="passwordForm.invalid">
-        Cambiar contraseña
-      </button>
-    </form>
+  
+        <button tc-button 
+        [view]="'default'" 
+        [outline]="true" 
+        [disabled]="passwordForm.invalid">
+          Cambiar contraseña
+        </button>
+      </form>
+    </div>
+  
   </div>
 </div>

@@ -1,21 +1,21 @@
 
-<table-component [url]="'/contacts'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+<table-component [url]="'/user/index_patient'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
 
-<!-- <div class="add-action-box">
+<div class="add-action-box">
   <button
     tc-button
-    [afterIcon]="'icofont-ui-contact-list'"
+    [afterIcon]="'icofont-paralysis-disability'"
     [view]="'accent'"
     [square]="true"
     [tcShape]="500"
-    (click)="createContact()"
+    (click)="createPatient()"
   ></button>
-</div>  -->
+</div> 
 
 <!-- Modal window -->
-<ng-container  *ngIf="contactForm">
+<ng-container  *ngIf="patientForm">
   <ng-template #modalBody>
-    <form [formGroup]="contactForm" novalidate>
+    <form [formGroup]="patientForm" novalidate>
 
       <tc-form-group>
         <span class="tc-placeholder"><b>Cedula</b></span>
@@ -73,7 +73,7 @@
         <tc-select
         [placeholder]="'Selecciona un estatus'"
         [options]="statuses"
-        [selected]="contactForm.value.status"
+        [selected]="patientForm.value.status"
         formControlName="status"
       ></tc-select>
     </tc-form-group>
@@ -82,10 +82,10 @@
   <ng-template #modalFooter>
     <div class="actions justify-content-between">
       <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
-      <button tc-button [view]="'accent'" [disabled]="contactForm.invalid" (click)="createUser(contactForm)">
+      <button tc-button [view]="'accent'" [disabled]="patientForm.invalid" (click)="createUser(patientForm)">
        Crear usuario y asignar cita
        </button>
-      <button tc-button [view]="'info'" [disabled]="contactForm.invalid" (click)="saveContact(contactForm)">
+      <button tc-button [view]="'info'" [disabled]="patientForm.invalid" (click)="savePatient(patientForm)">
        Guardar
       </button>
     </div>
