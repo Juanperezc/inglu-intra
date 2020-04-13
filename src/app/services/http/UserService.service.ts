@@ -26,8 +26,12 @@ export class UserService {
     return await this.http.put(environment.endpoint + `/users/` + id, data).toPromise();
   }
 
-  async change_password(data: any) {
-    return await this.http.post(environment.endpoint + `/user/change_password`, data).toPromise();
+  async change_password(data: any,id: number) {
+    return await this.http.post(environment.endpoint + `/user/change_password/` + id, data).toPromise();
+  }
+
+  async store(data : any) {
+    return await this.http.post(environment.endpoint + `/users`,data).toPromise();
   }
 
   async me() {

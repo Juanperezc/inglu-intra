@@ -186,8 +186,7 @@ export class PagePatientsComponent extends BasePageComponent implements OnInit, 
     this.patientForm.reset();
   }
   createPatient(){
-    this.currentPhoto = null;
-    this.openModal(this.modalBody, 'Crear paciente', this.modalFooter)
+    this.router.navigateByUrl("/vertical/create-patient");
   }
   async handleActionEmit(event: IHandleAction){
     console.log('emit', event);
@@ -195,7 +194,7 @@ export class PagePatientsComponent extends BasePageComponent implements OnInit, 
     const type = event.type;
     switch(type){
       case "edit":{
-        this.router.navigateByUrl("/vertical/account/" + row.id);
+        this.router.navigateByUrl("/vertical/patient-account/" + row.id);
      /*    this.edit(row); */
         break;
       }

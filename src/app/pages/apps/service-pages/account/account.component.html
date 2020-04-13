@@ -1,4 +1,4 @@
-<div class="row justify-content-center" *ngIf="userInfo && userForm && passwordForm">
+<div class="row justify-content-center" *ngIf="userForm && passwordForm">
   <div class="col col-12 col-xl-8">
     <form
       [formGroup]="userForm"
@@ -28,11 +28,17 @@
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Correo</tc-form-label>
-        <tc-input [placeholder]="'Correo'" formControlName="email" [disabled]="true"></tc-input>
+        <tc-input 
+        [placeholder]="'Correo'" 
+        formControlName="email" 
+        [disabled]="editPatient || editMe ? true: false"></tc-input>
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Cedula</tc-form-label>
-        <tc-input [placeholder]="'Cedula'" formControlName="id_card" [disabled]="true"></tc-input>
+        <tc-input 
+        [placeholder]="'Cedula'" 
+        formControlName="id_card"
+        [disabled]="editPatient || editMe ? true: false"></tc-input>
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Nombre</tc-form-label>
@@ -72,7 +78,7 @@
         <tc-input [placeholder]="'Ultimas visitas'" formControlName="lastVisit" [readonly]="true"></tc-input>
       </tc-form-group> -->
 
-      <tc-form-group *ngIf="editAccount">
+      <tc-form-group *ngIf="editPatient">
         <tc-form-label>Estatus</tc-form-label>
         <tc-select [placeholder]="'Estatus'" formControlName="status" [options]="status"></tc-select>
       </tc-form-group>
@@ -80,7 +86,7 @@
       <div class="row">
         <div class="col">
           <button tc-button [view]="'success'" [disabled]="!changes || userForm.invalid">
-            Guardar
+           {{  createMedic || createPatient ? 'Crear' : 'Guardar'}} 
           </button>
         </div>
       <!--   <div class="col text-right">
@@ -97,7 +103,7 @@
     </form>
 
     <hr>
-    <div *ngIf="editMe || editAccount">
+    <div *ngIf="editMe || editPatient">
       <h4>Cambiar contraseña</h4>
       <form
       [formGroup]="passwordForm"

@@ -9,7 +9,7 @@ import { UserStorage } from '../../../../services/util/UserStorage.service';
 import { GlobalService } from '../../../../services/util/GlobalService.service';
 import { FileService } from '../../../../services/http/FileService.service';
 import { UserService } from '../../../../services/http/UserService.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -19,10 +19,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PageAccountComponent extends BasePageComponent implements OnInit, OnDestroy {
   id: number | string;
+  title: string = null;
   userInfo: any;
   userInfoMock: any;
   editMe : boolean = false;
-  editAccount : boolean = false;
+  editPatient : boolean = false;
+  createMedic: boolean = false;
+  createPatient: boolean = false;
   passwordForm: FormGroup;
   userForm: FormGroup;
   gender: IOption[];
@@ -34,6 +37,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   constructor(
     store: Store<IAppState>,
     httpSv: HttpService,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private fileService : FileService,
     private userService : UserService,
@@ -46,39 +50,31 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     && this.activatedRoute.snapshot.url[0].path
     this.id = this.activatedRoute.snapshot && this.activatedRoute.snapshot.params
     && this.activatedRoute.snapshot.params['id'];
-    let title=null; 
+  
     console.log('lastRoute', lastRoute, this.id);
     switch(lastRoute){
       case "edit-account": {
-        title = "Editar cuenta"
+        this.title = "Editar cuenta"
         this.editMe=true;
         break;
       }
-      case "account": {
-        title = "Editar cuenta"
-        this.editAccount=true;
+      case "patient-account": {
+        this.title = "Editar paciente"
+        this.editPatient=true;
         break;
       }
       case "create-medic": {
+        this.title = "Crear medico"
+        this.createMedic=true;
         break;
       }
       case "create-patient": {
+        this.title = "Crear paciente"
+        this.createPatient=true;
         break;
       }
     }
-    this.pageData = {
-      title: title,
-      loaded: true,
-      breadcrumbs: [
-        {
-          title: 'Servicios',
-          route: 'default-dashboard'
-        },
-        {
-          title: title
-        }
-      ]
-    };
+    this.reloadPageData();
     this.gender = [
       {
         label: 'Masculino',
@@ -104,18 +100,36 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     this.changes = false;
   }
 
- async ngOnInit() {
-
-
-    this.max = new Date();
+  reloadPageData(){
+    this.pageData = {
+      title: this.title,
+      loaded: true,
+      breadcrumbs: [
+        {
+          title: 'Servicios',
+          route: 'default-dashboard'
+        },
+        {
+          title: this.title
+        }
+      ]
+    };
     super.ngOnInit();
+   
+  }
+ async ngOnInit() {
+    this.max = new Date();
+  
     if (this.editMe){
       this.userInfo = await UserStorage.getUser();
-    }else if (this.editAccount){
+    }else if (this.editPatient){
       this.userInfo = await this.loadUser(this.id);
       console.log(this.userInfo)
+    }else if (this.createMedic || this.createPatient){
+      this.userInfo = null;
     }
     this.getData('assets/data/account-data.json', 'userInfoMock', 'loadedDetect');
+  
 
     /* console.log("this.userInfo", this.userInfo) */
   }
@@ -136,7 +150,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   // init form
   initPasswordForm(){
     this.passwordForm = this.formBuilder.group({
-      password: [null,this.editAccount ? Validators.required : null],
+      password: [null, this.editMe ? Validators.required : null],
       confirm_password: [null, Validators.required],
       new_password: [null, Validators.required],
     });
@@ -151,10 +165,10 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       email: [data && data.email, Validators.required],
       profile_pic: [this.currentAvatar],
       date_of_birth: [data && data.date_of_birth, Validators.required],
-      address: [data && data.address, Validators.required],
+      address: [data && data.address/* , Validators.required */],
       phone: [data && data.phone/* , Validators.required */],
       gender: [data && data.gender, Validators.required],
-      status: [data && data.status && data.status.toString(), this.editAccount ? Validators.required : null]
+      status: [data && data.status && data.status.toString(), this.editPatient ? Validators.required : null]
     });
     // detect form changes
     this.userForm.valueChanges.subscribe((t) => {
@@ -182,8 +196,30 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       const user: any = await this.userService.update(id,data);
       GlobalService.SwalUpdateItem();
       const dataUser = user.data;
-      if (dataUser)
+      if (dataUser && this.editMe)
       UserStorage.setUser(dataUser);
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error)
+      GlobalService.CloseSweet();
+    } 
+  }
+  async storeUser(data){
+    try {
+      GlobalService.ShowSweetLoading();
+      const user: any = await this.userService.store(data);
+      GlobalService.CloseSweet();
+      GlobalService.SwalCreateItem();
+      const dataUser = user.data;
+      this.userInfo = dataUser;
+      if (this.userInfo.type == 1){
+        this.router.navigateByUrl("/vertical/patient-account/" + this.userInfo.id);
+     /*    this.editPatient = true;
+        this.createPatient = false;
+        this.title = "Editar paciente";
+        this.reloadPageData(); */
+      }
+  
      /*  GlobalService.CloseSweet(); */
     } catch (error) {
       console.error('error', error)
@@ -199,11 +235,13 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       this.userInfo.date_of_birth = 
       this.userInfo.date_of_birth ? 
       (GlobalService.formatDate(this.userInfo.date_of_birth)) : null;
+      this.userInfo.type=1;
       console.log(this.userInfo);
       if (id){
         //update
         await this.updateUser(id, this.userInfo);
       }else{
+        await this.storeUser(this.userInfo);
         //save
       }
       
@@ -216,7 +254,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     if (form.valid) {
       try{
       GlobalService.ShowSweetLoading();
-      const user: any = await this.userService.change_password(form.value);
+      const user: any = await this.userService.change_password(form.value, 
+        this.id ? this.id : this.userInfo.id);
       GlobalService.SwalUpdateItem();
       const dataUser = user.data;
       if (dataUser)
