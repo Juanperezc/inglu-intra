@@ -47,7 +47,7 @@ import { PageIconsOptionsComponent } from './ui/icons/icons-options';
 import { PageIconsIfComponent } from './ui/icons/icons-if';
 import { PageIconsSliComponent } from './ui/icons/icons-sli';
 import { PageModalWindowsComponent } from './ui/components/modal-windows';
-import { PageDoctorsComponent } from './medicine/doctors';
+
 
 import { PageDoctorProfileComponent } from './medicine/doctor-profile';
 import { PagePaymentsComponent } from './medicine/payments';
@@ -77,6 +77,8 @@ import { PageSuggestionTypesComponent } from './portal/suggestion_types';
 import { PagePostCategoryComponent } from './portal/post_category';
 import { PageContactComponent } from './services/contacts';
 import { PagePatientsComponent } from './services/patients';
+import { PageDoctorsComponent } from './services/doctors';
+import { TCDoctorCardComponent } from './services/doctors/card';
 
 @NgModule({
   imports: [
@@ -98,6 +100,7 @@ import { PagePatientsComponent } from './services/patients';
     LayoutModule
   ],
   declarations: [
+    TCDoctorCardComponent,
     BasePageComponent,
     PageDashboardComponent,
     SignInComponent,

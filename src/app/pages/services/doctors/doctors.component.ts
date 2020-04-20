@@ -9,6 +9,8 @@ import { HttpService } from '../../../services/http/http.service';
 import { Content } from '../../../ui/interfaces/modal';
 import { TCModalService } from '../../../ui/services/modal/modal.service';
 import { IOption } from '../../../ui/interfaces/option';
+import { DoctorService } from './../../../services/http/DoctorService.service';
+import { GlobalService } from './../../../services/util/GlobalService.service';
 
 @Component({
   selector: 'page-doctors',
@@ -16,18 +18,24 @@ import { IOption } from '../../../ui/interfaces/option';
   styleUrls: ['./doctors.component.scss']
 })
 export class PageDoctorsComponent extends BasePageComponent implements OnInit, OnDestroy {
-  doctors: IUser[];
+  pagination: boolean = true;
+  pagesCount: number = 1;
+	page: number = 1;
+  doctors: any[];
   doctorForm: FormGroup;
   gender: IOption[];
+  search: boolean = true;
   currentAvatar: string | ArrayBuffer;
   defaultAvatar: string;
+  searchText: string = null;
   specialists: string[];
 
   constructor(
     store: Store<IAppState>,
     httpSv: HttpService,
     private modal: TCModalService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private doctorService: DoctorService,
   ) {
     super(store, httpSv);
 
@@ -61,9 +69,20 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
 
   ngOnInit() {
     super.ngOnInit();
-
+    this.loadData();
     this.getData('assets/data/doctors.json', 'doctors', 'setLoaded');
     this.getData('assets/data/doctors-specialists.json', 'specialists');
+  }
+
+ 
+  
+  changeSearch(newValue) {
+  /*   mymodel = newValue; */
+  this.searchText = newValue;
+  /*   console.log(newValue) */
+  }
+  async submitSearch(){
+      await this.loadData(1,this.searchText);
   }
 
   ngOnDestroy() {
@@ -81,7 +100,22 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
       options: options
     });
   }
-
+  async loadData(page = 1, search = null){
+    try {
+      GlobalService.ShowSweetLoading();
+      const doctors: any = await this.doctorService.index(page,search);
+      if (doctors.meta){
+        this.pagesCount = doctors.meta.last_page;
+        this.page = doctors.meta.current_page;
+      }
+      this.doctors = doctors.data;
+      console.log('doctors', doctors);
+      GlobalService.CloseSweet();
+    } catch (error) {
+      console.error('error', error);
+      GlobalService.CloseSweet();
+    }
+  }
   // close modal window
   closeModal() {
     this.modal.close();
@@ -159,4 +193,8 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
   removeControl(controls: any, index: number) {
     controls.removeAt(index);
   }
+
+  goToPage(pageNum: number) {
+    this.loadData(pageNum,this.searchText)
+	}
 }

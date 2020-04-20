@@ -24,6 +24,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   userInfoMock: any;
   editMe : boolean = false;
   editPatient : boolean = false;
+  editDoctor : boolean = false;
   createMedic: boolean = false;
   createPatient: boolean = false;
   passwordForm: FormGroup;
@@ -61,6 +62,11 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       case "patient-account": {
         this.title = "Editar paciente"
         this.editPatient=true;
+        break;
+      }
+      case "doctor-account": {
+        this.title = "Editar medico"
+        this.editDoctor=true;
         break;
       }
       case "create-medic": {

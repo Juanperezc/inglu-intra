@@ -1,11 +1,39 @@
+
+<tc-form-group *ngIf="search">
+  <div class="col-md-12" style="display: flex;">
+    <div class="col-md-10">
+      <tc-input
+      [ngModel]="searchText" 
+      (ngModelChange)="changeSearch($event)"
+      [placeholder]="'Buscar'"
+      [suffixIcon]="'icofont-search-document'"
+    ></tc-input>
+    </div>
+    <div class="col-md-2">
+      <button
+      tc-button
+      [beforeIcon]="'icofont-search'"
+      (click)="submitSearch()"
+    >Buscar</button>
+    </div>
+  </div>
+ </tc-form-group>
 <div class="row">
+  
   <div class="col-12 col-md-4" *ngFor="let doctor of doctors; let i = index; let l = last">
-    <tc-contact
+    
+    <tc-doctor-card
       [data]="doctor"
       [ngClass]="{ 'mb-0': l, 'mb-md-0': (i + 2) === doctors.length || (i + 3) === doctors.length }"
-    ></tc-contact>
+    ></tc-doctor-card>
   </div>
 </div>
+<tc-pagination
+  *ngIf="pagination && pagesCount > 1"
+  [pagesNumber]="pagesCount"
+  [pageNum]="page"
+  (goToPage)="goToPage($event)"
+></tc-pagination>
 
 <div class="add-action-box">
   <button

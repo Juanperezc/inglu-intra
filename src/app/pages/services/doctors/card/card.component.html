@@ -1,0 +1,15 @@
+
+<div class="img-box" >
+  <img src="{{ data.profile_pic ? data.profile_pic : '/assets/content/avatar.jpeg'}}" width="400" height="400" alt="">
+</div>
+<div class="info-box">
+  <h4 class="name">{{ data.name }}</h4>
+
+  <!-- <p class="role">{{ data.role }}</p> -->
+
+  <p class="address">{{ data.address }}</p>
+
+  <div class="button-box" >
+    <a href="#" [routerLink]="['/vertical/doctor-account/' + data.id]" tc-button [view]="'accent'">Ver perfil</a>
+  </div>
+</div>

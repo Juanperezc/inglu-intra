@@ -106,7 +106,7 @@ import { TCDatePickerComponent } from './components/datepicker';
     TCAlignDirective,
     TCSortTableDirective,
     TCFocusDirective,
-
+    TCPaginationComponent,
     TCButtonComponent,
     TCCardComponent,
     TCTableComponent, TCTableColComponent,

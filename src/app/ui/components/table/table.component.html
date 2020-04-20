@@ -2,78 +2,107 @@
   <div class="col-md-12" style="display: flex;">
     <div class="col-md-10">
       <tc-input
-      [placeholder]="'Buscar'"
-      [tcFilterTable]="config.filtering"
-      [suffixIcon]="'icofont-search-document'"
-    ></tc-input>
+        [placeholder]="'Buscar'"
+        [tcFilterTable]="config.filtering"
+        [suffixIcon]="'icofont-search-document'"
+      ></tc-input>
     </div>
     <div class="col-md-2">
       <button
-      tc-button
-      [beforeIcon]="'icofont-search'"
-      (click)="onChangeTable(config)"
-    >Buscar</button>
+        tc-button
+        [beforeIcon]="'icofont-search'"
+        (click)="onChangeTable(config)"
+      >
+        Buscar
+      </button>
     </div>
   </div>
- </tc-form-group>
+</tc-form-group>
 
 <div class="table-wrap" *ngIf="rows && rows.length">
-	<table class="table-box">
+  <table class="table-box">
     <thead>
       <tr>
         <th
-          *ngFor="let c of columnList;"
+          *ngFor="let c of columnList"
           [column]="c.config"
           [align]="headerAlign"
           [tcTableSort]="c.config.sort"
           (sortChanged)="onChangeTable(config, c)"
           [tcBgColor]="headerBgColor"
         >
-          <div class="col-wrapper" [ngClass]="{ 'sorting-col': c.config.enableSorting }">
+          <div
+            class="col-wrapper"
+            [ngClass]="{ 'sorting-col': c.config.enableSorting }"
+          >
             <ng-container *ngIf="!c.headerTemplate">
-              <span *ngIf="c.config.enableSorting" class="sorting" [tcColor]="headerColor">
-                <button class="no-style icofont-simple-up up" [ngClass]="{ 'active': c.config.sort === 'asc' }"></button>
-                <button class="no-style icofont-simple-down down" [ngClass]="{ 'active': c.config.sort === 'desc' }"></button>
+              <span
+                *ngIf="c.config.enableSorting"
+                class="sorting"
+                [tcColor]="headerColor"
+              >
+                <button
+                  class="no-style icofont-simple-up up"
+                  [ngClass]="{ active: c.config.sort === 'asc' }"
+                ></button>
+                <button
+                  class="no-style icofont-simple-down down"
+                  [ngClass]="{ active: c.config.sort === 'desc' }"
+                ></button>
               </span>
-              
+
               <ng-container *ngIf="!c.enableFiltering">
-                <span class="title" [tcColor]="headerColor">{{ c.config.title }}</span>
+                <span class="title" [tcColor]="headerColor">{{
+                  c.config.title
+                }}</span>
               </ng-container>
 
               <ng-container *ngIf="c.enableFiltering">
                 <div class="search-box">
                   <tc-input
                     [size]="'sm'"
-                    (click)="$event.stopPropagation();"
+                    (click)="$event.stopPropagation()"
                     [tcFilterTable]="c.config.filtering"
                     [suffixIcon]="'icofont-search-alt-2'"
                     (tableChanged)="onChangeTable(config, c)"
-                    [placeholder]="c.config.title">
+                    [placeholder]="c.config.title"
+                  >
                   </tc-input>
                 </div>
               </ng-container>
             </ng-container>
           </div>
 
-          <ng-template *ngIf="c.headerTemplate" [ngTemplateOutlet]="c.headerTemplate"></ng-template>
+          <ng-template
+            *ngIf="c.headerTemplate"
+            [ngTemplateOutlet]="c.headerTemplate"
+          ></ng-template>
         </th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let row of rows" [align]="rowAlign">
-        <td *ngFor="let col of columnList" [ngStyle]="{ 'background': contentBgColor, 'color': contentColor }">
-          <ng-container *ngIf="!col.tdTemplate">{{ row[col.config.name] }}</ng-container>
+        <td
+          *ngFor="let col of columnList"
+          [ngStyle]="{ background: contentBgColor, color: contentColor }"
+        >
+          <ng-container *ngIf="!col.tdTemplate">{{
+            row[col.config.name]
+          }}</ng-container>
 
           <ng-template
             *ngIf="col.tdTemplate"
             [ngTemplateOutlet]="col.tdTemplate"
-            [ngTemplateOutletContext]="{ $implicit: row[col.config.name], row: row }"
+            [ngTemplateOutletContext]="{
+              $implicit: row[col.config.name],
+              row: row
+            }"
           ></ng-template>
         </td>
       </tr>
     </tbody>
-	</table>
+  </table>
 
   <div class="no-data" *ngIf="!rows">No se encontraron datos</div>
 </div>
