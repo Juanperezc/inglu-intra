@@ -1,6 +1,12 @@
 {
     "cSpell.words": [
+        "click",
+        "current",
         "ngrx",
+        "picture",
         "toastr"
+    ],
+    "cSpell.enableFiletypes": [
+        "html"
     ]
 }

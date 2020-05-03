@@ -11,6 +11,7 @@ import { TCModalService } from '../../../ui/services/modal/modal.service';
 import { IOption } from '../../../ui/interfaces/option';
 import { DoctorService } from './../../../services/http/DoctorService.service';
 import { GlobalService } from './../../../services/util/GlobalService.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'page-doctors',
@@ -36,6 +37,7 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
     private modal: TCModalService,
     private formBuilder: FormBuilder,
     private doctorService: DoctorService,
+    private router: Router,
   ) {
     super(store, httpSv);
 
@@ -84,22 +86,15 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
   async submitSearch(){
       await this.loadData(1,this.searchText);
   }
+  async createDoctor(){
+    await this.router.navigateByUrl("/vertical/create-doctor");
+  }
 
   ngOnDestroy() {
     super.ngOnDestroy();
   }
 
-  // open modal window
-  openModal<T>(body: Content<T>, header: Content<T> = null, footer: Content<T> = null, options: any = null) {
-    this.initDoctorForm();
 
-    this.modal.open({
-      body: body,
-      header: header,
-      footer: footer,
-      options: options
-    });
-  }
   async loadData(page = 1, search = null){
     try {
       GlobalService.ShowSweetLoading();
@@ -116,83 +111,10 @@ export class PageDoctorsComponent extends BasePageComponent implements OnInit, O
       GlobalService.CloseSweet();
     }
   }
-  // close modal window
-  closeModal() {
-    this.modal.close();
-    this.doctorForm.reset();
-    this.currentAvatar = this.defaultAvatar;
-  }
 
-  // upload new file
-  onFileChanged(inputValue: any) {
-    let file: File = inputValue.target.files[0];
-    let reader: FileReader = new FileReader();
 
-    reader.onloadend = () => {
-      this.currentAvatar = reader.result;
-    };
 
-    reader.readAsDataURL(file);
-  }
 
-  // add new doctor
-  addDoctor(form: FormGroup) {
-    if (form.valid) {
-      delete form.value.lastName;
-      delete form.value.gender;
-
-      let newDoctor: IUser = form.value;
-
-      newDoctor.img = this.currentAvatar;
-      newDoctor.name = `Dr. ${newDoctor.name}`;
-      newDoctor.profileLink = 'doctor-profile';
-
-      this.doctors.unshift(newDoctor);
-
-      this.closeModal();
-    }
-  }
-
-  // init form
-  initDoctorForm() {
-    this.doctorForm = this.formBuilder.group({
-      img: [],
-      name: ['', Validators.required],
-      lastName: ['', Validators.required],
-      role: ['', Validators.required],
-      address: ['', Validators.required],
-      gender: ['', Validators.required],
-      social: new FormArray([
-        this.doctorSocial('icofont-instagram', '#'),
-        this.doctorSocial('icofont-facebook', '#'),
-        this.doctorSocial('icofont-twitter', '#')
-      ])
-    });
-  }
-
-  // init doctor social
-  doctorSocial(icon: string, link: string) {
-    return new FormGroup({
-      icon: new FormControl(icon, Validators.required),
-      link: new FormControl(link, Validators.required)
-    });
-  }
-
-  // add social control
-  addControl(controls: any, iconInput: any, linkInput: any) {
-    if (iconInput.value && linkInput.value) {
-      controls.push(
-        this.doctorSocial(iconInput.value, linkInput.value)
-      );
-      iconInput.value = '';
-      linkInput.value = '';
-    }
-  }
-
-  // remove social control
-  removeControl(controls: any, index: number) {
-    controls.removeAt(index);
-  }
 
   goToPage(pageNum: number) {
     this.loadData(pageNum,this.searchText)

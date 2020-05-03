@@ -15,8 +15,8 @@
         "routing": "doctors"
       },
       {
-        "title": "Departments",
-        "routing": "departments"
+        "title": "Specialties",
+        "routing": "specialties"
       },
       {
         "title": "Patients",

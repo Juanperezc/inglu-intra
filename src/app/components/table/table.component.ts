@@ -19,6 +19,8 @@ export class TableComponent implements OnInit {
   @Input() url : string;
   @Input() reload : number = 1;
   @Input() search : string = null;
+  @Input() searchTable : boolean = true;
+  
   @Output() handleActionEmit: EventEmitter<IHandleAction> = new EventEmitter<IHandleAction>(null);
   rows: any[];
   pagination: any;

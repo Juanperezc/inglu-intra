@@ -1,6 +1,6 @@
 [
   {
-    "img": "/assets/content/department-1.jpg",
+    "img": "/assets/content/specialty-1.jpg",
     "title": "Cardiología",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [
@@ -10,7 +10,7 @@
     ]
   },
   {
-    "img": "/assets/content/department-2.jpg",
+    "img": "/assets/content/specialty-2.jpg",
     "title": "Odontología",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "img": "/assets/content/department-3.jpg",
+    "img": "/assets/content/specialty-3.jpg",
     "title": "Laboratorio",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [
@@ -30,7 +30,7 @@
     ]
   },
   {
-    "img": "/assets/content/department-4.jpg",
+    "img": "/assets/content/specialty-4.jpg",
     "title": "Neumología",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [
@@ -40,7 +40,7 @@
     ]
   },
   {
-    "img": "/assets/content/department-5.jpg",
+    "img": "/assets/content/specialty-5.jpg",
     "title": "Ginecología",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [
@@ -50,7 +50,7 @@
     ]
   },
   {
-    "img": "/assets/content/department-6.jpg",
+    "img": "/assets/content/specialty-6.jpg",
     "title": "Gastrologia",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [
@@ -60,7 +60,7 @@
       "/assets/content/doctor-400-4.jpg"
     ]
   },{
-  "img": "/assets/content/department-7.jpg",
+  "img": "/assets/content/specialty-7.jpg",
   "title": "Neurología",
   "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
   "team": [
@@ -70,7 +70,7 @@
   ]
 },
   {
-    "img": "/assets/content/department-8.jpg",
+    "img": "/assets/content/specialty-8.jpg",
     "title": "Rehabilitación física",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [
@@ -80,7 +80,7 @@
     ]
   },
   {
-    "img": "/assets/content/department-9.jpg",
+    "img": "/assets/content/specialty-9.jpg",
     "title": "Pediatra",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non omnis temporibus? Blanditiis culpa labore velit.",
     "team": [

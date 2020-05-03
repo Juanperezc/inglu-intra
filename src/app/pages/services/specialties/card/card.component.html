@@ -1,0 +1,14 @@
+
+<div class="img-box" >
+  <img src="{{ data.picture ? data.picture : '/assets/content/avatar.jpeg'}}" width="400" height="400" alt="">
+</div>
+<div class="info-box">
+  <h4 class="name">{{ data.name }}</h4>
+
+  <p class="address">{{ data.description }}</p>
+
+  <div class="button-box" >
+    <button type="button" (click)="onEdit()" tc-button [view]="'accent'">Editar</button>
+    <button type="button" (click)="onDelete()" tc-button [view]="'error'">Eliminar</button>
+  </div>
+</div>

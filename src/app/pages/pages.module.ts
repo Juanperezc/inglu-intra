@@ -52,7 +52,7 @@ import { PageModalWindowsComponent } from './ui/components/modal-windows';
 import { PageDoctorProfileComponent } from './medicine/doctor-profile';
 import { PagePaymentsComponent } from './medicine/payments';
 import { PageAppointmentsComponent } from './medicine/appointments';
-import { PageDepartmentsComponent } from './medicine/departments';
+
 import { Page404Component } from './page-404';
 import { PageLeafletMapsComponent } from './ui/maps/leaflet-maps';
 import { PageVTimelineComponent } from './ui/components/v-timeline';
@@ -79,6 +79,8 @@ import { PageContactComponent } from './services/contacts';
 import { PagePatientsComponent } from './services/patients';
 import { PageDoctorsComponent } from './services/doctors';
 import { TCDoctorCardComponent } from './services/doctors/card';
+import { PageSpecialtyComponent } from './services/specialties';
+import { TCSpecialtyCardComponent } from './services/specialties/card';
 
 @NgModule({
   imports: [
@@ -100,6 +102,7 @@ import { TCDoctorCardComponent } from './services/doctors/card';
     LayoutModule
   ],
   declarations: [
+    TCSpecialtyCardComponent,
     TCDoctorCardComponent,
     BasePageComponent,
     PageDashboardComponent,
@@ -141,7 +144,7 @@ import { TCDoctorCardComponent } from './services/doctors/card';
     PageDoctorProfileComponent,
     PagePaymentsComponent,
     PageAppointmentsComponent,
-    PageDepartmentsComponent,
+    PageSpecialtyComponent,
     Page404Component,
     PageLeafletMapsComponent,
     PageVTimelineComponent,

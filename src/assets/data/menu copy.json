@@ -25,11 +25,11 @@
     "routing": "doctors"
   },
   {
-    "title": "Departments",
+    "title": "Specialties",
     "icon": {
       "class": "icofont-nurse"
     },
-    "routing": "departments"
+    "routing": "specialties"
   },
   {
     "title": "Pacientes",

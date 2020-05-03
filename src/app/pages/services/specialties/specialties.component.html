@@ -1,4 +1,5 @@
 
+
 <tc-form-group *ngIf="search">
   <div class="col-md-12" style="display: flex;">
     <div class="col-md-10">
@@ -6,7 +7,7 @@
       [ngModel]="searchText" 
       (ngModelChange)="changeSearch($event)"
       [placeholder]="'Buscar'"
-      [suffixIcon]="'icofont-doctor'"
+      [suffixIcon]="'icofont-search-document'"
     ></tc-input>
     </div>
     <div class="col-md-2">
@@ -20,12 +21,13 @@
  </tc-form-group>
 <div class="row">
   
-  <div class="col-12 col-md-4" *ngFor="let doctor of doctors; let i = index; let l = last">
+  <div class="col-12 col-md-4" *ngFor="let specialty of specialties; let i = index; let l = last">
     
-    <tc-doctor-card
-      [data]="doctor"
-      [ngClass]="{ 'mb-0': l, 'mb-md-0': (i + 2) === doctors.length || (i + 3) === doctors.length }"
-    ></tc-doctor-card>
+    <tc-specialty-card
+    (handleAction)="handleAction($event)"
+      [data]="specialty"
+      [ngClass]="{ 'mb-0': l, 'mb-md-0': (i + 2) === specialties.length || (i + 3) === specialties.length }"
+    ></tc-specialty-card>
   </div>
 </div>
 <tc-pagination
@@ -38,52 +40,33 @@
 <div class="add-action-box">
   <button
     tc-button
-    [afterIcon]="'icofont-doctor'"
+    [afterIcon]="'icofont-nurse'"
     [square]="true"
     [tcShape]="500"
-    (click)="createDoctor()"
+    (click)="createSpecialty()"
   ></button>
 </div>
 
 <!-- Modal window -->
 <ng-container>
   <ng-template #modalBody>
-    <form [formGroup]="doctorForm" novalidate class="new-doctor-form">
+    <form [formGroup]="specialtyForm" novalidate class="new-specialty-form">
       <tc-form-group class="avatar-box">
         <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
-
-        <tc-avatar [src]="currentAvatar"></tc-avatar>
+        <tc-avatar [src]="specialtyForm.value.picture ? specialtyForm.value.picture : 'assets/content/avatar.jpeg'"></tc-avatar>
         <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true" (click)="fileInput.click()">
           Seleccionar imagen
         </button>
       </tc-form-group>
-
       <tc-form-group>
-        <tc-input [placeholder]="'Nombre'" formControlName="name"></tc-input>
+        <span class="tc-placeholder"><b>Nombre</b></span>
+        <tc-input  formControlName="name"></tc-input>
       </tc-form-group>
 
       <tc-form-group>
-        <tc-input [placeholder]="'Apellido'" formControlName="lastName"></tc-input>
+        <span class="tc-placeholder"><b>Dirección</b></span>
+        <tc-textarea  formControlName="description"></tc-textarea>
       </tc-form-group>
-
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-autocomplete [placeholder]="'Especialidad'" [data]="specialists" formControlName="role"></tc-autocomplete>
-          </tc-form-group>
-        </div>
-
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-select [placeholder]="'Genero'" formControlName="gender" [options]="gender"></tc-select>
-          </tc-form-group>
-        </div>
-      </div>
-
-      <tc-form-group>
-        <tc-textarea [placeholder]="'Dirección'" formControlName="address"></tc-textarea>
-      </tc-form-group>
-
   
     </form>
   </ng-template>
@@ -91,7 +74,7 @@
   <ng-template #modalFooter>
     <div class="actions justify-content-between">
       <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancelar</button>
-      <button tc-button [view]="'info'" [disabled]="doctorForm.invalid" (click)="addDoctor(doctorForm)">
+      <button tc-button [view]="'info'" [disabled]="specialtyForm.invalid" (click)="saveSpecialty(specialtyForm)">
        Guardar
       </button>
     </div>

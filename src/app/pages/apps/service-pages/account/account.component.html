@@ -8,12 +8,23 @@
     >
       <tc-form-group>
         <tc-form-label>Foto</tc-form-label>
-        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileChanged($event)"
+          #fileInput
+          hidden
+        />
 
         <div class="d-flex align-items-center">
-          <tc-avatar [src]="userForm.value.profile_pic ? 
-          userForm.value.profile_pic :
-          defaultAvatar" [size]="100"></tc-avatar>
+          <tc-avatar
+            [src]="
+              userForm.value.profile_pic
+                ? userForm.value.profile_pic
+                : defaultAvatar
+            "
+            [size]="100"
+          ></tc-avatar>
           <button
             tc-button
             [type]="'button'"
@@ -28,17 +39,19 @@
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Correo</tc-form-label>
-        <tc-input 
-        [placeholder]="'Correo'" 
-        formControlName="email" 
-        [disabled]="editPatient || editMe ? true: false"></tc-input>
+        <tc-input
+          [placeholder]="'Correo'"
+          formControlName="email"
+          [disabled]="editPatient || editMe || editDoctor ? true : false"
+        ></tc-input>
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Cedula</tc-form-label>
-        <tc-input 
-        [placeholder]="'Cedula'" 
-        formControlName="id_card"
-        [disabled]="editPatient || editMe ? true: false"></tc-input>
+        <tc-input
+          [placeholder]="'Cedula'"
+          formControlName="id_card"
+          [disabled]="editPatient || editMe || editDoctor ? true : false"
+        ></tc-input>
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Nombre</tc-form-label>
@@ -46,19 +59,30 @@
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Apellido</tc-form-label>
-        <tc-input [placeholder]="'Apellido'" formControlName="last_name"></tc-input>
+        <tc-input
+          [placeholder]="'Apellido'"
+          formControlName="last_name"
+        ></tc-input>
       </tc-form-group>
       <div class="row">
         <div class="col-12 col-sm-6">
           <tc-form-group>
             <tc-form-label>Fecha de nacimiento</tc-form-label>
-            <tc-datepicker [placeholder]="'Fecha de nacimiento'" formControlName="date_of_birth" [max]="max" ></tc-datepicker>
+            <tc-datepicker
+              [placeholder]="'Fecha de nacimiento'"
+              formControlName="date_of_birth"
+              [max]="max"
+            ></tc-datepicker>
           </tc-form-group>
         </div>
         <div class="col-12 col-sm-6">
           <tc-form-group>
             <tc-form-label>Genero</tc-form-label>
-            <tc-select [placeholder]="'Genero'" formControlName="gender" [options]="gender"></tc-select>
+            <tc-select
+              [placeholder]="'Genero'"
+              formControlName="gender"
+              [options]="gender"
+            ></tc-select>
           </tc-form-group>
         </div>
       </div>
@@ -70,26 +94,34 @@
 
       <tc-form-group>
         <tc-form-label>Dirección</tc-form-label>
-        <tc-textarea formControlName="address" ></tc-textarea>
+        <tc-textarea formControlName="address"></tc-textarea>
       </tc-form-group>
 
-  <!--     <tc-form-group>
+      <!--     <tc-form-group>
         <tc-form-label>Ultimas visitas</tc-form-label>
         <tc-input [placeholder]="'Ultimas visitas'" formControlName="lastVisit" [readonly]="true"></tc-input>
       </tc-form-group> -->
 
-      <tc-form-group *ngIf="editPatient">
+      <tc-form-group *ngIf="editPatient || editDoctor">
         <tc-form-label>Estatus</tc-form-label>
-        <tc-select [placeholder]="'Estatus'" formControlName="status" [options]="status"></tc-select>
+        <tc-select
+          [placeholder]="'Estatus'"
+          formControlName="status"
+          [options]="status"
+        ></tc-select>
       </tc-form-group>
 
       <div class="row">
         <div class="col">
-          <button tc-button [view]="'success'" [disabled]="!changes || userForm.invalid">
-           {{  createMedic || createPatient ? 'Crear' : 'Guardar'}} 
+          <button
+            tc-button
+            [view]="'success'"
+            [disabled]="!changes || userForm.invalid"
+          >
+            {{ createMedic || createPatient ? "Crear" : "Guardar" }}
           </button>
         </div>
-      <!--   <div class="col text-right">
+        <!--   <div class="col text-right">
           <button
             tc-button
             [type]="'button'"
@@ -102,47 +134,206 @@
       </div>
     </form>
 
-    <hr>
-    <div *ngIf="editMe || editPatient">
-      <h4>Cambiar contraseña</h4>
-      <form
-      [formGroup]="passwordForm"
+    <hr />
+    <!-- Datos del personal medico -->
+    <div *ngIf="editDoctor">
+      <h4>Datos del personal</h4>
+      <!--     <form
+      [formGroup]="doctorForm"
       novalidate
       class="new-doctor-form mb-4"
-      (ngSubmit)="changePassword(passwordForm)"
+      (ngSubmit)="doctorFormSubmit(doctorForm)"
+      > -->
+      <div class="row">
+        <div class="col-12 col-sm-12">
+          <tc-form-group>
+            
+            <tc-form-label class="table-section">
+              <div class="row">
+                <div class="col-6 col-sm-6">
+                  <span><h4>Especialidades</h4></span>
+                </div>
+                <div class="col-6 col-sm-6 add-button-col">
+                  <span class="add-button">
+                    <button (click)="addSpecialty()" tc-button [view]="'info'">
+                      Añadir
+                    </button>
+                  </span>
+                </div>
+              </div>
+             
+            </tc-form-label>
+            <table-component
+              [searchTable]="false"
+              [url]="'/user/specialty/' + id"
+              [reload]="reloadSpecialty"
+              [headers]="headersSpecialty"
+              (handleActionEmit)="handleActionEmitSpecialty($event)"
+            ></table-component>
+          </tc-form-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-12">
+          <tc-form-group>
+            <tc-form-label class="table-section">
+              <div class="row">
+                <div class="col-6 col-sm-6">
+                  <span><h4>Lugares de trabajo</h4></span>
+                </div>
+                <div class="col-6 col-sm-6 add-button-col">
+                  <span class="add-button">
+                    <button (click)="addWorkspace()" tc-button [view]="'info'">
+                      Añadir
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <table-component
+              [searchTable]="false"
+              [url]="'/user/workspace/' + id"
+              [reload]="reloadWorkspace"
+              [headers]="headersWorkspace"
+              (handleActionEmit)="handleActionEmitWorkspace($event)"
+            ></table-component>
+            </tc-form-label>
+          </tc-form-group>
+        </div>
+      </div>
+  
+    </div>
+    <div *ngIf="editMe || editPatient || editDoctor">
+      <h4>Cambiar contraseña</h4>
+      <form
+        [formGroup]="passwordForm"
+        novalidate
+        class="new-doctor-form mb-4"
+        (ngSubmit)="changePassword(passwordForm)"
       >
         <div class="row" *ngIf="editMe">
           <div class="col-12 col-sm-6">
             <tc-form-group>
               <tc-form-label>Contraseña actual</tc-form-label>
-              <tc-input [placeholder]="'Contraseña actual'" formControlName="password" type="password"></tc-input>
+              <tc-input
+                [placeholder]="'Contraseña actual'"
+                formControlName="password"
+                type="password"
+              ></tc-input>
             </tc-form-group>
           </div>
         </div>
         <div class="row">
           <div class="col-12 col-sm-6">
             <tc-form-group>
-              <tc-form-label>Nueva contraseña <area shape="" coords="" href="" alt=""></tc-form-label>
-              <tc-input [placeholder]="'Nueva contraseña'" formControlName="new_password" type="password"></tc-input>
+              <tc-form-label
+                >Nueva contraseña <area shape="" coords="" href="" alt=""
+              /></tc-form-label>
+              <tc-input
+                [placeholder]="'Nueva contraseña'"
+                formControlName="new_password"
+                type="password"
+              ></tc-input>
             </tc-form-group>
           </div>
-  
           <div class="col-12 col-sm-6">
             <tc-form-group>
               <tc-form-label>Confirmar nueva contraseña</tc-form-label>
-              <tc-input [placeholder]="'Confirmar nueva contraseña'" formControlName="confirm_password" type="password" ></tc-input>
+              <tc-input
+                [placeholder]="'Confirmar nueva contraseña'"
+                formControlName="confirm_password"
+                type="password"
+              ></tc-input>
             </tc-form-group>
           </div>
         </div>
-  
-        <button tc-button 
-        [view]="'default'" 
-        [outline]="true" 
-        [disabled]="passwordForm.invalid">
+        <button
+          tc-button
+          [view]="'default'"
+          [outline]="true"
+          [disabled]="passwordForm.invalid"
+        >
           Cambiar contraseña
         </button>
       </form>
     </div>
-  
   </div>
+  
 </div>
+
+
+<!-- Modal window -->
+<ng-container *ngIf="userSpecialtyForm">
+  <ng-template #modalBodySpecialty>
+    <form [formGroup]="userSpecialtyForm" novalidate>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Especialidad</b></span>
+        <tc-select
+        [placeholder]="'Selecciona una especialidad'"
+        [options]="specialties"
+        [selected]="userSpecialtyForm.value.specialty"
+        formControlName="specialty"
+      ></tc-select>
+    </tc-form-group>
+    </form>
+  </ng-template>
+  <ng-template #modalFooterSpecialty>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModalSpecialty()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="userSpecialtyForm.invalid" (click)="saveUserSpecialty(userSpecialtyForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->
+
+
+<!-- Modal window -->
+<ng-container *ngIf="userWorkspaceForm">
+  <ng-template #modalBodyWorkspace>
+    <form [formGroup]="userWorkspaceForm" novalidate>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Especialidad</b></span>
+        <tc-select
+        [placeholder]="'Selecciona una especialidad'"
+        [options]="specialties"
+        [selected]="userWorkspaceForm.value.specialty"
+        formControlName="specialty"
+      ></tc-select>
+    </tc-form-group>
+    <tc-form-group>
+      <tc-form-label>Localidad</tc-form-label>
+      <tc-input
+        formControlName="location"
+      ></tc-input>
+    </tc-form-group>
+    <tc-form-group>
+      <tc-form-label>Hora de inicio</tc-form-label>
+      <tc-input
+        formControlName="start_time"
+      ></tc-input>
+    </tc-form-group>
+    <tc-form-group>
+      <tc-form-label>Hora de fin</tc-form-label>
+      <tc-input
+        formControlName="end_time"
+      ></tc-input>
+    </tc-form-group>
+    <tc-form-group>
+      <tc-form-label>Dia</tc-form-label>
+      <tc-input
+        formControlName="day"
+      ></tc-input>
+    </tc-form-group>
+    </form>
+  </ng-template>
+  <ng-template #modalFooterWorkspace>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModalWorkspaces()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="userWorkspaceForm.invalid" (click)="saveUserWorkspace(userWorkspaceForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

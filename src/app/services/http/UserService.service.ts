@@ -37,5 +37,20 @@ export class UserService {
   async me() {
     return await this.http.get(environment.endpoint + `/user/me`).toPromise();
   }
+
+  async store_specialty(data : any,id) {
+    return await this.http.post(environment.endpoint + `/user/specialty/${id}`,data).toPromise();
+  }
+
+  async store_workspace(data : any,id) {
+    return await this.http.post(environment.endpoint + `/user/workspace/${id}`,data).toPromise();
+  }
+
+  async delete_specialty(data : any,id) {
+    return await this.http.post(environment.endpoint + `/user/specialty_delete/${id}`, data).toPromise();
+  }
+  async delete_workspace(data : any,id) {
+    return await this.http.post(environment.endpoint + `/user/workspace_delete/${id}`, data).toPromise();
+  }
   
 }

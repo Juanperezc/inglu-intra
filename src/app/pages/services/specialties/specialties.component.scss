@@ -1,11 +1,21 @@
 @import '~assets/sass/variables';
 
+.tc-avatar {
+  float: left;
+  box-shadow: $shadow;
+  margin-right: -10px;
+}
+.tc-btn{
+  margin-left: 20px;
+}
 :host {
-  .department {
+ 
+  .specialty {
     .team {
       flex-wrap: wrap;
 
       .tc-avatar {
+        float: left;
         box-shadow: $shadow;
         margin-right: -10px;
       }

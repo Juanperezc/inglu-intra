@@ -197,9 +197,6 @@ export class PageClaimTypesComponent extends BasePageComponent implements OnInit
         delete claimTypes.id;
         await this.updateClaimTypes(id, claimTypes);
       }
-   
-    /*   claimTypes.photo = this.currentPhoto; */
-
       console.log(claimTypes);
       this.closeModal();
     }

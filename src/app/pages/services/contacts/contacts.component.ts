@@ -200,7 +200,6 @@ export class PageContactComponent extends BasePageComponent implements OnInit, O
 
   // init form
   initForm(data: any) {
- 
     this.contactForm = this.formBuilder.group({
       id: [(data ? data.id : null)],
       id_card: [(data ? data.id_card : ''), Validators.required],

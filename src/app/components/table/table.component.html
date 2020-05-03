@@ -7,7 +7,7 @@
 [page]="pagination && pagination.current_page"
 [hovered]="true" 
 [pagination]="true"
-[search]="true"
+[search]="searchTable"
 >
   <tc-table-col *ngFor="let header of headers" [columnTitle]="header.columnTitle" [columnName]="header.columnName">
     <ng-template #tableTDTemplate let-value *ngIf = "header.tcType != 'actions'">

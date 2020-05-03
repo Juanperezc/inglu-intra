@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BasePageComponent } from '../../../base-page';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../../../interfaces/app-state';
@@ -11,6 +11,11 @@ import { FileService } from '../../../../services/http/FileService.service';
 import { UserService } from '../../../../services/http/UserService.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { IHandleAction } from '../../../../interfaces/handle-action';
+import { ITableHeaders } from '../../../../interfaces/table-headers';
+import { TCModalService } from '../../../../ui/services/modal/modal.service';
+import { SpecialtyService } from '../../../../services/http/SpecialtyService.service';
+import { WorkspaceService } from '../../../../services/http/WorkspaceService.service';
 
 @Component({
   selector: 'page-account',
@@ -18,10 +23,18 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./account.component.scss']
 })
 export class PageAccountComponent extends BasePageComponent implements OnInit, OnDestroy {
+  @ViewChild('modalBodySpecialty') modalBodySpecialty: ElementRef<any>;
+  @ViewChild('modalFooterSpecialty') modalFooterSpecialty: ElementRef<any>;
+  @ViewChild('modalBodyWorkspace') modalBodyWorkspace: ElementRef<any>;
+  @ViewChild('modalFooterWorkspace') modalFooterWorkspace: ElementRef<any>;
+
+  
   id: number | string;
   title: string = null;
   userInfo: any;
   userInfoMock: any;
+  reloadSpecialty: number = 1;
+  reloadWorkspace: number =1;
   editMe : boolean = false;
   editPatient : boolean = false;
   editDoctor : boolean = false;
@@ -31,9 +44,14 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   userForm: FormGroup;
   gender: IOption[];
   status: IOption[];
+  specialties: Array<IOption> = new Array<IOption>();
+  headersSpecialty : Array<ITableHeaders>;
+  headersWorkspace : Array<ITableHeaders>;
   currentAvatar: string | ArrayBuffer;
   defaultAvatar: string;
   changes: boolean;
+  userSpecialtyForm: FormGroup;
+  userWorkspaceForm: FormGroup;
   max: any;
   constructor(
     store: Store<IAppState>,
@@ -42,7 +60,10 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     private activatedRoute: ActivatedRoute,
     private fileService : FileService,
     private userService : UserService,
+    private specialtyService : SpecialtyService,
+    private workspaceService : WorkspaceService,
     private toastr: ToastrService,
+    private modal: TCModalService,
     private formBuilder: FormBuilder
   ) {
     super(store, httpSv);
@@ -69,7 +90,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         this.editDoctor=true;
         break;
       }
-      case "create-medic": {
+      case "create-doctor": {
         this.title = "Crear medico"
         this.createMedic=true;
         break;
@@ -101,11 +122,178 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         value: '2'
       }
     ];
+
+    this.headersSpecialty = [
+      {
+        columnName: "name",
+        columnTitle: "Nombre",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "description",
+        columnTitle: "Descripcion",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "updated_at",
+        columnTitle: "Ultima actualización",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "actions",
+        columnTitle: "Acciones",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'actions',
+        tcActions: [
+        {
+          afterIcon: 'icofont-ui-delete',
+          view: 'error',
+          size: 'sm',
+          handleClick: 'remove'
+        } ]
+      }
+    ];
+    this.headersWorkspace = [
+      {
+        columnName: "specialty",
+        columnTitle: "Departamento",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "location",
+        columnTitle: "Ubicacion",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "start_time",
+        columnTitle: "Inicio",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "end_time",
+        columnTitle: "Fin",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "day",
+        columnTitle: "Dia",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "updated_at",
+        columnTitle: "Ultima actualización",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: []
+      },
+      {
+        columnName: "actions",
+        columnTitle: "Acciones",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'actions',
+        tcActions: [
+        {
+          afterIcon: 'icofont-ui-delete',
+          view: 'error',
+          size: 'sm',
+          handleClick: 'remove'
+        } ]
+      }
+    ];
     this.defaultAvatar = 'assets/content/avatar.jpeg';
 /*     this.currentAvatar = this.defaultAvatar; */
     this.changes = false;
   }
+  closeModalSpecialty() {
+    this.modal.close();
+    this.userSpecialtyForm.reset();
+  }
 
+  closeModalWorkspace() {
+    this.modal.close();
+    this.userWorkspaceForm.reset();
+  }
+
+  addSpecialty(){
+    this.openModalUserSpecialty(this.modalBodySpecialty, 'Agregar especialidad', this.modalFooterSpecialty)
+  }
+  addWorkspace(){
+    this.openModalUserWorkspace(this.modalBodyWorkspace, 'Agregar lugar de trabajo', this.modalFooterWorkspace)
+  }
+  openModalUserSpecialty(body: any, header: any = null, footer: any = null, data: any = null) {
+    this.initFormUserSpecialty(data);
+    this.modal.open({
+      body: body,
+      header: header,
+      footer: footer
+    });
+  }
+
+  openModalUserWorkspace(body: any, header: any = null, footer: any = null, data: any = null) {
+    this.initFormUserWorkspace(data);
+    this.modal.open({
+      body: body,
+      header: header,
+      footer: footer
+    });
+  }
+  initFormUserSpecialty(data: any) {
+    
+    this.userSpecialtyForm = this.formBuilder.group({
+      id: [(data ? data.id : null)],
+      specialty: [(data ? data.specialty : ''), Validators.required],
+    });
+    console.log('initForm',this.userSpecialtyForm);
+  }
+  initFormUserWorkspace(data: any) {
+    this.userWorkspaceForm = this.formBuilder.group({
+      id: [(data ? data.id : null)],
+      specialty: [(data ? data.specialty : ''), Validators.required],
+      location: [(data ? data.location : ''), Validators.required],
+      start_time: [(data ? data.start_time : ''), Validators.required],
+      end_time: [(data ? data.end_time : ''), Validators.required],
+      day: [(data ? data.day : ''), Validators.required],
+    });
+    console.log('initForm',this.userWorkspaceForm);
+  }
   reloadPageData(){
     this.pageData = {
       title: this.title,
@@ -121,19 +309,22 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       ]
     };
     super.ngOnInit();
+  
    
   }
  async ngOnInit() {
     this.max = new Date();
-  
+    this.loadSpecialties();
     if (this.editMe){
       this.userInfo = await UserStorage.getUser();
-    }else if (this.editPatient){
+    }else if (this.editPatient || this.editDoctor){
       this.userInfo = await this.loadUser(this.id);
       console.log(this.userInfo)
     }else if (this.createMedic || this.createPatient){
       this.userInfo = null;
     }
+    this.initFormUserSpecialty(null);
+    this.initFormUserWorkspace(null);
     this.getData('assets/data/account-data.json', 'userInfoMock', 'loadedDetect');
   
 
@@ -174,13 +365,35 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       address: [data && data.address/* , Validators.required */],
       phone: [data && data.phone/* , Validators.required */],
       gender: [data && data.gender, Validators.required],
-      status: [data && data.status && data.status.toString(), this.editPatient ? Validators.required : null]
+      status: [data && data.status && data.status.toString(), this.editPatient || this.editDoctor ? Validators.required : null]
     });
     // detect form changes
     this.userForm.valueChanges.subscribe((t) => {
    /*    console.log('change',t) */
       this.changes = true;
     });
+  }
+  async loadSpecialties(){
+    try {
+      GlobalService.ShowSweetLoading();
+      const specialties: any = await this.specialtyService.index();
+      const dataSpecialties = specialties.data;
+      if (dataSpecialties){
+        dataSpecialties.forEach(specialty => {
+          this.specialties.push({
+            label: specialty.name,
+            value: specialty.id.toString()
+          })
+        });
+      }
+      console.log(dataSpecialties);
+      GlobalService.CloseSweet();
+    
+    } catch (error) {
+      console.error('error', error)
+      GlobalService.CloseSweet();
+     
+    }
   }
   async loadUser(id){
     try {
@@ -196,6 +409,42 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     }
   }
 
+  async handleActionEmitSpecialty(event: IHandleAction){
+    console.log('emit', event);
+    const row = event.row;
+    const type = event.type;
+    switch(type){
+     
+      case "remove":{
+       const result = await GlobalService.AlertDelete();
+       if (result.value) 
+       {
+         const data = { specialty : row.id };
+        this.deleteUserSpecialty(data);
+     /*    this.deleteContact(row.id); */
+       }
+        break;
+      }
+    }
+  }
+  async handleActionEmitWorkspace(event: IHandleAction){
+    console.log('emit', event);
+    const row = event.row;
+    const type = event.type;
+    switch(type){
+     
+      case "remove":{
+       const result = await GlobalService.AlertDelete();
+       if (result.value) 
+       {
+         const data = { user_workspace_id : row.id };
+        this.deleteUserWorkspace(data);
+     /*    this.deleteContact(row.id); */
+       }
+        break;
+      }
+    }
+  }
   async updateUser(id,data){
     try {
       GlobalService.ShowSweetLoading();
@@ -220,10 +469,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       this.userInfo = dataUser;
       if (this.userInfo.type == 1){
         this.router.navigateByUrl("/vertical/patient-account/" + this.userInfo.id);
-     /*    this.editPatient = true;
-        this.createPatient = false;
-        this.title = "Editar paciente";
-        this.reloadPageData(); */
+      }else if  (this.userInfo.type ==2){
+        this.router.navigateByUrl("/vertical/doctor-account/" + this.userInfo.id);
       }
   
      /*  GlobalService.CloseSweet(); */
@@ -232,17 +479,96 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       GlobalService.CloseSweet();
     } 
   }
+
+  async deleteUserSpecialty(userSpecialtyData: any){
+    try {
+      console.log(userSpecialtyData)
+      GlobalService.ShowSweetLoading();
+      const userSpecialty: any = await this.userService.delete_specialty(userSpecialtyData,this.id);
+      GlobalService.SwalDeleteItem();
+      this.reloadSpecialty++;
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error);
+      GlobalService.CloseSweet();
+    }
+  }
+
+  async deleteUserWorkspace(userWorkspaceData: any){
+    try {
+      console.log(userWorkspaceData)
+      GlobalService.ShowSweetLoading();
+      const userWorkspace: any = await this.userService.delete_workspace(userWorkspaceData,this.id);
+      GlobalService.SwalDeleteItem();
+      this.reloadWorkspace++;
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error);
+      GlobalService.CloseSweet();
+    }
+  }
+  async storeUserSpecialty(userSpecialtyData: any){
+    try {
+      GlobalService.ShowSweetLoading();
+      const userSpecialty: any = await this.userService.store_specialty(userSpecialtyData,this.id);
+      GlobalService.SwalCreateItem();
+      this.reloadSpecialty++;
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error);
+      GlobalService.CloseSweet();
+    }
+  }
+
+  async storeUserWorkspace(userWorkspaceData: any){
+    try {
+      GlobalService.ShowSweetLoading();
+      const userWorkspace: any = await this.userService.store_workspace(userWorkspaceData,this.id);
+      GlobalService.SwalCreateItem();
+      this.reloadWorkspace++;
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error);
+      GlobalService.CloseSweet();
+    }
+  }
+
   // save form data
+  async saveUserSpecialty(form: FormGroup) {
+    if (form.valid) {
+      let userSpecialty: any = form.value;
+      this.storeUserSpecialty(userSpecialty);
+      
+      console.log(userSpecialty);
+      this.closeModalSpecialty();
+    }
+  }
+
+  async saveUserWorkspace(form: FormGroup) {
+    if (form.valid) {
+      let userWorkspace: any = form.value;
+      this.storeUserWorkspace(userWorkspace);
+      
+      console.log(userWorkspace);
+      this.closeModalSpecialty();
+    }
+  }
   async saveData(form: FormGroup) {
     if (form.valid) {
       this.userInfo = form.value;
       const id = this.userInfo.id;
-      
       this.userInfo.date_of_birth = 
       this.userInfo.date_of_birth ? 
       (GlobalService.formatDate(this.userInfo.date_of_birth)) : null;
-      this.userInfo.type=1;
-      console.log(this.userInfo);
+      if (this.createPatient)
+      {
+        this.userInfo.type=1;
+      }
+      else if (this.createMedic){
+        this.userInfo.type=2;
+      }
+    
+/*       console.log(this.userInfo); */
       if (id){
         //update
         await this.updateUser(id, this.userInfo);

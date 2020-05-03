@@ -41,7 +41,7 @@ import { PageModalWindowsComponent } from '../pages/ui/components/modal-windows'
 import { PageDoctorProfileComponent } from '../pages/medicine/doctor-profile';
 import { PagePaymentsComponent } from '../pages/medicine/payments';
 import { PageAppointmentsComponent } from '../pages/medicine/appointments';
-import { PageDepartmentsComponent } from '../pages/medicine/departments';
+import { PageSpecialtyComponent } from '../pages/services/specialties';
 import { Page404Component } from '../pages/page-404';
 import { PageLeafletMapsComponent } from '../pages/ui/maps/leaflet-maps';
 import { PageVTimelineComponent } from '../pages/ui/components/v-timeline';
@@ -77,7 +77,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'patient-profile', component: PagePatientProfileComponent },
   { path: 'payments', component: PagePaymentsComponent },
   { path: 'appointments', component: PageAppointmentsComponent },
-  { path: 'departments', component: PageDepartmentsComponent },
+  { path: 'specialties', component: PageSpecialtyComponent },
   { path: 'alerts', component: PageAlertsComponent },
   { path: 'buttons', component: PageButtonsComponent },
   { path: 'cards', component: PageCardsComponent },
@@ -118,7 +118,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'edit-account', component: PageAccountComponent },
   { path: 'patient-account/:id', component: PageAccountComponent },
   { path: 'doctor-account/:id', component: PageAccountComponent },
-  { path: 'create-medic', component: PageAccountComponent },
+  { path: 'create-doctor', component: PageAccountComponent },
   { path: 'create-patient', component: PageAccountComponent },
   { path: 'events-calendar', component: PageCalendarComponent },
   { path: 'settings', component: PageSettingsComponent },

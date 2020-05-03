@@ -37,7 +37,7 @@
     "icon": {
       "class": "icofont-nurse"
     },
-    "routing": "departments"
+    "routing": "specialties"
   },
 
   {
