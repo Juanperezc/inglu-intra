@@ -77,7 +77,7 @@ export class PageSuggestionsComponent extends BasePageComponent implements OnIni
     {
       columnName: "status",
       columnTitle: "Estatus",
-      iconClass: null,
+      iconClass: 'sc',
       tcColor: null,
       tcFontSize: null,
       tcType: 'badge',

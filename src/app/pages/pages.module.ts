@@ -51,7 +51,7 @@ import { PageModalWindowsComponent } from './ui/components/modal-windows';
 
 import { PageDoctorProfileComponent } from './medicine/doctor-profile';
 import { PagePaymentsComponent } from './medicine/payments';
-import { PageAppointmentsComponent } from './medicine/appointments';
+import { PageAppointmentsComponent } from './services/appointments';
 
 import { Page404Component } from './page-404';
 import { PageLeafletMapsComponent } from './ui/maps/leaflet-maps';

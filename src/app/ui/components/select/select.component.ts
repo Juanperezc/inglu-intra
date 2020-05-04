@@ -76,7 +76,9 @@ export class TCSelectComponent implements OnInit, ControlValueAccessor {
   currentColor: string;
   currentBorderColor: string;
 
-  onChange = (value: string | string[]) => {};
+  onChange = (value: string | string[]) => {
+  
+  };
   onTouched = () => {};
 
   constructor(
@@ -229,6 +231,7 @@ export class TCSelectComponent implements OnInit, ControlValueAccessor {
     } else {
       if (!active) {
         this.writeValue(opt.value);
+        this.valueSelected.emit(opt.value);
         this.setStyles(this.selectState.default);
 
         this.opened = false;
@@ -252,6 +255,8 @@ export class TCSelectComponent implements OnInit, ControlValueAccessor {
   // set value
   set value(value: string | string[]) {
     this.value = value;
+    console.log('value', value)
+ 
     this.writeValue(value);
     this.onChange(value);
   }

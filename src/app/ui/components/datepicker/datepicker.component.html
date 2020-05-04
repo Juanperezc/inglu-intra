@@ -17,13 +17,14 @@
     placeholder="{{ placeholder }}"
     class="input-control"
     [(ngModel)]="value"
+    [min]="min"
     [max]="max"
     [attr.maxlength]="charLimiting"
     [readonly]="readonly ? true : null"
     [required]="required ? true : null"
     (focus)="onFocus(disabled || readonly)"
     (blur)="onBlur(disabled || readonly)">
-    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+    <owl-date-time [pickerType]="pickerType" #dt3></owl-date-time>
    <!--  <input
       type="{{ type }}"
       name="{{ name }}"

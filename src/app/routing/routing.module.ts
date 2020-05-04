@@ -40,7 +40,7 @@ import { PageIconsSliComponent } from '../pages/ui/icons/icons-sli';
 import { PageModalWindowsComponent } from '../pages/ui/components/modal-windows';
 import { PageDoctorProfileComponent } from '../pages/medicine/doctor-profile';
 import { PagePaymentsComponent } from '../pages/medicine/payments';
-import { PageAppointmentsComponent } from '../pages/medicine/appointments';
+import { PageAppointmentsComponent } from '../pages/services/appointments';
 import { PageSpecialtyComponent } from '../pages/services/specialties';
 import { Page404Component } from '../pages/page-404';
 import { PageLeafletMapsComponent } from '../pages/ui/maps/leaflet-maps';
@@ -88,7 +88,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'badges', component: PageBadgesComponent },
   { path: 'ratings', component: PageRatingsComponent },
   { path: 'checkboxes', component: PageCheckboxesComponent },
- /*  { path: 'contacts', component: PageContactsComponent }, */
+
   { path: 'radio-buttons', component: PageRadioButtonsComponent },
   { path: 'switchers', component: PageSwitchersComponent },
   { path: 'modal-windows', component: PageModalWindowsComponent },
@@ -176,7 +176,6 @@ export const ROUTES: Routes = [
 
 @NgModule({
   imports: [
-
   ],
   exports: [
     RouterModule

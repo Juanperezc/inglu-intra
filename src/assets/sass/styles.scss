@@ -34,3 +34,19 @@ body{
 .tc-placeholder{
     margin-left: 5px;
 }
+.owl-dt-container{
+    z-index: 9999 !important;
+}
+.cdk-overlay-pane{
+   z-index: 9999 !important;
+}
+
+.cdk-overlay-connected-position-bounding-box{
+    z-index: 9999 !important;
+}
+.cdk-overlay-container{
+    z-index: 9999 !important;
+}
+.cdk-overlay-backdrop {
+    z-index: 9999 !important;
+}

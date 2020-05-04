@@ -92,6 +92,9 @@ export class TableComponent implements OnInit {
       case 2 : {
         return "error"
       }
+      case 3 : {
+        return "success"
+      }
     }
   }
   valueBadgeStr(value,type = 'default'){
@@ -110,7 +113,38 @@ export class TableComponent implements OnInit {
             return "Agendado";
           }
          }
-       } else if (type == "user"){
+       }
+      else if (type == "sc"){
+        /*    console.log("valueInt", valueInt) */
+           switch(valueInt){
+             case 0: {
+               return "Sin antender";
+             }
+             case 1: {
+               return "Atendido";
+             }
+             
+           }
+         }
+       else  if (type == "appointment_event"){
+          /*    console.log("valueInt", valueInt) */
+             switch(valueInt){
+               case 0: {
+                 return "Pendiente";
+               }
+               case 1: {
+                 return "Agendado";
+               }
+               case 2: {
+                return "Cancelado";
+              }
+              case 3: {
+                return "Culminado";
+              }
+               
+             }
+           }
+       else if (type == "user"){
         /*    console.log("valueInt", valueInt) */
            switch(valueInt){
              case 0: {

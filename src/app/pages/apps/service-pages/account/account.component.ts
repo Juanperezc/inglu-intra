@@ -31,6 +31,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   
   id: number | string;
   title: string = null;
+  userMedicalInfo: any;
   userInfo: any;
   userInfoMock: any;
   reloadSpecialty: number = 1;
@@ -42,8 +43,10 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   createPatient: boolean = false;
   passwordForm: FormGroup;
   userForm: FormGroup;
+  userMedicalForm: FormGroup;
   gender: IOption[];
   status: IOption[];
+  blood_types: IOption[];
   specialties: Array<IOption> = new Array<IOption>();
   headersSpecialty : Array<ITableHeaders>;
   headersWorkspace : Array<ITableHeaders>;
@@ -122,7 +125,45 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         value: '2'
       }
     ];
-
+    /* 
+     "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "AB-",
+        "OB+",
+        "OB-"*/
+    this.blood_types = [
+      {
+        label: 'A+',
+        value: 'A+'
+      },
+      {
+        label: 'B+',
+        value: 'B+'
+      },
+      {
+        label: 'B-',
+        value: 'B-'
+      },
+      {
+        label: 'AB+',
+        value: 'AB+'
+      },
+      {
+        label: 'AB-',
+        value: 'AB-'
+      },
+      {
+        label: 'OB+',
+        value: 'OB+'
+      },
+      {
+        label: 'OB-',
+        value: 'OB-'
+      },
+    ];
     this.headersSpecialty = [
       {
         columnName: "name",
@@ -317,8 +358,13 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     this.loadSpecialties();
     if (this.editMe){
       this.userInfo = await UserStorage.getUser();
+
     }else if (this.editPatient || this.editDoctor){
       this.userInfo = await this.loadUser(this.id);
+     /*  if (editPatient){ */
+        this.userMedicalInfo = await this.loadMecialDataUser(this.id);
+   /*    } */
+    
       console.log(this.userInfo)
     }else if (this.createMedic || this.createPatient){
       this.userInfo = null;
@@ -340,6 +386,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     this.currentAvatar = this.userInfo && this.userInfo.profile_pic ?
     this.userInfo.profile_pic :
     this.defaultAvatar;
+    this.initUserMedicalForm(this.userMedicalInfo);
     this.initUserForm(this.userInfo);
     this.initPasswordForm();
   }
@@ -373,6 +420,18 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       this.changes = true;
     });
   }
+
+  initUserMedicalForm(data: any) {
+    console.log("data", data);
+    this.userMedicalForm = this.formBuilder.group({
+      blood_type: [data && data.blood_type],
+      patient_status: [data && data.patient_status],
+      pathologies: [data && data.pathologies],
+      treatments: [data && data.treatments],
+      record: [data && data.record],
+    });
+
+  }
   async loadSpecialties(){
     try {
       GlobalService.ShowSweetLoading();
@@ -393,6 +452,19 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       console.error('error', error)
       GlobalService.CloseSweet();
      
+    }
+  }
+  async loadMecialDataUser(id){
+    try {
+      GlobalService.ShowSweetLoading();
+      const user: any = await this.userService.show_medical_record(id);
+      const dataUser = user.data;
+      GlobalService.CloseSweet();
+      return dataUser;
+    } catch (error) {
+      console.error('error', error)
+      GlobalService.CloseSweet();
+      return null;
     }
   }
   async loadUser(id){
@@ -458,6 +530,19 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       console.error('error', error)
       GlobalService.CloseSweet();
     } 
+  }
+  async updateMedicalUser(id,data){
+    try {
+      GlobalService.ShowSweetLoading();
+      const userMedical: any = await this.userService.update_medical_record(id,data);
+      GlobalService.SwalUpdateItem();
+      const dataUser = userMedical.data;
+    console.log(dataUser);
+     /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error('error', error)
+      GlobalService.CloseSweet();
+    }
   }
   async storeUser(data){
     try {
@@ -553,6 +638,15 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       this.closeModalSpecialty();
     }
   }
+  async saveMedicalData(form: FormGroup) {
+    if (form.valid) {
+      this.userMedicalInfo = form.value;
+    
+      await this.updateMedicalUser(this.userInfo.id, this.userMedicalInfo);
+     /*  this.changes = false; */
+    }
+  }
+
   async saveData(form: FormGroup) {
     if (form.valid) {
       this.userInfo = form.value;

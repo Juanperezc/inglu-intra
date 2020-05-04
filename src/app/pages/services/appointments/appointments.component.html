@@ -1,0 +1,80 @@
+
+<table-component [url]="'/appointments'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
+
+<div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-stethoscope-alt'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="addPatientModal()"
+  ></button>
+</div> 
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="appointmentForm" novalidate>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Paciente</b></span>
+        <tc-select
+        [placeholder]="'Selecciona un paciente'"
+        [options]="patients"
+        [selected]="appointmentForm.value.patient"
+        formControlName="patient_id"
+        ></tc-select>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Medico</b></span>
+        <tc-select
+        [placeholder]="'Selecciona un medico'"
+        [options]="doctors"
+        [selected]="appointmentForm.value.medical_staff_id"
+        formControlName="medical_staff_id"
+        (valueSelected)="handleMedicSelected($event)"
+        ></tc-select>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Ubicacion</b></span>
+        <tc-select
+        [placeholder]="'Selecciona una Ubicacion'"
+        [options]="workspaces"
+        [selected]="appointmentForm.value.user_workspace_id"
+        formControlName="user_workspace_id"
+        ></tc-select>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Fecha de cita</b></span>
+        <tc-datepicker
+        [placeholder]="'Fecha de cita'"
+        formControlName="date"
+        [min]="minDate"
+        [pickerType]="'both'"
+      ></tc-datepicker>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Condicion</b></span>
+        <tc-input  formControlName="condition"></tc-input>
+      </tc-form-group>
+      <!-- <tc-form-group>
+        <span class="tc-placeholder"><b>Estatus</b></span>
+        <tc-select
+        [placeholder]="'Selecciona un estatus'"
+        [options]="statuses"
+        [selected]="appointmentForm.value.status"
+        formControlName="status"
+        ></tc-select>
+      </tc-form-group> -->
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="appointmentForm.invalid" (click)="saveAppointment(appointmentForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

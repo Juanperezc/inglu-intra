@@ -135,6 +135,86 @@
     </form>
 
     <hr />
+
+     <!-- Datos del personal medico -->
+     <div *ngIf="editPatient">
+      <h4>Historial medico</h4>
+      <form
+      [formGroup]="userMedicalForm"
+      novalidate
+      class="new-doctor-form mb-4"
+      (ngSubmit)="saveMedicalData(userMedicalForm)"
+    >
+    
+    
+
+    <tc-form-group>
+      <tc-form-label>Tipo de sangre</tc-form-label>
+      <tc-select
+        formControlName="blood_type"
+        [options]="blood_types"
+      ></tc-select>
+    </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Estado del paciente</tc-form-label>
+        <tc-input  formControlName="patient_status"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Patologias</tc-form-label>
+        <tc-textarea formControlName="pathologies"></tc-textarea>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Tratamientos</tc-form-label>
+        <tc-textarea formControlName="treatments"></tc-textarea>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Record</tc-form-label>
+        <tc-textarea formControlName="record"></tc-textarea>
+      </tc-form-group>
+      
+
+      <!--     <tc-form-group>
+        <tc-form-label>Ultimas visitas</tc-form-label>
+        <tc-input [placeholder]="'Ultimas visitas'" formControlName="lastVisit" [readonly]="true"></tc-input>
+      </tc-form-group> -->
+
+    
+
+      <div class="row">
+        <div class="col">
+          <button
+            tc-button
+            [view]="'success'"
+            [disabled]="userMedicalForm.invalid"
+          >
+          Guardar
+          </button>
+        </div>
+        <!--   <div class="col text-right">
+          <button
+            tc-button
+            [type]="'button'"
+            [view]="'error'"
+            [outline]="true"
+          >
+            Eliminar cuenta
+          </button>
+        </div> -->
+      </div>
+    </form>
+      <!--     <form
+      [formGroup]="doctorForm"
+      novalidate
+      class="new-doctor-form mb-4"
+      (ngSubmit)="doctorFormSubmit(doctorForm)"
+      > -->
+     
+  
+    </div>
+
     <!-- Datos del personal medico -->
     <div *ngIf="editDoctor">
       <h4>Datos del personal</h4>
@@ -329,7 +409,7 @@
   </ng-template>
   <ng-template #modalFooterWorkspace>
     <div class="actions justify-content-between">
-      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModalWorkspaces()">Salir</button>
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModalWorkspace()">Salir</button>
       <button tc-button [view]="'info'" [disabled]="userWorkspaceForm.invalid" (click)="saveUserWorkspace(userWorkspaceForm)">
        Guardar
       </button>

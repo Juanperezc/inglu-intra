@@ -41,6 +41,8 @@ export class TCDatePickerComponent implements ControlValueAccessor, OnInit {
   }
   @HostBinding('class.input-disabled') @Input() disabled: boolean;
   @HostBinding('class.input-readonly') @Input() readonly: boolean;
+  @Input() pickerType: string = "calendar";
+  @Input() min: any;
   @Input() max: any;
   @Input() type: string;
   @Input() name: string;
