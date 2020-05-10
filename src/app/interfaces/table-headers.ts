@@ -2,6 +2,7 @@ export interface ITableHeaders {
     columnTitle: string;
     columnName: string;
     iconClass: string;
+    formatter?: any;
     tcColor: string;
     tcFontSize: number;
     tcType: string;

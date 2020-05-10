@@ -44,8 +44,24 @@ import { TCModalComponent } from './components/modal';
 import { TCColorPickerComponent } from './components/color-picker/color-picker.component';
 import { TCPickerComponent } from './components/color-picker/picker/picker.component';
 
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+/* import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; */
+import { OwlDateTimeModule, OWL_DATE_TIME_FORMATS} from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+
 import { TCDatePickerComponent } from './components/datepicker';
+
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const MY_MOMENT_FORMATS = {
+  parseInput: 'DD-MM-YYYY',
+  fullPickerInput: 'DD-MM-YYYY HH:mm',
+  datePickerInput: 'DD-MM-YYYY',
+  timePickerInput: 'hh:mm a',
+  monthYearLabel: 'MMM-YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM-YYYY'
+};
+
 @NgModule({
   imports: [
     CommonModule,
@@ -53,7 +69,7 @@ import { TCDatePickerComponent } from './components/datepicker';
     RouterModule,
     ReactiveFormsModule,
     OwlDateTimeModule, 
-    OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
     DragulaModule.forRoot()
   ],
   declarations: [
@@ -135,6 +151,9 @@ import { TCDatePickerComponent } from './components/datepicker';
   ],
   entryComponents: [
     TCModalComponent
+  ],
+  providers: [
+    {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
   ]
 })
 export class UIModule { }

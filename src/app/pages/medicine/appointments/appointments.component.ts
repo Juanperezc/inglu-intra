@@ -68,6 +68,7 @@ export class PageAppointmentsComponent extends BasePageComponent implements OnIn
       footer: footer
     });
   }
+  
 
   // close modal window
   closeModal() {

@@ -78,3 +78,28 @@
   </ng-template>
 </ng-container>
 <!-- end Modal window -->
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBodyTreatment>
+    <form [formGroup]="treatmentForm" novalidate>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Descripcion</b></span>
+        <tc-textarea  formControlName="description"></tc-textarea>
+      </tc-form-group>
+      <tc-form-group>
+          <span class="tc-placeholder"><b>Medicamentos</b></span>
+          <tc-textarea  formControlName="medicine"></tc-textarea>
+      </tc-form-group>
+    </form>
+  </ng-template>
+  <ng-template #modalFooterTreatment>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModalTreatment()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="treatmentForm.invalid" (click)="saveTreatment(treatmentForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

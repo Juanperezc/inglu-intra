@@ -12,9 +12,13 @@ export class AppointmentService {
   async update(id : number ,data : any) {
     return await this.http.put(environment.endpoint + `/appointments/`  + id, data).toPromise();
   }
-  
+
   async delete(id : number) {
     return await this.http.delete(environment.endpoint + `/appointments/`  + id).toPromise();
+  }
+  //by appointment_id
+  async show_treatment(id: number) {
+    return await this.http.get(environment.endpoint + `/appointment/treatment/` + id).toPromise();
   }
 
   async store(data : any) {

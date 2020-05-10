@@ -3,8 +3,8 @@ import * as moment from "moment";
 
 export class GlobalService {
   static formatDate(date: any, format = "YYYY-MM-DD") {
-    console.log(moment(date).format(format));
-    return moment(date).format(format);
+   /*  console.log(moment.utc(date).local().format(format)); */
+    return moment.utc(date).local().format(format);
   }
   static async AlertDelete() {
     const result = await Swal.fire({

@@ -20,10 +20,21 @@
   },
   {
     "title": "Eventos del club",
+    "groupTitle": true
+  },
+  {
+    "title": "Eventos",
     "icon": {
       "class": "icofont-result-sport"
     },
     "routing": "events"
+  },
+  {
+    "title": "Asistencia y comentarios",
+    "icon": {
+      "class": "icofont-result-sport"
+    },
+    "routing": "events-assistance"
   },
   {
     "title": "Personal médico",
