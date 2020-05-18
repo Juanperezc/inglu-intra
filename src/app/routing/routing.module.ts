@@ -68,6 +68,8 @@ import { PagePostCategoryComponent } from '../pages/portal/post_category';
 import { PageContactComponent } from '../pages/services/contacts';
 import { PagePatientsComponent } from '../pages/services/patients';
 import { PageDoctorsComponent } from '../pages/services/doctors';
+import { PageEventsComponent } from '../pages/services/events';
+import { PageEventsAssistanceComponent } from '../pages/services/events-assistance';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -130,6 +132,9 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'suggestions', component: PageSuggestionsComponent },
   { path: 'suggestion-types', component: PageSuggestionTypesComponent },
   { path: 'faqs', component: PageFaqsComponent },
+  { path: 'events', component: PageEventsComponent },
+  { path: 'events-assistance', component: PageEventsAssistanceComponent },
+
   { path: '**', component: Page404Component }
 ];
 

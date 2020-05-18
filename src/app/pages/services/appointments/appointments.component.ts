@@ -94,7 +94,7 @@ export class PageAppointmentsComponent extends BasePageComponent implements OnIn
       {
         columnName: "date",
         formatter: (value) => {
-          return  GlobalService.formatDate(value, "DD-MM-YYYY H:m");
+          return  GlobalService.formatDate(value, "DD-MM-YYYY HH:mm");
         },
         columnTitle: "Fecha",
         iconClass: null,
@@ -134,7 +134,7 @@ export class PageAppointmentsComponent extends BasePageComponent implements OnIn
         columnName: "updated_at",
         columnTitle: "Ultima actualización",
         formatter: (value) => {
-          return  GlobalService.formatDate(value, "DD-MM-YYYY H:m");
+          return  GlobalService.formatDate(value, "DD-MM-YYYY HH:mm");
         },
         iconClass: null,
         tcColor: null,
@@ -286,7 +286,7 @@ export class PageAppointmentsComponent extends BasePageComponent implements OnIn
     this.appointmentForm = this.formBuilder.group({
       id: [(data ? data.id : null)],
       condition: [(data ? data.condition : '')],
-      date: [(data ? GlobalService.formatDate(data.date.toString(), "YYYY-MM-DD H:m") : '')],
+      date: [(data ? GlobalService.formatDate(data.date.toString(), "YYYY-MM-DD HH:mm") : '')],
       patient_id: [(data ? data.patient_id.toString() : '')],
       medical_staff_id: [(data ? data.medical_staff_id.toString() : '')],
       user_workspace_id: [(data ? data.user_workspace_id.toString() : '')],

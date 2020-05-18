@@ -6,6 +6,10 @@ export class GlobalService {
    /*  console.log(moment.utc(date).local().format(format)); */
     return moment.utc(date).local().format(format);
   }
+  static getDateMoment(date: any,add = 0, format = "DD-MM-YYYY HH:mm") {
+    /*  console.log(moment.utc(date).local().format(format)); */
+     return moment.utc(date, format).local().add(add, 'hours').toDate();
+   }
   static async AlertDelete() {
     const result = await Swal.fire({
       heightAuto: false,

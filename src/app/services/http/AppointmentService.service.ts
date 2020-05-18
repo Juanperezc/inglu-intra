@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -8,7 +8,16 @@ import { environment } from '../../../environments/environment';
 export class AppointmentService {
   constructor(private http: HttpClient) {}
 
+  async index() {
 
+    let params = new HttpParams();
+    params = params.append('per_page', '100000');
+
+    return await this.http.get(environment.endpoint + `/appointments`,{
+      params: params
+    }).toPromise();
+  }
+  
   async update(id : number ,data : any) {
     return await this.http.put(environment.endpoint + `/appointments/`  + id, data).toPromise();
   }

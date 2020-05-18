@@ -1,0 +1,129 @@
+<table-component
+  [url]="'/events'"
+  [reload]="reload"
+  [headers]="headers"
+  (handleActionEmit)="handleActionEmit($event)"
+></table-component>
+
+<div class="add-action-box">
+  <button
+    tc-button
+    [afterIcon]="'icofont-result-sport'"
+    [view]="'accent'"
+    [square]="true"
+    [tcShape]="500"
+    (click)="createEvent()"
+  ></button>
+</div>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="eventForm" novalidate>
+      <tc-form-group class="avatar-box">
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileChanged($event)"
+          #fileInput
+          hidden
+        />
+        <tc-avatar
+          [src]="
+            eventForm.value.picture
+              ? eventForm.value.picture
+              : 'assets/content/avatar.jpeg'
+          "
+        ></tc-avatar>
+        <button
+          tc-button
+          [type]="'button'"
+          [afterIcon]="'icofont-ui-user'"
+          [view]="'accent'"
+          [outline]="true"
+          (click)="fileInput.click()"
+        >
+          Seleccionar imagen
+        </button>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Coordinador</b></span>
+        <tc-select
+          [placeholder]="'Selecciona un usuario'"
+          [options]="doctors"
+          [selected]="eventForm.value.doctor_id"
+          formControlName="doctor_id"
+        ></tc-select>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Fecha del evento</b></span>
+        <tc-datepicker
+          [placeholder]="'Fecha de cita'"
+          formControlName="date"
+          [min]="minDate"
+          [pickerType]="'both'"
+        ></tc-datepicker>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Nombre</b></span>
+        <tc-input [placeholder]="'Nombre'" formControlName="name"></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Descripcion</b></span>
+        <tc-textarea
+          [placeholder]="'Descripcion'"
+          formControlName="description"
+        ></tc-textarea>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Limite de personas</b></span>
+        <tc-input
+          [placeholder]="'Limite de personas'"
+          formControlName="limit"
+        ></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Tipo</b></span>
+        <tc-input [placeholder]="'Tipo'" formControlName="type"></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Ubicacion</b></span>
+        <tc-input
+          [placeholder]="'Ubicacion'"
+          formControlName="location"
+        ></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Estatus</tc-form-label>
+        <tc-select
+          [placeholder]="'Estatus'"
+          formControlName="status"
+          [selected]="eventForm.value.status"
+          [options]="statuses"
+        ></tc-select>
+      </tc-form-group>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button
+        tc-button
+        [type]="'button'"
+        [view]="'error'"
+        (click)="closeModal()"
+      >
+        Salir
+      </button>
+      <button
+        tc-button
+        [view]="'info'"
+        [disabled]="eventForm.invalid"
+        (click)="saveEvent(eventForm)"
+      >
+        Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

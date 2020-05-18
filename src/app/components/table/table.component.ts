@@ -99,7 +99,19 @@ export class TableComponent implements OnInit {
   }
   valueBadgeStr(value,type = 'default'){
     const valueInt = parseInt(value,10);
-  
+    if (type == "event_a"){
+      switch(valueInt){
+        case 1: {
+          return "Enviado";
+        }
+        case 2: {
+          return "Cancelado";
+        }
+        case 3: {
+         return "Aceptado";
+       }
+    }
+  }
     if (type == "contact"){
       /*    console.log("valueInt", valueInt) */
          switch(valueInt){

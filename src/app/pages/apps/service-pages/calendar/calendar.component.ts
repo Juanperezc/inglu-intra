@@ -8,6 +8,9 @@ import { IAppState } from '../../../../interfaces/app-state';
 import { HttpService } from '../../../../services/http/http.service';
 import { TCModalService } from '../../../../ui/services/modal/modal.service';
 import { Content } from '../../../../ui/interfaces/modal';
+import { GlobalService } from '../../../../services/util/GlobalService.service';
+import { EventUserService } from '../../../../services/http/EventUserService.service';
+import { AppointmentService } from '../../../../services/http/AppointmentService.service';
 
 @Component({
   selector: 'page-calendar',
@@ -25,7 +28,9 @@ export class PageCalendarComponent extends BasePageComponent implements OnInit, 
   constructor(
     store: Store<IAppState>,
     httpSv: HttpService,
-    private modal: TCModalService
+    private modal: TCModalService,
+    private eventUserService: EventUserService,
+    private appointmentService: AppointmentService
   ) {
     super(store, httpSv);
 
@@ -44,7 +49,14 @@ export class PageCalendarComponent extends BasePageComponent implements OnInit, 
       ]
     };
     this.calendarEvents = [
-      {
+     /*  {
+        title: 'Cita medica',
+        color: '#9d709a',
+        start: this.setDate(0),
+        end: this.setDate(0, 1),
+        desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'
+      } */
+     /*  {
         title: 'Cita medica',
         color: '#9d709a',
         start: this.setDate(0),
@@ -115,13 +127,22 @@ export class PageCalendarComponent extends BasePageComponent implements OnInit, 
         start: this.setDate(20, 7),
         end: this.setDate(20, 8),
         desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'
-      }
+      } */
     ];
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     super.ngOnInit();
-
+     await this.loadEvents(); 
+    await this.loadAppointments();
+    setTimeout(() => {
+      this.reloadCalendarOptions();
+      this.setLoaded();
+    }, 500);
+  
+  
+  }
+  reloadCalendarOptions(){
     this.calendarOptions = {
       locale: 'es',
       editable: true,
@@ -140,13 +161,64 @@ export class PageCalendarComponent extends BasePageComponent implements OnInit, 
       },
       events: this.calendarEvents
     };
-    this.setLoaded();
   }
 
   ngOnDestroy() {
     super.ngOnDestroy();
   }
-
+  async loadEvents(){
+    try {
+      GlobalService.ShowSweetLoading();
+      const eventUser: any = await this.eventUserService.index();
+      const dataEvents = eventUser.data;
+      if (dataEvents){
+        dataEvents.forEach(eventUser => {
+          this.calendarEvents.push({ 
+            title: "Evento: " + eventUser.event + "-" + eventUser.user,
+            color: '#9d709a',
+            start: GlobalService.getDateMoment(eventUser.date),
+            end: GlobalService.getDateMoment(eventUser.date,2),
+            desc: eventUser.description
+          })
+        });
+        /* this.reloadCalendarOptions(); */
+        /* this.setLoaded(); */
+      }
+    /*   
+       */
+      GlobalService.CloseSweet();
+    } catch (error) {
+      
+      GlobalService.CloseSweet();
+    }
+  }
+  async loadAppointments(){
+    try {
+      GlobalService.ShowSweetLoading();
+      const appointments: any = await this.appointmentService.index();
+      const dataAppointments = appointments.data;
+      if (dataAppointments){
+        dataAppointments.forEach((appointment) => {
+     /*       */
+         this.calendarEvents.push({ 
+            title: "Cita: " + appointment.patient + "-" + appointment.doctor,
+            color: '#349d68',
+            start: GlobalService.getDateMoment(appointment.date,0,"YYYY-MM-DD HH:mm"),
+            end: GlobalService.getDateMoment(appointment.date,2,"YYYY-MM-DD HH:mm"),
+            desc: "Cita: " + appointment.patient + "-" + appointment.doctor + ", Condicion:" + appointment.condition
+          });
+        });
+     /*    this.reloadCalendarOptions();
+        this.setLoaded(); */
+      }
+      
+      
+      GlobalService.CloseSweet();
+    } catch (error) {
+      
+      GlobalService.CloseSweet();
+    }
+  }
   setDate(day: number, hour: number = 0) {
     let date = new Date();
 

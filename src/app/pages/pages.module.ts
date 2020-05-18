@@ -81,6 +81,8 @@ import { PageDoctorsComponent } from './services/doctors';
 import { TCDoctorCardComponent } from './services/doctors/card';
 import { PageSpecialtyComponent } from './services/specialties';
 import { TCSpecialtyCardComponent } from './services/specialties/card';
+import { PageEventsComponent } from './services/events';
+import { PageEventsAssistanceComponent } from './services/events-assistance';
 
 @NgModule({
   imports: [
@@ -164,7 +166,9 @@ import { TCSpecialtyCardComponent } from './services/specialties/card';
     PageClaimsComponent,
     PageClaimTypesComponent,
     PageSuggestionTypesComponent,
-    PageSuggestionsComponent
+    PageSuggestionsComponent,
+    PageEventsAssistanceComponent,
+    PageEventsComponent
   ],
   exports: [ ],
   entryComponents: [ ]
