@@ -75,8 +75,10 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     && this.activatedRoute.snapshot.url[0].path
     this.id = this.activatedRoute.snapshot && this.activatedRoute.snapshot.params
     && this.activatedRoute.snapshot.params['id'];
+   /*  this.bankName =  */
+
   
-    console.log('lastRoute', lastRoute, this.id);
+   /*  console.log('bank',  this.activatedRoute.snapshot.params['bank']); */
     switch(lastRoute){
       case "edit-account": {
         this.title = "Editar cuenta"
@@ -401,6 +403,10 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   }
   initUserForm(data: any) {
     console.log("data", data);
+
+  
+  
+
     this.userForm = this.formBuilder.group({
       id: [data && data.id ? data.id : null],
       name: [data && data.name, Validators.required],
@@ -414,6 +420,28 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       gender: [data && data.gender, Validators.required],
       status: [data && data.status && data.status.toString(), this.editPatient || this.editDoctor ? Validators.required : null]
     });
+    if (!data){
+      this.activatedRoute.queryParamMap.subscribe(queryParamMap => {
+
+        this.userForm.controls['email'].setValue(queryParamMap.get("email"));
+        this.userForm.controls['id_card'].setValue(queryParamMap.get("id_card"));
+        this.userForm.controls['name'].setValue(queryParamMap.get("name"));
+        this.userForm.controls['last_name'].setValue(queryParamMap.get("last_name"));
+        this.userForm.controls['date_of_birth'].setValue(queryParamMap.get("date_of_birth"));
+        this.userForm.controls['address'].setValue(queryParamMap.get("address"));
+        this.userForm.controls['phone'].setValue(queryParamMap.get("phone"));
+        if (queryParamMap.get("gender")){
+          if (queryParamMap.get("gender") == "Masculino"){
+            this.userForm.controls['gender'].setValue("male");
+          }else{
+            this.userForm.controls['gender'].setValue("female");
+          }
+          this.changes = true;
+        }
+      })
+    }
+   /* */
+
     // detect form changes
     this.userForm.valueChanges.subscribe((t) => {
    /*    console.log('change',t) */

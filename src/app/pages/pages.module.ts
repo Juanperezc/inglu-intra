@@ -83,7 +83,12 @@ import { PageSpecialtyComponent } from './services/specialties';
 import { TCSpecialtyCardComponent } from './services/specialties/card';
 import { PageEventsComponent } from './services/events';
 import { PageEventsAssistanceComponent } from './services/events-assistance';
-
+import { PageClubTeamComponent } from './portal/club-team';
+import { PageClubImageComponent } from './portal/club-images'
+import { PageClubTaskComponent } from './portal/club-tasks';
+import { PageClubInformationComponent } from './portal/club-information';
+import { PageClubInformationMainComponent } from './portal/club-main-information';
+import { PageClubSettingsComponent } from './portal/club-settings';
 @NgModule({
   imports: [
     CommonModule,
@@ -168,7 +173,13 @@ import { PageEventsAssistanceComponent } from './services/events-assistance';
     PageSuggestionTypesComponent,
     PageSuggestionsComponent,
     PageEventsAssistanceComponent,
-    PageEventsComponent
+    PageEventsComponent,
+    PageClubTeamComponent,
+    PageClubImageComponent,
+    PageClubTaskComponent,
+    PageClubInformationComponent,
+    PageClubInformationMainComponent,
+    PageClubSettingsComponent
   ],
   exports: [ ],
   entryComponents: [ ]

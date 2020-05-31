@@ -1,0 +1,79 @@
+
+<div class="row" *ngIf="clubSettingsForm">
+  <div class="col col-12 col-xl-12">
+    <form
+      [formGroup]="clubSettingsForm"
+      novalidate
+      class="new-doctor-form mb-4"
+      (ngSubmit)="saveData(clubSettingsForm)"
+    >
+      <tc-form-group>
+        <tc-form-label>Titulo</tc-form-label>
+        <tc-input [placeholder]="'Titulo'" formControlName="title"></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Subtitulo</tc-form-label>
+        <tc-input
+          [placeholder]="'Subtitulo'"
+          formControlName="subtitle"
+        ></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>PlayStore URL</tc-form-label>
+        <tc-input
+          [placeholder]="'Playstore URL'"
+          formControlName="playstore_url"
+        ></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Linkedin URL</tc-form-label>
+        <tc-input
+          [placeholder]="'Linkedin URL'"
+          formControlName="linkedin_url"
+        ></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Facebook URL</tc-form-label>
+        <tc-input
+          [placeholder]="'Facebook URL'"
+          formControlName="facebook_url"
+        ></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Twitter URL</tc-form-label>
+        <tc-input
+          [placeholder]="'Twitter URL'"
+          formControlName="twitter_url"
+        ></tc-input>
+      </tc-form-group>
+      <div class="row">
+        <div class="col">
+          <button
+            tc-button
+            [view]="'success'"
+          >
+          Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+
+   
+
+
+
+    <!-- Datos del personal medico -->
+  
+    
+  
+  
+ 
+   
+  </div>
+  
+</div>
+
+
+ 
+
+

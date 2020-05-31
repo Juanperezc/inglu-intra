@@ -70,6 +70,12 @@ import { PagePatientsComponent } from '../pages/services/patients';
 import { PageDoctorsComponent } from '../pages/services/doctors';
 import { PageEventsComponent } from '../pages/services/events';
 import { PageEventsAssistanceComponent } from '../pages/services/events-assistance';
+import { PageClubTeamComponent } from '../pages/portal/club-team';
+import { PageClubImageComponent } from '../pages/portal/club-images';
+import { PageClubTaskComponent } from '../pages/portal/club-tasks';
+import { PageClubInformationComponent } from '../pages/portal/club-information';
+import { PageClubInformationMainComponent } from '../pages/portal/club-main-information';
+import { PageClubSettingsComponent } from '../pages/portal/club-settings';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -132,6 +138,13 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'suggestions', component: PageSuggestionsComponent },
   { path: 'suggestion-types', component: PageSuggestionTypesComponent },
   { path: 'faqs', component: PageFaqsComponent },
+  { path: 'club-team', component: PageClubTeamComponent },
+  { path: 'club-images', component: PageClubImageComponent },
+  { path: 'club-tasks', component: PageClubTaskComponent },
+  { path: 'club-information', component: PageClubInformationComponent },
+  { path: 'club-settings', component: PageClubSettingsComponent },
+  { path: 'club-main-information', component: PageClubInformationMainComponent },
+  
   { path: 'events', component: PageEventsComponent },
   { path: 'events-assistance', component: PageEventsAssistanceComponent },
 

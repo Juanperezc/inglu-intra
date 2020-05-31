@@ -1,0 +1,129 @@
+<div  *ngIf="clubTaskForm">
+  <div class="col col-12 col-xl-12">
+    <form
+      [formGroup]="clubTaskForm"
+      novalidate
+      class="new-doctor-form mb-4"
+      (ngSubmit)="saveData(clubTaskForm)"
+    >
+      <tc-form-group>
+        <tc-form-label>Titulo</tc-form-label>
+        <tc-input [placeholder]="'Titulo'" formControlName="title"></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Subtitulo</tc-form-label>
+        <tc-input
+          [placeholder]="'Subtitulo'"
+          formControlName="subtitle"
+        ></tc-input>
+      </tc-form-group>
+
+      <div class="row">
+        <div class="col">
+          <button tc-button [view]="'success'">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Datos del personal medico -->
+
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <tc-form-group>
+          <tc-form-label class="table-section">
+            <div class="row">
+              <div class="col-6 col-sm-6">
+                <span><h4>Items</h4></span>
+              </div>
+              <div class="col-6 col-sm-6 add-button-col">
+                <span class="add-button">
+                  <button (click)="createTaskItem()" tc-button [view]="'info'">
+                    Añadir
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <table-component
+              [searchTable]="false"
+              [url]="'/site_h_work_items'"
+              [reload]="reload"
+              [headers]="headers"
+              (handleActionEmit)="handleActionEmit($event)"
+            ></table-component>
+          </tc-form-label>
+        </tc-form-group>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal window -->
+<ng-container *ngIf="clubTaskItemForm">
+  <ng-template #modalBody>
+    <form [formGroup]="clubTaskItemForm" novalidate>
+      <tc-form-group class="avatar-box d-flex">
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileChanged($event)"
+          #fileInput
+          hidden
+        />
+
+        <tc-avatar
+          [src]="
+            clubTaskItemForm.value.img
+              ? clubTaskItemForm.value.img
+              : 'https://via.placeholder.com/150'
+          "
+        ></tc-avatar>
+        <button
+          tc-button
+          [type]="'button'"
+          [afterIcon]="'icofont-ui-user'"
+          [view]="'accent'"
+          [outline]="true"
+          (click)="fileInput.click()"
+        >
+          Seleccionar imagen
+        </button>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-input
+          [placeholder]="'Titulo'"
+          formControlName="title"
+        ></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-input
+          [placeholder]="'Descripcion'"
+          formControlName="description"
+        ></tc-input>
+      </tc-form-group>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button
+        tc-button
+        [type]="'button'"
+        [view]="'error'"
+        (click)="closeModal()"
+      >
+        Salir
+      </button>
+      <button
+        tc-button
+        [view]="'info'"
+        [disabled]="clubTaskItemForm.invalid"
+        (click)="saveTaskItem(clubTaskItemForm)"
+      >
+        Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

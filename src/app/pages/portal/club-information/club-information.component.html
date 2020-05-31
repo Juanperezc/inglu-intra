@@ -1,0 +1,82 @@
+
+<div class="row" *ngIf="clubInformationForm">
+  <div class="col col-12 col-xl-12">
+    <form
+      [formGroup]="clubInformationForm"
+      novalidate
+      class="new-doctor-form mb-4"
+      (ngSubmit)="saveData(clubInformationForm)"
+    >
+    <tc-form-group>
+      <tc-form-label>Foto</tc-form-label>
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onFileChanged($event)"
+        #fileInput
+        hidden
+      />
+
+      <div class="d-flex align-items-center">
+        <tc-avatar
+          [src]="
+            clubInformationForm.value.img
+              ? clubInformationForm.value.img
+              : defaultAvatar
+          "
+          [size]="100"
+        ></tc-avatar>
+        <button
+          tc-button
+          [type]="'button'"
+          [afterIcon]="'icofont-ui-user'"
+          [view]="'accent'"
+          [outline]="true"
+          (click)="fileInput.click()"
+        >
+          Seleccionar imagen
+        </button>
+      </div>
+    </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Titulo</tc-form-label>
+        <tc-input [placeholder]="'Titulo'" formControlName="title"></tc-input>
+      </tc-form-group>
+      <tc-form-group>
+        <tc-form-label>Descripcion</tc-form-label>
+        <tc-input
+          [placeholder]="'Descripcion'"
+          formControlName="description"
+        ></tc-input>
+      </tc-form-group>
+      <div class="row">
+        <div class="col">
+          <button
+            tc-button
+            [view]="'success'"
+          >
+          Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+
+   
+
+
+
+    <!-- Datos del personal medico -->
+  
+    
+  
+  
+ 
+   
+  </div>
+  
+</div>
+
+
+ 
+
+

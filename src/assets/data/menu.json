@@ -12,15 +12,15 @@
     "routing": "default-dashboard"
   },
   {
+    "title": "Citas y Eventos",
+    "groupTitle": true
+  },
+  {
     "title": "Citas medicas",
     "icon": {
       "class": "icofont-stethoscope-alt"
     },
     "routing": "appointments"
-  },
-  {
-    "title": "Eventos del club",
-    "groupTitle": true
   },
   {
     "title": "Eventos",
@@ -35,6 +35,10 @@
       "class": "icofont-result-sport"
     },
     "routing": "events-assistance"
+  },
+  {
+    "title": "Gestión de usuarios",
+    "groupTitle": true
   },
   {
     "title": "Personal médico",
@@ -58,7 +62,10 @@
     },
     "routing": "patients"
   },
-
+  {
+    "title": "Otros",
+    "groupTitle": true
+  },
   {
     "title": "Contactos",
     "icon": {
@@ -137,8 +144,22 @@
     "groupTitle": true
   },
   {
+    "title": "Configuracion general",
+    "routing": "club-settings",
+    "icon": {
+      "class": "icofont-info"
+    }
+  },
+  {
     "title": "Información del club",
     "routing": "club-information",
+    "icon": {
+      "class": "icofont-info"
+    }
+  },
+  {
+    "title": "Información preliminar",
+    "routing": "club-main-information",
     "icon": {
       "class": "icofont-info"
     }
