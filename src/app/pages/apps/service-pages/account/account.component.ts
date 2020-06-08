@@ -422,7 +422,6 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     });
     if (!data){
       this.activatedRoute.queryParamMap.subscribe(queryParamMap => {
-
         this.userForm.controls['email'].setValue(queryParamMap.get("email"));
         this.userForm.controls['id_card'].setValue(queryParamMap.get("id_card"));
         this.userForm.controls['name'].setValue(queryParamMap.get("name"));
