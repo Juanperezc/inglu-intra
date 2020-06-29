@@ -24,7 +24,7 @@
     [required]="required ? true : null"
     (focus)="onFocus(disabled || readonly)"
     (blur)="onBlur(disabled || readonly)">
-    <owl-date-time [pickerType]="pickerType" #dt3></owl-date-time>
+    <owl-date-time [hour12Timer] = "false" [pickerType]="pickerType" #dt3></owl-date-time>
    <!--  <input
       type="{{ type }}"
       name="{{ name }}"

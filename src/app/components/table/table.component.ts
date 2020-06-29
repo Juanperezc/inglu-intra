@@ -153,7 +153,6 @@ export class TableComponent implements OnInit {
               case 3: {
                 return "Culminado";
               }
-               
              }
            }
        else if (type == "user"){
@@ -167,6 +166,9 @@ export class TableComponent implements OnInit {
              }
              case 2: {
               return "Desactivado";
+            }
+            case 3: {
+              return "Culminado";
             }
            }
          }

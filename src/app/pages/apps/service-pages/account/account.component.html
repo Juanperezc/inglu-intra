@@ -218,16 +218,9 @@
     <!-- Datos del personal medico -->
     <div *ngIf="editDoctor">
       <h4>Datos del personal</h4>
-      <!--     <form
-      [formGroup]="doctorForm"
-      novalidate
-      class="new-doctor-form mb-4"
-      (ngSubmit)="doctorFormSubmit(doctorForm)"
-      > -->
       <div class="row">
         <div class="col-12 col-sm-12">
           <tc-form-group>
-            
             <tc-form-label class="table-section">
               <div class="row">
                 <div class="col-6 col-sm-6">
@@ -241,7 +234,6 @@
                   </span>
                 </div>
               </div>
-             
             </tc-form-label>
             <table-component
               [searchTable]="false"
@@ -389,21 +381,34 @@
     </tc-form-group>
     <tc-form-group>
       <tc-form-label>Hora de inicio</tc-form-label>
-      <tc-input
+   <!--    <tc-input
         formControlName="start_time"
-      ></tc-input>
+      ></tc-input> -->
+      <tc-datepicker
+      formControlName="start_time"
+      [pickerType]="'timer'"
+    ></tc-datepicker>
+
     </tc-form-group>
     <tc-form-group>
       <tc-form-label>Hora de fin</tc-form-label>
-      <tc-input
-        formControlName="end_time"
-      ></tc-input>
+      <tc-datepicker
+      formControlName="end_time"
+      [pickerType]="'timer'"
+    ></tc-datepicker>
     </tc-form-group>
     <tc-form-group>
       <tc-form-label>Dia</tc-form-label>
-      <tc-input
+      <tc-select
+      [placeholder]="'Selecciona una dia'"
+      [options]="days"
+      [selected]="userSpecialtyForm.value.day"
+      formControlName="day"
+    ></tc-select>
+    
+      <!-- <tc-input
         formControlName="day"
-      ></tc-input>
+      ></tc-input> -->
     </tc-form-group>
     </form>
   </ng-template>

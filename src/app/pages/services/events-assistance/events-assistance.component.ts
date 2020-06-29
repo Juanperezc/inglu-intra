@@ -49,11 +49,11 @@ export class PageEventsAssistanceComponent extends BasePageComponent implements 
 
     this.statuses.push({
       label: "Activado",
-      value: "1"
+      value: "enable"
     })
     this.statuses.push({
       label: "Desactivado",
-      value: "2"
+      value: "disabled"
     })
 
     this.headers = [{
@@ -88,7 +88,7 @@ export class PageEventsAssistanceComponent extends BasePageComponent implements 
       tcType: 'text',
       tcActions: []
     },
-    {
+    /* {
       columnName: "status",
       columnTitle: "Estatus",
       iconClass: 'event_a',
@@ -96,7 +96,7 @@ export class PageEventsAssistanceComponent extends BasePageComponent implements 
       tcFontSize: null,
       tcType: 'badge',
       tcActions: []
-    },
+    }, */
     /* {
       columnName: "actions",
       columnTitle: "Acciones",

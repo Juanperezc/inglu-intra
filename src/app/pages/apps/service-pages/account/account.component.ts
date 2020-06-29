@@ -1,44 +1,50 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { BasePageComponent } from '../../../base-page';
-import { Store } from '@ngrx/store';
-import { IAppState } from '../../../../interfaces/app-state';
-import { HttpService } from '../../../../services/http/http.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IOption } from '../../../../ui/interfaces/option';
-import { UserStorage } from '../../../../services/util/UserStorage.service';
-import { GlobalService } from '../../../../services/util/GlobalService.service';
-import { FileService } from '../../../../services/http/FileService.service';
-import { UserService } from '../../../../services/http/UserService.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { IHandleAction } from '../../../../interfaces/handle-action';
-import { ITableHeaders } from '../../../../interfaces/table-headers';
-import { TCModalService } from '../../../../ui/services/modal/modal.service';
-import { SpecialtyService } from '../../../../services/http/SpecialtyService.service';
-import { WorkspaceService } from '../../../../services/http/WorkspaceService.service';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
+import { BasePageComponent } from "../../../base-page";
+import { Store } from "@ngrx/store";
+import { IAppState } from "../../../../interfaces/app-state";
+import { HttpService } from "../../../../services/http/http.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { IOption } from "../../../../ui/interfaces/option";
+import { UserStorage } from "../../../../services/util/UserStorage.service";
+import { GlobalService } from "../../../../services/util/GlobalService.service";
+import { FileService } from "../../../../services/http/FileService.service";
+import { UserService } from "../../../../services/http/UserService.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { IHandleAction } from "../../../../interfaces/handle-action";
+import { ITableHeaders } from "../../../../interfaces/table-headers";
+import { TCModalService } from "../../../../ui/services/modal/modal.service";
+import { SpecialtyService } from "../../../../services/http/SpecialtyService.service";
+import { WorkspaceService } from "../../../../services/http/WorkspaceService.service";
 
 @Component({
-  selector: 'page-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  selector: "page-account",
+  templateUrl: "./account.component.html",
+  styleUrls: ["./account.component.scss"],
 })
-export class PageAccountComponent extends BasePageComponent implements OnInit, OnDestroy {
-  @ViewChild('modalBodySpecialty') modalBodySpecialty: ElementRef<any>;
-  @ViewChild('modalFooterSpecialty') modalFooterSpecialty: ElementRef<any>;
-  @ViewChild('modalBodyWorkspace') modalBodyWorkspace: ElementRef<any>;
-  @ViewChild('modalFooterWorkspace') modalFooterWorkspace: ElementRef<any>;
+export class PageAccountComponent extends BasePageComponent
+  implements OnInit, OnDestroy {
+  @ViewChild("modalBodySpecialty") modalBodySpecialty: ElementRef<any>;
+  @ViewChild("modalFooterSpecialty") modalFooterSpecialty: ElementRef<any>;
+  @ViewChild("modalBodyWorkspace") modalBodyWorkspace: ElementRef<any>;
+  @ViewChild("modalFooterWorkspace") modalFooterWorkspace: ElementRef<any>;
 
-  
   id: number | string;
   title: string = null;
   userMedicalInfo: any;
   userInfo: any;
   userInfoMock: any;
   reloadSpecialty: number = 1;
-  reloadWorkspace: number =1;
-  editMe : boolean = false;
-  editPatient : boolean = false;
-  editDoctor : boolean = false;
+  reloadWorkspace: number = 1;
+  editMe: boolean = false;
+  editPatient: boolean = false;
+  editDoctor: boolean = false;
   createMedic: boolean = false;
   createPatient: boolean = false;
   passwordForm: FormGroup;
@@ -47,9 +53,10 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   gender: IOption[];
   status: IOption[];
   blood_types: IOption[];
+  days: IOption[];
   specialties: Array<IOption> = new Array<IOption>();
-  headersSpecialty : Array<ITableHeaders>;
-  headersWorkspace : Array<ITableHeaders>;
+  headersSpecialty: Array<ITableHeaders>;
+  headersWorkspace: Array<ITableHeaders>;
   currentAvatar: string | ArrayBuffer;
   defaultAvatar: string;
   changes: boolean;
@@ -61,71 +68,103 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     httpSv: HttpService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private fileService : FileService,
-    private userService : UserService,
-    private specialtyService : SpecialtyService,
-    private workspaceService : WorkspaceService,
+    private fileService: FileService,
+    private userService: UserService,
+    private specialtyService: SpecialtyService,
+    private workspaceService: WorkspaceService,
     private toastr: ToastrService,
     private modal: TCModalService,
     private formBuilder: FormBuilder
   ) {
     super(store, httpSv);
-    const lastRoute =  this.activatedRoute.snapshot && 
-    this.activatedRoute.snapshot.url
-    && this.activatedRoute.snapshot.url[0].path
-    this.id = this.activatedRoute.snapshot && this.activatedRoute.snapshot.params
-    && this.activatedRoute.snapshot.params['id'];
-   /*  this.bankName =  */
+    const lastRoute =
+      this.activatedRoute.snapshot &&
+      this.activatedRoute.snapshot.url &&
+      this.activatedRoute.snapshot.url[0].path;
+    this.id =
+      this.activatedRoute.snapshot &&
+      this.activatedRoute.snapshot.params &&
+      this.activatedRoute.snapshot.params["id"];
+    /*  this.bankName =  */
 
-  
-   /*  console.log('bank',  this.activatedRoute.snapshot.params['bank']); */
-    switch(lastRoute){
+    /*  console.log('bank',  this.activatedRoute.snapshot.params['bank']); */
+    switch (lastRoute) {
       case "edit-account": {
-        this.title = "Editar cuenta"
-        this.editMe=true;
+        this.title = "Editar cuenta";
+        this.editMe = true;
         break;
       }
       case "patient-account": {
-        this.title = "Editar paciente"
-        this.editPatient=true;
+        this.title = "Editar paciente";
+        this.editPatient = true;
         break;
       }
       case "doctor-account": {
-        this.title = "Editar medico"
-        this.editDoctor=true;
+        this.title = "Editar medico";
+        this.editDoctor = true;
         break;
       }
       case "create-doctor": {
-        this.title = "Crear medico"
-        this.createMedic=true;
+        this.title = "Crear medico";
+        this.createMedic = true;
         break;
       }
       case "create-patient": {
-        this.title = "Crear paciente"
-        this.createPatient=true;
+        this.title = "Crear paciente";
+        this.createPatient = true;
         break;
       }
     }
     this.reloadPageData();
-    this.gender = [
+    this.days = [
       {
-        label: 'Masculino',
-        value: 'male'
+        label: "Domingo",
+        value: "Sunday",
       },
       {
-        label: 'Femenino',
-        value: 'female'
-      }
+        label: "Lunes",
+        value: "Monday",
+      },
+      {
+        label: "Martes",
+        value: "Tuesday",
+      },
+      {
+        label: "Miercoles",
+        value: "Wednesday",
+      },
+      {
+        label: "Jueves",
+        value: "Thursday",
+      },
+      {
+        label: "Viernes",
+        value: "Friday",
+      },
+      {
+        label: "Sabado",
+        value: "Saturday",
+      },
+    ];
+    this.gender = [
+      {
+        label: "Masculino",
+        value: "male",
+      },
+      {
+        label: "Femenino",
+        value: "female",
+      },
     ];
     this.status = [
       {
-        label: 'Activo',
-        value: '1'
+        label: "Activo",
+        value: "1",
       },
       {
-        label: 'Desactivado',
-        value: '2'
-      }
+        label: "Desactivado",
+        value: "2",
+      },
     ];
     /* 
      "A+",
@@ -138,32 +177,32 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         "OB-"*/
     this.blood_types = [
       {
-        label: 'A+',
-        value: 'A+'
+        label: "A+",
+        value: "A+",
       },
       {
-        label: 'B+',
-        value: 'B+'
+        label: "B+",
+        value: "B+",
       },
       {
-        label: 'B-',
-        value: 'B-'
+        label: "B-",
+        value: "B-",
       },
       {
-        label: 'AB+',
-        value: 'AB+'
+        label: "AB+",
+        value: "AB+",
       },
       {
-        label: 'AB-',
-        value: 'AB-'
+        label: "AB-",
+        value: "AB-",
       },
       {
-        label: 'OB+',
-        value: 'OB+'
+        label: "OB+",
+        value: "OB+",
       },
       {
-        label: 'OB-',
-        value: 'OB-'
+        label: "OB-",
+        value: "OB-",
       },
     ];
     this.headersSpecialty = [
@@ -173,8 +212,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "description",
@@ -182,8 +221,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "updated_at",
@@ -191,8 +230,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "actions",
@@ -200,15 +239,16 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'actions',
+        tcType: "actions",
         tcActions: [
-        {
-          afterIcon: 'icofont-ui-delete',
-          view: 'error',
-          size: 'sm',
-          handleClick: 'remove'
-        } ]
-      }
+          {
+            afterIcon: "icofont-ui-delete",
+            view: "error",
+            size: "sm",
+            handleClick: "remove",
+          },
+        ],
+      },
     ];
     this.headersWorkspace = [
       {
@@ -217,8 +257,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "location",
@@ -226,8 +266,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "start_time",
@@ -235,8 +275,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "end_time",
@@ -244,8 +284,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "day",
@@ -253,8 +293,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "updated_at",
@@ -262,8 +302,8 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
+        tcType: "text",
+        tcActions: [],
       },
       {
         columnName: "actions",
@@ -271,18 +311,19 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
         iconClass: null,
         tcColor: null,
         tcFontSize: null,
-        tcType: 'actions',
+        tcType: "actions",
         tcActions: [
-        {
-          afterIcon: 'icofont-ui-delete',
-          view: 'error',
-          size: 'sm',
-          handleClick: 'remove'
-        } ]
-      }
+          {
+            afterIcon: "icofont-ui-delete",
+            view: "error",
+            size: "sm",
+            handleClick: "remove",
+          },
+        ],
+      },
     ];
-    this.defaultAvatar = 'assets/content/avatar.jpeg';
-/*     this.currentAvatar = this.defaultAvatar; */
+    this.defaultAvatar = "assets/content/avatar.jpeg";
+    /*     this.currentAvatar = this.defaultAvatar; */
     this.changes = false;
   }
   closeModalSpecialty() {
@@ -295,86 +336,103 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     this.userWorkspaceForm.reset();
   }
 
-  addSpecialty(){
-    this.openModalUserSpecialty(this.modalBodySpecialty, 'Agregar especialidad', this.modalFooterSpecialty)
+  addSpecialty() {
+    this.openModalUserSpecialty(
+      this.modalBodySpecialty,
+      "Agregar especialidad",
+      this.modalFooterSpecialty
+    );
   }
-  addWorkspace(){
-    this.openModalUserWorkspace(this.modalBodyWorkspace, 'Agregar lugar de trabajo', this.modalFooterWorkspace)
+  addWorkspace() {
+    this.openModalUserWorkspace(
+      this.modalBodyWorkspace,
+      "Agregar lugar de trabajo",
+      this.modalFooterWorkspace
+    );
   }
-  openModalUserSpecialty(body: any, header: any = null, footer: any = null, data: any = null) {
+  openModalUserSpecialty(
+    body: any,
+    header: any = null,
+    footer: any = null,
+    data: any = null
+  ) {
     this.initFormUserSpecialty(data);
     this.modal.open({
       body: body,
       header: header,
-      footer: footer
+      footer: footer,
     });
   }
 
-  openModalUserWorkspace(body: any, header: any = null, footer: any = null, data: any = null) {
+  openModalUserWorkspace(
+    body: any,
+    header: any = null,
+    footer: any = null,
+    data: any = null
+  ) {
     this.initFormUserWorkspace(data);
     this.modal.open({
       body: body,
       header: header,
-      footer: footer
+      footer: footer,
     });
   }
   initFormUserSpecialty(data: any) {
-    
     this.userSpecialtyForm = this.formBuilder.group({
-      id: [(data ? data.id : null)],
-      specialty: [(data ? data.specialty : ''), Validators.required],
+      id: [data ? data.id : null],
+      specialty: [data ? data.specialty : "", Validators.required],
     });
-    console.log('initForm',this.userSpecialtyForm);
+    console.log("initForm", this.userSpecialtyForm);
   }
   initFormUserWorkspace(data: any) {
     this.userWorkspaceForm = this.formBuilder.group({
-      id: [(data ? data.id : null)],
-      specialty: [(data ? data.specialty : ''), Validators.required],
-      location: [(data ? data.location : ''), Validators.required],
-      start_time: [(data ? data.start_time : ''), Validators.required],
-      end_time: [(data ? data.end_time : ''), Validators.required],
-      day: [(data ? data.day : ''), Validators.required],
+      id: [data ? data.id : null],
+      specialty: [data ? data.specialty : "", null],
+      location: [data ? data.location : "", Validators.required],
+      start_time: [data ? data.start_time : "", Validators.required],
+      end_time: [data ? data.end_time : "", Validators.required],
+      day: [data ? data.day : "", null],
     });
-    console.log('initForm',this.userWorkspaceForm);
+    console.log("initForm", this.userWorkspaceForm);
   }
-  reloadPageData(){
+  reloadPageData() {
     this.pageData = {
       title: this.title,
       loaded: true,
       breadcrumbs: [
         {
-          title: 'Servicios',
-          route: 'default-dashboard'
+          title: "Servicios",
+          route: "default-dashboard",
         },
         {
-          title: this.title
-        }
-      ]
+          title: this.title,
+        },
+      ],
     };
     super.ngOnInit();
-  
-   
   }
- async ngOnInit() {
+  async ngOnInit() {
     this.max = new Date();
     this.loadSpecialties();
-    if (this.editMe){
+    if (this.editMe) {
       this.userInfo = await UserStorage.getUser();
-
-    }else if (this.editPatient || this.editDoctor){
+    } else if (this.editPatient || this.editDoctor) {
       this.userInfo = await this.loadUser(this.id);
-     /*  if (editPatient){ */
-        this.userMedicalInfo = await this.loadMecialDataUser(this.id);
-   /*    } */
-    
-      console.log(this.userInfo)
-    }else if (this.createMedic || this.createPatient){
+      /*  if (editPatient){ */
+      this.userMedicalInfo = await this.loadMecialDataUser(this.id);
+      /*    } */
+
+      console.log(this.userInfo);
+    } else if (this.createMedic || this.createPatient) {
       this.userInfo = null;
     }
     this.initFormUserSpecialty(null);
     this.initFormUserWorkspace(null);
-    this.getData('assets/data/account-data.json', 'userInfoMock', 'loadedDetect');
-  
+    this.getData(
+      "assets/data/account-data.json",
+      "userInfoMock",
+      "loadedDetect"
+    );
 
     /* console.log("this.userInfo", this.userInfo) */
   }
@@ -385,16 +443,17 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
 
   loadedDetect() {
     this.setLoaded();
-    this.currentAvatar = this.userInfo && this.userInfo.profile_pic ?
-    this.userInfo.profile_pic :
-    this.defaultAvatar;
+    this.currentAvatar =
+      this.userInfo && this.userInfo.profile_pic
+        ? this.userInfo.profile_pic
+        : this.defaultAvatar;
     this.initUserMedicalForm(this.userMedicalInfo);
     this.initUserForm(this.userInfo);
     this.initPasswordForm();
   }
 
   // init form
-  initPasswordForm(){
+  initPasswordForm() {
     this.passwordForm = this.formBuilder.group({
       password: [null, this.editMe ? Validators.required : null],
       confirm_password: [null, Validators.required],
@@ -404,9 +463,6 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
   initUserForm(data: any) {
     console.log("data", data);
 
-  
-  
-
     this.userForm = this.formBuilder.group({
       id: [data && data.id ? data.id : null],
       name: [data && data.name, Validators.required],
@@ -415,35 +471,46 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       email: [data && data.email, Validators.required],
       profile_pic: [this.currentAvatar],
       date_of_birth: [data && data.date_of_birth, Validators.required],
-      address: [data && data.address/* , Validators.required */],
-      phone: [data && data.phone/* , Validators.required */],
+      address: [data && data.address /* , Validators.required */],
+      phone: [data && data.phone /* , Validators.required */],
       gender: [data && data.gender, Validators.required],
-      status: [data && data.status && data.status.toString(), this.editPatient || this.editDoctor ? Validators.required : null]
+      status: [
+        data && data.status && data.status.toString(),
+        this.editPatient || this.editDoctor ? Validators.required : null,
+      ],
     });
-    if (!data){
-      this.activatedRoute.queryParamMap.subscribe(queryParamMap => {
-        this.userForm.controls['email'].setValue(queryParamMap.get("email"));
-        this.userForm.controls['id_card'].setValue(queryParamMap.get("id_card"));
-        this.userForm.controls['name'].setValue(queryParamMap.get("name"));
-        this.userForm.controls['last_name'].setValue(queryParamMap.get("last_name"));
-        this.userForm.controls['date_of_birth'].setValue(queryParamMap.get("date_of_birth"));
-        this.userForm.controls['address'].setValue(queryParamMap.get("address"));
-        this.userForm.controls['phone'].setValue(queryParamMap.get("phone"));
-        if (queryParamMap.get("gender")){
-          if (queryParamMap.get("gender") == "Masculino"){
-            this.userForm.controls['gender'].setValue("male");
-          }else{
-            this.userForm.controls['gender'].setValue("female");
+    if (!data) {
+      this.activatedRoute.queryParamMap.subscribe((queryParamMap) => {
+        this.userForm.controls["email"].setValue(queryParamMap.get("email"));
+        this.userForm.controls["id_card"].setValue(
+          queryParamMap.get("id_card")
+        );
+        this.userForm.controls["name"].setValue(queryParamMap.get("name"));
+        this.userForm.controls["last_name"].setValue(
+          queryParamMap.get("last_name")
+        );
+        this.userForm.controls["date_of_birth"].setValue(
+          queryParamMap.get("date_of_birth")
+        );
+        this.userForm.controls["address"].setValue(
+          queryParamMap.get("address")
+        );
+        this.userForm.controls["phone"].setValue(queryParamMap.get("phone"));
+        if (queryParamMap.get("gender")) {
+          if (queryParamMap.get("gender") == "Masculino") {
+            this.userForm.controls["gender"].setValue("male");
+          } else {
+            this.userForm.controls["gender"].setValue("female");
           }
           this.changes = true;
         }
-      })
+      });
     }
-   /* */
+    /* */
 
     // detect form changes
     this.userForm.valueChanges.subscribe((t) => {
-   /*    console.log('change',t) */
+      /*    console.log('change',t) */
       this.changes = true;
     });
   }
@@ -457,31 +524,28 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       treatments: [data && data.treatments],
       record: [data && data.record],
     });
-
   }
-  async loadSpecialties(){
+  async loadSpecialties() {
     try {
       GlobalService.ShowSweetLoading();
       const specialties: any = await this.specialtyService.index();
       const dataSpecialties = specialties.data;
-      if (dataSpecialties){
-        dataSpecialties.forEach(specialty => {
+      if (dataSpecialties) {
+        dataSpecialties.forEach((specialty) => {
           this.specialties.push({
             label: specialty.name,
-            value: specialty.id.toString()
-          })
+            value: specialty.id.toString(),
+          });
         });
       }
       console.log(dataSpecialties);
       GlobalService.CloseSweet();
-    
     } catch (error) {
-      console.error('error', error)
+      console.error("error", error);
       GlobalService.CloseSweet();
-     
     }
   }
-  async loadMecialDataUser(id){
+  async loadMecialDataUser(id) {
     try {
       GlobalService.ShowSweetLoading();
       const user: any = await this.userService.show_medical_record(id);
@@ -489,12 +553,12 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       GlobalService.CloseSweet();
       return dataUser;
     } catch (error) {
-      console.error('error', error)
+      console.error("error", error);
       GlobalService.CloseSweet();
       return null;
     }
   }
-  async loadUser(id){
+  async loadUser(id) {
     try {
       GlobalService.ShowSweetLoading();
       const user: any = await this.userService.show(id);
@@ -502,76 +566,74 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       GlobalService.CloseSweet();
       return dataUser;
     } catch (error) {
-      console.error('error', error)
+      console.error("error", error);
       GlobalService.CloseSweet();
       return null;
     }
   }
 
-  async handleActionEmitSpecialty(event: IHandleAction){
-    console.log('emit', event);
+  async handleActionEmitSpecialty(event: IHandleAction) {
+    console.log("emit", event);
     const row = event.row;
     const type = event.type;
-    switch(type){
-     
-      case "remove":{
-       const result = await GlobalService.AlertDelete();
-       if (result.value) 
-       {
-         const data = { specialty : row.id };
-        this.deleteUserSpecialty(data);
-     /*    this.deleteContact(row.id); */
-       }
+    switch (type) {
+      case "remove": {
+        const result = await GlobalService.AlertDelete();
+        if (result.value) {
+          const data = { specialty: row.id };
+          this.deleteUserSpecialty(data);
+          /*    this.deleteContact(row.id); */
+        }
         break;
       }
     }
   }
-  async handleActionEmitWorkspace(event: IHandleAction){
-    console.log('emit', event);
+  async handleActionEmitWorkspace(event: IHandleAction) {
+    console.log("emit", event);
     const row = event.row;
     const type = event.type;
-    switch(type){
-     
-      case "remove":{
-       const result = await GlobalService.AlertDelete();
-       if (result.value) 
-       {
-         const data = { user_workspace_id : row.id };
-        this.deleteUserWorkspace(data);
-     /*    this.deleteContact(row.id); */
-       }
+    switch (type) {
+      case "remove": {
+        const result = await GlobalService.AlertDelete();
+        if (result.value) {
+          const data = { user_workspace_id: row.id };
+          this.deleteUserWorkspace(data);
+          /*    this.deleteContact(row.id); */
+        }
         break;
       }
     }
   }
-  async updateUser(id,data){
+  async updateUser(id, data) {
     try {
       GlobalService.ShowSweetLoading();
-      const user: any = await this.userService.update(id,data);
+      const user: any = await this.userService.update(id, data);
       GlobalService.SwalUpdateItem();
       const dataUser = user.data;
-      if (dataUser && this.editMe)
-      UserStorage.setUser(dataUser);
-     /*  GlobalService.CloseSweet(); */
+      if (dataUser && this.editMe) UserStorage.setUser(dataUser);
+      /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error('error', error)
-      GlobalService.CloseSweet();
-    } 
-  }
-  async updateMedicalUser(id,data){
-    try {
-      GlobalService.ShowSweetLoading();
-      const userMedical: any = await this.userService.update_medical_record(id,data);
-      GlobalService.SwalUpdateItem();
-      const dataUser = userMedical.data;
-    console.log(dataUser);
-     /*  GlobalService.CloseSweet(); */
-    } catch (error) {
-      console.error('error', error)
+      console.error("error", error);
       GlobalService.CloseSweet();
     }
   }
-  async storeUser(data){
+  async updateMedicalUser(id, data) {
+    try {
+      GlobalService.ShowSweetLoading();
+      const userMedical: any = await this.userService.update_medical_record(
+        id,
+        data
+      );
+      GlobalService.SwalUpdateItem();
+      const dataUser = userMedical.data;
+      console.log(dataUser);
+      /*  GlobalService.CloseSweet(); */
+    } catch (error) {
+      console.error("error", error);
+      GlobalService.CloseSweet();
+    }
+  }
+  async storeUser(data) {
     try {
       GlobalService.ShowSweetLoading();
       const user: any = await this.userService.store(data);
@@ -579,68 +641,83 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
       GlobalService.SwalCreateItem();
       const dataUser = user.data;
       this.userInfo = dataUser;
-      if (this.userInfo.type == 1){
-        this.router.navigateByUrl("/vertical/patient-account/" + this.userInfo.id);
-      }else if  (this.userInfo.type ==2){
-        this.router.navigateByUrl("/vertical/doctor-account/" + this.userInfo.id);
+      if (this.userInfo.type == 1) {
+        this.router.navigateByUrl(
+          "/vertical/patient-account/" + this.userInfo.id
+        );
+      } else if (this.userInfo.type == 2) {
+        this.router.navigateByUrl(
+          "/vertical/doctor-account/" + this.userInfo.id
+        );
       }
-  
-     /*  GlobalService.CloseSweet(); */
+      /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error('error', error)
+      console.error("error", error);
       GlobalService.CloseSweet();
-    } 
+    }
   }
 
-  async deleteUserSpecialty(userSpecialtyData: any){
+  async deleteUserSpecialty(userSpecialtyData: any) {
     try {
-      console.log(userSpecialtyData)
+      console.log(userSpecialtyData);
       GlobalService.ShowSweetLoading();
-      const userSpecialty: any = await this.userService.delete_specialty(userSpecialtyData,this.id);
+      const userSpecialty: any = await this.userService.delete_specialty(
+        userSpecialtyData,
+        this.id
+      );
       GlobalService.SwalDeleteItem();
       this.reloadSpecialty++;
-     /*  GlobalService.CloseSweet(); */
+      /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error('error', error);
+      console.error("error", error);
       GlobalService.CloseSweet();
     }
   }
 
-  async deleteUserWorkspace(userWorkspaceData: any){
+  async deleteUserWorkspace(userWorkspaceData: any) {
     try {
-      console.log(userWorkspaceData)
+      console.log(userWorkspaceData);
       GlobalService.ShowSweetLoading();
-      const userWorkspace: any = await this.userService.delete_workspace(userWorkspaceData,this.id);
+      const userWorkspace: any = await this.userService.delete_workspace(
+        userWorkspaceData,
+        this.id
+      );
       GlobalService.SwalDeleteItem();
       this.reloadWorkspace++;
-     /*  GlobalService.CloseSweet(); */
+      /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error('error', error);
+      console.error("error", error);
       GlobalService.CloseSweet();
     }
   }
-  async storeUserSpecialty(userSpecialtyData: any){
+  async storeUserSpecialty(userSpecialtyData: any) {
     try {
       GlobalService.ShowSweetLoading();
-      const userSpecialty: any = await this.userService.store_specialty(userSpecialtyData,this.id);
+      const userSpecialty: any = await this.userService.store_specialty(
+        userSpecialtyData,
+        this.id
+      );
       GlobalService.SwalCreateItem();
       this.reloadSpecialty++;
-     /*  GlobalService.CloseSweet(); */
+      /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error('error', error);
+      console.error("error", error);
       GlobalService.CloseSweet();
     }
   }
 
-  async storeUserWorkspace(userWorkspaceData: any){
+  async storeUserWorkspace(userWorkspaceData: any) {
     try {
       GlobalService.ShowSweetLoading();
-      const userWorkspace: any = await this.userService.store_workspace(userWorkspaceData,this.id);
+      const userWorkspace: any = await this.userService.store_workspace(
+        userWorkspaceData,
+        this.id
+      );
       GlobalService.SwalCreateItem();
       this.reloadWorkspace++;
-     /*  GlobalService.CloseSweet(); */
+      /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error('error', error);
+      console.error("error", error);
       GlobalService.CloseSweet();
     }
   }
@@ -650,7 +727,7 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     if (form.valid) {
       let userSpecialty: any = form.value;
       this.storeUserSpecialty(userSpecialty);
-      
+
       console.log(userSpecialty);
       this.closeModalSpecialty();
     }
@@ -658,19 +735,32 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
 
   async saveUserWorkspace(form: FormGroup) {
     if (form.valid) {
-      let userWorkspace: any = form.value;
-      this.storeUserWorkspace(userWorkspace);
-      
-      console.log(userWorkspace);
-      this.closeModalSpecialty();
+      console.log("form", form.value);
+      let formValue = form.value;
+      const start_time = formValue.start_time.format("HH:mm");
+      const end_time = formValue.end_time.format("HH:mm");
+      console.log(start_time);
+      if (
+        formValue.start_time > formValue.end_time ||
+        formValue.start_time == formValue.end_time
+      ) {
+        this.toastr.error("Los rangos de las fechas son invalidos", "Error");
+      } else {
+        formValue.start_time = start_time;
+        formValue.end_time = end_time;
+        let userWorkspace: any = formValue;
+        this.storeUserWorkspace(userWorkspace);
+        console.log(userWorkspace);
+        this.closeModalSpecialty();
+      }
+      /*  */
     }
   }
   async saveMedicalData(form: FormGroup) {
     if (form.valid) {
       this.userMedicalInfo = form.value;
-    
       await this.updateMedicalUser(this.userInfo.id, this.userMedicalInfo);
-     /*  this.changes = false; */
+      /*  this.changes = false; */
     }
   }
 
@@ -678,73 +768,74 @@ export class PageAccountComponent extends BasePageComponent implements OnInit, O
     if (form.valid) {
       this.userInfo = form.value;
       const id = this.userInfo.id;
-      this.userInfo.date_of_birth = 
-      this.userInfo.date_of_birth ? 
-      (GlobalService.formatDate(this.userInfo.date_of_birth)) : null;
-      if (this.createPatient)
-      {
-        this.userInfo.type=1;
+      this.userInfo.date_of_birth = this.userInfo.date_of_birth
+        ? GlobalService.formatDate(this.userInfo.date_of_birth)
+        : null;
+      if (this.createPatient) {
+        this.userInfo.type = 1;
+      } else if (this.createMedic) {
+        this.userInfo.type = 2;
       }
-      else if (this.createMedic){
-        this.userInfo.type=2;
-      }
-    
-/*       console.log(this.userInfo); */
-      if (id){
+      /*       console.log(this.userInfo); */
+      if (id) {
         //update
         await this.updateUser(id, this.userInfo);
-      }else{
+      } else {
         await this.storeUser(this.userInfo);
         //save
       }
-      
-     /*  this.changes = false; */
+      /*  this.changes = false; */
     }
   }
 
-  async changePassword(form: FormGroup){
-    console.log('change password');
+  async changePassword(form: FormGroup) {
+    console.log("change password");
     if (form.valid) {
-      try{
-      GlobalService.ShowSweetLoading();
-      const user: any = await this.userService.change_password(form.value, 
-        this.id ? this.id : this.userInfo.id);
-      GlobalService.SwalUpdateItem();
-      const dataUser = user.data;
-      if (dataUser)
-      UserStorage.setUser(dataUser);
-     /*  GlobalService.CloseSweet(); */
-    } catch (error) {
-      if (error.status == 422){
-        if (error.error && error.error.message == "Password does not match"){
-          this.toastr.error("Las contraseña suministrada es incorrecta", "Error")
+      try {
+        GlobalService.ShowSweetLoading();
+        const user: any = await this.userService.change_password(
+          form.value,
+          this.id ? this.id : this.userInfo.id
+        );
+        GlobalService.SwalUpdateItem();
+        const dataUser = user.data;
+        if (dataUser) UserStorage.setUser(dataUser);
+        /*  GlobalService.CloseSweet(); */
+      } catch (error) {
+        if (error.status == 422) {
+          if (error.error && error.error.message == "Password does not match") {
+            this.toastr.error(
+              "Las contraseña suministrada es incorrecta",
+              "Error"
+            );
+          }
         }
+        console.error("error", error);
+        GlobalService.CloseSweet();
       }
-      console.error('error', error)
-      GlobalService.CloseSweet();
-    } 
-  
     }
   }
   // upload new file
-  
+
   async onFileChanged(inputValue: any) {
     let file: File = inputValue.target.files[0];
     console.log(file);
-   /*  let reader: FileReader = new FileReader(); */
+    /*  let reader: FileReader = new FileReader(); */
     try {
-    GlobalService.ShowSweetLoading();
-    console.log('test');
-    const service: any = await this.fileService.upload_file(file,"image/profile");
-    console.log(service);
-    GlobalService.CloseSweet();
+      GlobalService.ShowSweetLoading();
+      console.log("test");
+      const service: any = await this.fileService.upload_file(
+        file,
+        "image/profile"
+      );
+      console.log(service);
+      GlobalService.CloseSweet();
 
-  /*   this.currentPhoto = service.urlFinal; */
-    this.userForm.controls['profile_pic'].setValue(service.urlFinal);
-
+      /*   this.currentPhoto = service.urlFinal; */
+      this.userForm.controls["profile_pic"].setValue(service.urlFinal);
     } catch (error) {
-      console.error('error', error);
-       GlobalService.CloseSweet();
+      console.error("error", error);
+      GlobalService.CloseSweet();
     }
   }
 }

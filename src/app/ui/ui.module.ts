@@ -56,7 +56,7 @@ export const MY_MOMENT_FORMATS = {
   parseInput: 'DD-MM-YYYY',
   fullPickerInput: 'DD-MM-YYYY HH:mm',
   datePickerInput: 'DD-MM-YYYY',
-  timePickerInput: 'hh:mm a',
+  timePickerInput: 'HH:mm',
   monthYearLabel: 'MMM-YYYY',
   dateA11yLabel: 'LL',
   monthYearA11yLabel: 'MMMM-YYYY'

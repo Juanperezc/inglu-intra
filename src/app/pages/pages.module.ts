@@ -89,6 +89,7 @@ import { PageClubTaskComponent } from './portal/club-tasks';
 import { PageClubInformationComponent } from './portal/club-information';
 import { PageClubInformationMainComponent } from './portal/club-main-information';
 import { PageClubSettingsComponent } from './portal/club-settings';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -182,6 +183,6 @@ import { PageClubSettingsComponent } from './portal/club-settings';
     PageClubSettingsComponent
   ],
   exports: [ ],
-  entryComponents: [ ]
+  entryComponents: []
 })
 export class PagesModule {}

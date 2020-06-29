@@ -85,7 +85,12 @@
 
       <tc-form-group>
         <span class="tc-placeholder"><b>Tipo</b></span>
-        <tc-input [placeholder]="'Tipo'" formControlName="type"></tc-input>
+        <tc-select
+          [placeholder]="'Selecciona un tipo'"
+          [options]="types"
+          [selected]="eventForm.value.type"
+          formControlName="type"
+        ></tc-select>
       </tc-form-group>
       <tc-form-group>
         <span class="tc-placeholder"><b>Ubicacion</b></span>

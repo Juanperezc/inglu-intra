@@ -22,7 +22,7 @@ import { FileService } from '../../../services/http/FileService.service';
 export class PageEventsComponent extends BasePageComponent implements OnInit, OnDestroy {
   @ViewChild('modalBody') modalBody: ElementRef<any>;
   @ViewChild('modalFooter') modalFooter: ElementRef<any>;
-
+  types=[];
   data: any[];
   doctors: Array<IOption>;
   statuses: Array<IOption>;
@@ -47,13 +47,35 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
     this.doctors = new Array<IOption>();
     this.statuses = new Array<IOption>();
 
+
+    this.types.push(
+    {
+      label: "Actividad fisica",
+      value: "Actividad fisica",
+    },
+    {
+      label: "Apoyo psicologico",
+      value: "Apoyo psicologico",
+    },
+    {
+      label: "Integración comunitaria y familiar",
+      value: "Integración comunitaria y familiar",
+    },
+    {
+      label: "Conferencias",
+      value: "Conferencias",
+    },
+    {
+      label: "Recreación",
+      value: "Recreación",
+    })
     this.statuses.push({
       label: "Activado",
-      value: "1"
+      value: "enable"
     })
     this.statuses.push({
       label: "Desactivado",
-      value: "2"
+      value: "disabled"
     })
 
     this.headers = [{
