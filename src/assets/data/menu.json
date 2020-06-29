@@ -191,18 +191,5 @@
     "icon": {
       "class": "icofont-support-faq"
     }
-  },
-  {
-    "title": "Movil",
-    "groupTitle": true,
-    "largeTitle" : true
-  },
-  {
-    "title": "Notificaciones",
-    "routing": "notifications",
-    "icon": {
-      "class": "icofont-notification"
-    }
   }
-
 ]

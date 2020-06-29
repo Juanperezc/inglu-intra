@@ -106,6 +106,15 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
       tcActions: []
     },
     {
+      columnName: "type",
+      columnTitle: "Tipo",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
       columnName: "date",
       columnTitle: "Fecha",
       formatter: (value) => {
