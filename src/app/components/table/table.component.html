@@ -16,7 +16,7 @@
         {{ (value != null) && valueBadgeStr(value, header && header.iconClass)}}
       </tc-badge>
      
-      <strong *ngIf="header.tcType == 'text'">{{ header.formatter ? ( value && header.formatter(subStrTable(value))) : (value && subStrTable(value))  }}</strong>
+      <strong *ngIf="header.tcType == 'text'">{{ header.formatter ? (value != undefined && header.formatter(subStrTable(value))) : (value != undefined && subStrTable(value))  }}</strong>
     </ng-template>
     <ng-template *ngIf = "header.tcType == 'actions'" #tableTDTemplate let-row="row">
    

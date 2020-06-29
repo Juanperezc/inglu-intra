@@ -75,7 +75,41 @@ export class PageEventsAssistanceComponent extends BasePageComponent implements 
       tcType: 'text',
       tcActions: []
     },
- 
+    {
+      columnName: "qualification",
+      formatter: (value) => {
+        if (value == 0){
+          return "No se encuentra calificación"
+        }else{
+          return value
+        }
+      },
+      columnTitle: "Calificación",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: [],
+      
+    },
+    {
+      columnName: "comment",
+      // formatter: (value) => {
+      //   console.log(value,"test")
+      //   if (value == "" || value == null){
+      //     return "No se encuentra comentario"
+      //   }else{
+      //     return value
+      //   }
+      // },
+      columnTitle: "Comentarios",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: [],
+      
+    },
     {
       columnName: "updated_at",
       formatter: (value) => {
@@ -88,15 +122,15 @@ export class PageEventsAssistanceComponent extends BasePageComponent implements 
       tcType: 'text',
       tcActions: []
     },
-    {
-      columnName: "status",
-      columnTitle: "Estatus",
-      iconClass: 'event_a',
-      tcColor: null,
-      tcFontSize: null,
-      tcType: 'badge',
-      tcActions: []
-    },
+    // {
+    //   columnName: "status",
+    //   columnTitle: "Estatus",
+    //   iconClass: 'event_a',
+    //   tcColor: null,
+    //   tcFontSize: null,
+    //   tcType: 'badge',
+    //   tcActions: []
+    // },
     /* {
       columnName: "actions",
       columnTitle: "Acciones",
