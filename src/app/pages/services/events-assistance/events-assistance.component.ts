@@ -57,6 +57,15 @@ export class PageEventsAssistanceComponent extends BasePageComponent implements 
     })
 
     this.headers = [{
+      columnName: "profile_pic",
+      columnTitle: "Foto",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'img',
+      tcActions: []
+    },
+    {
       columnName: "user",
       columnTitle: "Usuario",
       iconClass: null,
