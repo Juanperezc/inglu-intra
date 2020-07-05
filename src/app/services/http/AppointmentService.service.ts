@@ -17,6 +17,17 @@ export class AppointmentService {
       params: params
     }).toPromise();
   }
+
+  async appointment_by_user(id){
+    let params = new HttpParams();
+    params = params.append('per_page', '100000');
+
+    return await this.http.
+    get(environment.endpoint + `/appointment/appointment_by_user/${id}`
+    ,{
+      params: params
+    }).toPromise();
+  }
   
   async update(id : number ,data : any) {
     return await this.http.put(environment.endpoint + `/appointments/`  + id, data).toPromise();

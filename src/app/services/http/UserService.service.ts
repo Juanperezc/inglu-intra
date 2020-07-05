@@ -42,6 +42,10 @@ export class UserService {
   async update(id: number,data: any) {
     return await this.http.put(environment.endpoint + `/users/` + id, data).toPromise();
   }
+  
+  async recover_password(data: any) {
+    return await this.http.post(environment.endpoint + `/user/recover_password` , data).toPromise();
+  }
 
   async update_medical_record(id: number,data: any) {
     return await this.http.put(environment.endpoint + `/user/medical_record/` + id, data).toPromise();

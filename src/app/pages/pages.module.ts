@@ -89,14 +89,16 @@ import { PageClubTaskComponent } from './portal/club-tasks';
 import { PageClubInformationComponent } from './portal/club-information';
 import { PageClubInformationMainComponent } from './portal/club-main-information';
 import { PageClubSettingsComponent } from './portal/club-settings';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
     CommonModule,
+    NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
     ChartsModule,
     NgxChartsModule,
     NgxEchartsModule,
@@ -115,6 +117,7 @@ import { PageClubSettingsComponent } from './portal/club-settings';
     BasePageComponent,
     PageDashboardComponent,
     SignInComponent,
+    ForgetPasswordComponent,
     SignUpComponent,
     PageAlertsComponent,
     PageButtonsComponent,

@@ -35,7 +35,13 @@
     <img [src]="'assets/img/logo.png'" class="logo" />
     <!-- <logo [src]="'assets/img/logo.png'" ></logo>
  -->
-    <app-menu [src]="'assets/data/menu.json'"></app-menu>
+
+   <app-menu 
+   *ngIf = "user && user.rol[0] == 'admin'"
+   [src]="'assets/data/menu.json'"></app-menu>
+   <app-menu 
+   *ngIf = "user && user.rol[0] == 'medical_staff'"
+   [src]="'assets/data/menu-doctor.json'"></app-menu>
 
    <!--  <div class="add-patient">
       <button

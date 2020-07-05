@@ -13,6 +13,7 @@ import { TCModalService } from '../../ui/services/modal/modal.service';
 import { IPatient } from '../../interfaces/patient';
 import * as PatientsActions from '../../store/actions/patients.actions';
 import * as SettingsActions from '../../store/actions/app-settings.actions';
+import { UserStorage } from '../../services/util/UserStorage.service';
 
 @Component({
   selector: 'vertical-layout',
@@ -23,6 +24,7 @@ import * as SettingsActions from '../../store/actions/app-settings.actions';
   ]
 })
 export class VerticalLayoutComponent extends BaseLayoutComponent implements OnInit {
+  public user: any = null;
   patientForm: FormGroup;
   gender: IOption[];
   currentAvatar: string | ArrayBuffer;
@@ -52,9 +54,9 @@ export class VerticalLayoutComponent extends BaseLayoutComponent implements OnIn
     this.currentAvatar = this.defaultAvatar;
   }
 
-  ngOnInit() {
+ async ngOnInit() {
     super.ngOnInit();
-
+    this.user = await UserStorage.getUser();
     this.store.dispatch(new SettingsActions.Update({ layout: 'vertical' }));
   }
 

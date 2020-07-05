@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, ViewChild, ElementRef } from '@angular/core';
 import { IUser } from '../../interfaces/user';
 
 @Component({

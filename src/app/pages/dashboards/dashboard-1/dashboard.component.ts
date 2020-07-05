@@ -5,6 +5,9 @@ import { EChartOption } from 'echarts';
 import { BasePageComponent } from '../../base-page';
 import { IAppState } from '../../../interfaces/app-state';
 import { HttpService } from '../../../services/http/http.service';
+import { HomeService } from '../../../services/http/HomeService.service';
+import { GlobalService } from '../../../services/util/GlobalService.service';
+import { UserStorage } from '../../../services/util/UserStorage.service';
 
 @Component({
   selector: 'page-dashboard',
@@ -22,10 +25,12 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
   piePatternSrc: string;
   piePatternImg: any;
   pieStyle: any;
-
+  dataHome: any;
+  user: any;
   constructor(
     store: Store<IAppState>,
-    httpSv: HttpService
+    httpSv: HttpService,
+    private homeService: HomeService
   ) {
     super(store, httpSv);
 
@@ -59,17 +64,41 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
     };
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = await UserStorage.getUser();
     super.ngOnInit();
-
     this.getData('assets/data/last-appointments.json', 'appointments', 'setLoaded');
-
-    this.setHSOptions();
+    await this.loadHome();
+/*     this.setDOptions(); */
+   /*  this.setHSOptions();
     this.setPAOptions();
     this.setPGOptions();
     this.setDOptions();
     this.setPIOptions();
-    this.setHEOptions();
+    this.setHEOptions(); */
+  }
+
+  async loadHome() {
+    try {
+      GlobalService.ShowSweetLoading();
+      const home: any = await this.homeService.index();
+      /* const homeData = home; */
+      this.dataHome = home;
+      console.log('dataHome', this.dataHome);
+    /*   this.setHSOptions();
+ */
+      this.setPAOptions(home.patient_ages);
+      this.setPGOptions(home.patient_gender);
+      this.setDOptions(home.specialties);
+      
+     /*  this.setPIOptions();
+      this.setHEOptions();
+ */
+      GlobalService.CloseSweet();
+    } catch (error) {
+      console.error("error", error);
+      GlobalService.CloseSweet();
+    }
   }
 
   ngOnDestroy() {
@@ -161,7 +190,7 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
     };
   }
 
-  setPAOptions() {
+  setPAOptions(data) {
     this.paOptions = {
       grid: {
         left: 0,
@@ -197,19 +226,13 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
             }
           }
         },
-        data:[
-          { value: 347, name: '0-10' },
-          { value: 310, name: '10-20' },
-          { value: 234, name: '20-30' },
-          { value: 195, name: '30-40' },
-          { value: 670, name: '40+' }
-        ],
+        data: data,
         itemStyle: this.pieStyle
       }]
     };
   }
 
-  setPGOptions() {
+  setPGOptions(data) {
     this.pgOptions = {
       grid: {
         left: 0,
@@ -245,16 +268,13 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
             }
           }
         },
-        data:[
-          { value: 154, name: 'Femenino' },
-          { value: 173, name: 'Masculino' }
-        ],
+        data: data,
         itemStyle: this.pieStyle
       }]
     };
   }
 
-  setDOptions() {
+  setDOptions(data) {
     this.dOptions = {
       grid: {
         left: 0,
@@ -276,13 +296,13 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
             show: false
           }
         },
-        data:[
+        data: data/* [
           { value: 115, name: 'Cardiología' },
           { value: 173, name: 'Odontología' },
           { value: 154, name: 'Laboratorio' },
           { value: 180, name: 'Neumología' },
           { value: 219, name: 'Ginecología' }
-        ],
+        ] */,
         itemStyle: this.pieStyle
       }]
     };

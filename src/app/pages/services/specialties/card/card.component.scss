@@ -9,6 +9,9 @@ $_animation: $animation;
 $_sl-color: inherit;
 $_sl-color-hover: accent-palette(500);
 
+img{
+  height: 236px;
+}
 
 :host {
   background: $_bg;

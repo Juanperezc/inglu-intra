@@ -1,0 +1,48 @@
+[
+  {
+    "title": "Servicios",
+    "groupTitle": true,
+    "largeTitle" : true
+  },
+  {
+    "title": "Inicio",
+    "icon": {
+      "class": "icofont-thermometer-alt"
+    },
+    "routing": "default-dashboard"
+  },
+  {
+    "title": "Citas",
+    "groupTitle": true
+  },
+  {
+    "title": "Citas medicas",
+    "icon": {
+      "class": "icofont-stethoscope-alt"
+    },
+    "routing": "appointments"
+  },
+  {
+    "title": "Gestión de usuarios",
+    "groupTitle": true
+  },
+  {
+    "title": "Pacientes",
+    "icon": {
+      "class": "icofont-paralysis-disability"
+    },
+    "routing": "patients"
+  },
+  {
+    "title": "Otros",
+    "groupTitle": true
+  },
+  {
+    "title": "Calendario",
+    "routing": "events-calendar",
+    "icon": {
+      "class": "icofont-calendar"
+    }
+  }
+
+]

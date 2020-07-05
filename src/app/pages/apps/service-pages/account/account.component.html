@@ -145,8 +145,6 @@
       class="new-doctor-form mb-4"
       (ngSubmit)="saveMedicalData(userMedicalForm)"
     >
-    
-    
 
     <tc-form-group>
       <tc-form-label>Tipo de sangre</tc-form-label>
@@ -155,26 +153,33 @@
         [options]="blood_types"
       ></tc-select>
     </tc-form-group>
-      <tc-form-group>
+   <!--    <tc-form-group>
         <tc-form-label>Estado del paciente</tc-form-label>
         <tc-input  formControlName="patient_status"></tc-input>
       </tc-form-group>
-
+ -->
       <tc-form-group>
-        <tc-form-label>Patologias</tc-form-label>
-        <tc-textarea formControlName="pathologies"></tc-textarea>
+        <tc-form-label>Patologías</tc-form-label>
+        <ng-select [multiple]="true"  formControlName="pathologies">
+          <ng-option *ngFor="let pat of pathologies" [value]="pat.name" >{{pat.name}}</ng-option>
+     <!--      <ng-option [value]="'custom'">Custom</ng-option> -->
+      </ng-select>
+      <!-- 
+        <tc-textarea formControlName="pathologies"></tc-textarea> -->
       </tc-form-group>
 
       <tc-form-group>
-        <tc-form-label>Tratamientos</tc-form-label>
+        <tc-form-label>Tratamientos anteriores</tc-form-label>
         <tc-textarea formControlName="treatments"></tc-textarea>
       </tc-form-group>
 
-      <tc-form-group>
+
+
+  <!--     <tc-form-group>
         <tc-form-label>Record</tc-form-label>
         <tc-textarea formControlName="record"></tc-textarea>
-      </tc-form-group>
-      
+      </tc-form-group> -->
+      <!-- historial aqui -->
 
       <!--     <tc-form-group>
         <tc-form-label>Ultimas visitas</tc-form-label>
@@ -193,26 +198,22 @@
           Guardar
           </button>
         </div>
-        <!--   <div class="col text-right">
-          <button
-            tc-button
-            [type]="'button'"
-            [view]="'error'"
-            [outline]="true"
-          >
-            Eliminar cuenta
-          </button>
-        </div> -->
       </div>
     </form>
-      <!--     <form
+    <h4>Historial de citas</h4>
+    <div class="row">
+      <table-component
+      [searchTable]="false"
+      [url]="'/appointment/appointment_by_user/' + id"
+      [headers]="headerAppointments"
+    ></table-component>
+    </div>
+    <!--
+      <form
       [formGroup]="doctorForm"
       novalidate
       class="new-doctor-form mb-4"
-      (ngSubmit)="doctorFormSubmit(doctorForm)"
-      > -->
-     
-  
+      (ngSubmit)="doctorFormSubmit(doctorForm)"> -->
     </div>
 
     <!-- Datos del personal medico -->
@@ -274,9 +275,9 @@
       </div>
   
     </div>
-    <div *ngIf="editMe || editPatient || editDoctor">
+    <div *ngIf="editMe || userInfo.rol[0] == 'admin' && (editPatient || editDoctor)">
       <h4>Cambiar contraseña</h4>
-      <form
+      <form 
         [formGroup]="passwordForm"
         novalidate
         class="new-doctor-form mb-4"

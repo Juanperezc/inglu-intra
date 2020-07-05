@@ -76,6 +76,7 @@ import { PageClubTaskComponent } from '../pages/portal/club-tasks';
 import { PageClubInformationComponent } from '../pages/portal/club-information';
 import { PageClubInformationMainComponent } from '../pages/portal/club-main-information';
 import { PageClubSettingsComponent } from '../pages/portal/club-settings';
+import { ForgetPasswordComponent } from '../pages/forget-password/forget-password.component';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -148,12 +149,14 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'events', component: PageEventsComponent },
   { path: 'events-assistance', component: PageEventsAssistanceComponent },
 
-  { path: '**', component: Page404Component }
+  
 ];
 
 const PUBLIC_ROUTES: Routes = [
   { path: 'sign-in', component: SignInComponent },
-  { path: 'sign-up', component: SignUpComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: '**', component: Page404Component }
+  
 ];
 
 export const ROUTES: Routes = [
@@ -187,7 +190,7 @@ export const ROUTES: Routes = [
   },
   {
     path: '**',
-    component: VerticalLayoutComponent,
+    component: PublicLayoutComponent,
     children: VERTICAL_ROUTES
   }
 ];

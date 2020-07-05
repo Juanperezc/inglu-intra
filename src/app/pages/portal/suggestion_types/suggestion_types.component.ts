@@ -145,7 +145,7 @@ export class PageSuggestionTypesComponent extends BasePageComponent implements O
   }
   createSuggestionTypes(){
     this.currentPhoto = null;
-    this.openModal(this.modalBody, 'Crear tipo de sugerrencia', this.modalFooter)
+    this.openModal(this.modalBody, 'Crear tipo de sugerencia', this.modalFooter)
   }
   async handleActionEmit(event: IHandleAction){
     console.log('emit', event);

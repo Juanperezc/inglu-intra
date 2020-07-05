@@ -18,6 +18,7 @@ import { IHandleAction } from "../../../interfaces/handle-action";
 import { IOption } from "../../../ui/interfaces/option";
 import { ContactService } from "../../../services/http/ContactService.service";
 import { Router } from "@angular/router";
+import { UserService } from '../../../services/http/UserService.service';
 
 @Component({
   selector: "contacts-component",
@@ -31,8 +32,10 @@ export class PageContactComponent extends BasePageComponent
 
   data: any[];
   categoriesOption: Array<IOption> = new Array<IOption>();
+  appointmentForm: FormGroup;
   contactForm: FormGroup;
   statuses: Array<IOption>;
+  doctors: Array<IOption>;
   currentPhoto: string | ArrayBuffer;
   reload: number = 1;
   defaultAvatar: string;
@@ -44,7 +47,8 @@ export class PageContactComponent extends BasePageComponent
     private modal: TCModalService,
     private formBuilder: FormBuilder,
     private contactService: ContactService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     super(store, httpSv);
     this.statuses = new Array<IOption>();
@@ -162,6 +166,7 @@ export class PageContactComponent extends BasePageComponent
     /*  await this.loadCategories(); */
     super.ngOnInit();
     this.initForm(null);
+    await this.loadDoctors();
     this.getData("assets/data/appointments.json", "data", "setLoaded");
   }
 
@@ -182,6 +187,72 @@ export class PageContactComponent extends BasePageComponent
       header: header,
       footer: footer,
     });
+  }
+
+   // open modal window
+  openModalAppointment(
+    body: any,
+    header: any = null,
+    footer: any = null,
+    data: any = null
+  ) {
+    this.initForm(data);
+    this.modal.open({
+      body: body,
+      header: header,
+      footer: footer,
+    });
+  }
+
+  
+
+  // edit appointment
+  async editAppointment(row: any) {
+    await this.openModalAppointment(
+      this.modalBody,
+      "Editar cita",
+      this.modalFooter,
+      null
+    );
+  }
+
+
+    //loadDoctors
+    async loadDoctors() {
+      try {
+        GlobalService.ShowSweetLoading();
+        const doctors: any = await this.userService.index_doctors();
+        const dataDoctors = doctors.data;
+        if (dataDoctors) {
+          dataDoctors.forEach((doctor) => {
+            this.doctors.push({
+              label: doctor.name + " " + doctor.last_name,
+              value: doctor.id.toString(),
+            });
+          });
+        }
+        console.log(dataDoctors);
+        GlobalService.CloseSweet();
+      } catch (error) {
+        console.error("error", error);
+        GlobalService.CloseSweet();
+      }
+    }
+   // initForm
+  async initFormContact(data: any) {
+    console.log("data", data);
+    this.appointmentForm = this.formBuilder.group({
+      id: [data ? data.id : null],
+      condition: ["Primera cita"],
+      date: [ data ? GlobalService.formatDate(data.date.toString(), "YYYY-MM-DD HH:mm") : "", ],
+      contact_id: [data ? data.contact_id.toString() : ""],
+      medical_staff_id: [data ? data.medical_staff_id.toString() : ""],
+      user_workspace_id: [
+        data && data.user_workspace_id ? data.user_workspace_id.toString() : "",
+      ],
+      status: [data ? data.status.toString() : ""],
+    });
+   /*  console.log("this.appointmentForm", this.appointmentForm); */
   }
 
   // close modal window

@@ -1,0 +1,286 @@
+[
+ {
+   "name": "I. Renal Crónica",
+   "atenciones": "108"          
+ },
+ {
+   "name": "Cardiopatía Congénita",
+   "atenciones": "39"
+           },
+ {
+   "name": "Cánceres Infantiles",
+   "atenciones": "8"
+          },
+ {
+   "name": "C. Cervicouterino",
+   "atenciones": "137"          
+ },
+ {
+   "name": "Cuidados Paliativos (Cáncer)",
+   "atenciones": "612"          
+ },
+ {
+   "name": "Infarto Agudo del Miocardio",
+   "atenciones": "332"          
+ },
+ {
+   "name": "Diabetes Tipo 1",
+   "atenciones": "6"
+          },
+ {
+   "name": "Disrrafias Espinales",
+   "atenciones": "3"
+          },
+ {
+   "name": "Escoliosis",
+   "atenciones": "20"
+           },
+ {
+   "name": "Cáncer de Mama",
+   "atenciones": "137"          
+ },
+ {
+   "name": "Cataratas",
+   "atenciones": "2.03          6"
+ },
+ {
+   "name": "Endoprótesis de Cadera",
+   "atenciones": "65"
+           },
+ {
+   "name": "Fisura Labiopalatina ",
+   "atenciones": "5"
+          },
+ {
+   "name": "Esquizofrenia",
+   "atenciones": "23"
+           },
+ {
+   "name": "Cáncer Testicular",
+   "atenciones": "35"
+           },
+ {
+   "name": "Linfoma Adulto",
+   "atenciones": "10"
+           },
+ {
+   "name": "VIH / Sida",
+   "atenciones": "20"
+           },
+ {
+   "name": "Implantación Marcapaso",
+   "atenciones": "77"
+           },
+ {
+   "name": "Epilepsia no Refractaria",
+   "atenciones": "42"
+           },
+ {
+   "name": "Prematurez",
+   "atenciones": "425"          
+ },
+ {
+   "name": "Hipertensión Arterial",
+   "atenciones": "4.55          1"
+ },
+ {
+   "name": "Diabetes Tipo 2",
+   "atenciones": "2.96          8"
+ },
+ {
+   "name": "Neumonia",
+   "atenciones": "638"          
+ },
+ {
+   "name": "Salud Oral 6 años",
+   "atenciones": "3.58          0"
+ },
+ {
+   "name": "Infección Respiratoria Aguda Infantil ",
+   "atenciones": "7.10          1"
+ },
+ {
+   "name": "Colecistectomía",
+   "atenciones": "644"          
+ },
+ {
+   "name": "Cáncer Gástrico",
+   "atenciones": "89"
+           },
+ {
+   "name": "Cáncer de Próstata",
+   "atenciones": "193"          
+ },
+ {
+   "name": "Vicios de Refracción",
+   "atenciones": "5.52          0"
+ },
+ {
+   "name": "Estrabismo",
+   "atenciones": "80"
+           },
+ {
+   "name": "Retinopatía Diabética",
+   "atenciones": "937"          
+ },
+ {
+   "name": "Desprendimiento de Retina",
+   "atenciones": "35"
+           },
+ {
+   "name": "Hemofilia",
+   "atenciones": "0"
+          },
+ {
+   "name": "Depresión ",
+   "atenciones": "2.46          1"
+ },
+ {
+   "name": "Hiperplasia de Próstata",
+   "atenciones": "141"          
+ },
+ {
+   "name": "Ortesis",
+   "atenciones": "3.73          8"
+ },
+ {
+   "name": "Accidente Cerebrovascular",
+   "atenciones": "1.10          6"
+ },
+ {
+   "name": "Enfermedad Pulmonar Obstructiva Crónica",
+   "atenciones": "310"          
+ },
+ {
+   "name": "Asma Bronquial",
+   "atenciones": "435"          
+ },
+ {
+   "name": "S. Dif. Respiratoria Recién Nacido",
+   "atenciones": "45"
+           },
+ {
+   "name": "Artrosis Cadera/Rodilla",
+   "atenciones": "2.46          9"
+ },
+ {
+   "name": "Hemorragia Subaracnoidea",
+   "atenciones": "41"
+           },
+ {
+   "name": "Tumor Sist. Nervioso Central",
+   "atenciones": "17"
+           },
+ {
+   "name": "Hernia del Núcleo Pulposo Lumbar",
+   "atenciones": "46"
+           },
+ {
+   "name": "Leucemia",
+   "atenciones": "3"
+          },
+ {
+   "name": "Urgencia Odontológica",
+   "atenciones": "17.3          76"
+ },
+ {
+   "name": "Salud Oral 60 años",
+   "atenciones": "1.31          1"
+ },
+ {
+   "name": "Politraumatizado grave",
+   "atenciones": "50"
+           },
+ {
+   "name": "Traumatismo Encefalocraneano",
+   "atenciones": "156"          
+ },
+ {
+   "name": "Trauma Ocular",
+   "atenciones": "94"
+           },
+ {
+   "name": "Fibrosis Quística",
+   "atenciones": "1"
+          },
+ {
+   "name": "Artritis Reumatoidea",
+   "atenciones": "108"          
+ },
+ {
+   "name": "Tratamiento Consumo Alcohol y Drogas",
+   "atenciones": "63"
+           },
+ {
+   "name": "Analgesia del Parto",
+   "atenciones": "1.45          6"
+ },
+ {
+   "name": "Gran Quemado",
+   "atenciones": "2"
+          },
+ {
+   "name": "Hipoacusia Bilateral",
+   "atenciones": "1.36          3"
+ },
+ {
+   "name": "Hernia Abdominal",
+   "atenciones": "-"
+          },
+ {
+   "name": "Asma Adulto",
+   "atenciones": "1.89          0"
+ },
+ {
+   "name": "Enfermedad de Parkinson",
+   "atenciones": "202"          
+ },
+ {
+   "name": "Epilepsia no Refractaria Mayores 15 años",
+   "atenciones": "359"          
+ },
+ {
+   "name": "Enfermedad de Gaucher",
+   "atenciones": "-"
+          },
+ {
+   "name": "Artritis Ideopática Juvenil",
+   "atenciones": "12"
+           },
+ {
+   "name": "Prevención Secundaria Insuficiencia Renal",
+   "atenciones": "1.73          0"
+ },
+ {
+   "name": "Atención Odontológica Integral Embarazada",
+   "atenciones": "4.80          0"
+ },
+ {
+   "name": "Displasia Luxante de Cadera en el Recién Nacido y Menor de 1 Año",
+   "atenciones": "317"          
+ },
+ {
+   "name": "Retinopatía del Prematuro",
+   "atenciones": "1"
+          },
+ {
+   "name": "Displasia Broncopulmonar del Prematuro",
+   "atenciones": "8"
+          },
+ {
+   "name": "Hipoacusia Neurosensorial Bilateral del Prematuro",
+   "atenciones": "1"
+          },
+ {
+   "name": "Esclerosis Múltiple Recurrente Remitente",
+   "atenciones": "3"
+          },
+ {
+   "name": "Hepatitis B",
+   "atenciones": "2"
+          },
+ {
+   "name": "Hepatitis C",
+   "atenciones": "1"
+          }
+]

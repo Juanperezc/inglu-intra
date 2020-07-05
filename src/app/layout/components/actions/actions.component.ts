@@ -5,6 +5,7 @@ import { HttpService } from '../../../services/http/http.service';
 import { UserService } from '../../../services/http/UserService.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserStorage } from '../../../services/util/UserStorage.service';
+import { NotificationService } from '../../../services/http/NotificationService.service';
 
 @Component({
   selector: 'actions',
@@ -18,11 +19,12 @@ export class ActionsComponent implements OnInit {
   files: any[];
   closeDropdown: EventEmitter<boolean>;
   @Input() layout: string;
-
+  
   constructor(
     private httpSv: HttpService,
     private router: Router,
     private userService: UserService,
+    private notificationService: NotificationService,
     private ngxSpinner: NgxSpinnerService
   ) {
     this.notifications = [];
@@ -32,12 +34,44 @@ export class ActionsComponent implements OnInit {
     this.layout = 'vertical';
   }
 
+
+  getUnReadNotification(){
+   return this.notifications.filter((res) => {
+     if (res.read_at == null){
+       return res;
+     }
+   })
+  }
   async ngOnInit() {
     this.user = await UserStorage.getUser();
-    this.getData('assets/data/navbar-notifications.json', 'notifications');
+  
+    this.notifications = this.user.notifications;
+  /*   this.readNotifications(); */
+    /* this.getData('assets/data/navbar-notifications.json', 'notifications'); */
     this.getData('assets/data/navbar-messages.json', 'messages');
     this.getData('assets/data/navbar-files.json', 'files');
+    
   }
+
+  getImgFromType(type){
+    return this.notificationService.getImgFromType(type);
+  }
+
+  getTitleFromType(type){
+    return this.notificationService.getTitleFromType(type);
+  }
+
+  async readNotifications(){
+    try {
+     const userResponse: any = await this.notificationService.read_notifications();
+     await UserStorage.setUser(userResponse.data);
+     this.notifications = userResponse.data.notifications
+    
+    } catch (error) {
+   /*    await this.globalService.closeLoading(); */
+    }
+  }
+
   async logout(){
     event.preventDefault();
     this.onCloseDropdown();

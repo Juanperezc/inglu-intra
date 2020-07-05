@@ -19,6 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptorService } from './services/util/auth-interceptor.service';
 import { AuthGuardService } from './services/util/auth-guard.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -27,6 +28,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+ 
     SweetAlert2Module.forRoot(),
     RouterModule.forRoot(ROUTES),
     StoreModule.forRoot({

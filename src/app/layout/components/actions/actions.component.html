@@ -1,26 +1,37 @@
 <tc-dropdown class="item">
-  <tc-dropdown-button>
-    <tc-icon [iconClass]="'icofont icofont-notification'" [tcFontSize]="26"></tc-icon>
-    <tc-badge *ngIf="notifications && notifications.length" [view]="'error'" [size]="'sm'">
-      {{ notifications.length }}
+  <tc-dropdown-button (click)="readNotifications()">
+    <tc-icon
+      [iconClass]="'icofont icofont-notification'"
+      [tcFontSize]="26"
+    ></tc-icon>
+    <tc-badge
+      *ngIf="notifications && getUnReadNotification().length"
+      [view]="'error'"
+      [size]="'sm'"
+    >
+      {{ getUnReadNotification().length }}
     </tc-badge>
   </tc-dropdown-button>
 
-  <tc-dropdown-content [align]="'right'" [animation]="'fadeInUp'" [offset]="[10, 0]">
+  <tc-dropdown-content
+    [align]="'right'"
+    [animation]="'fadeInUp'"
+    [offset]="[10, 0]"
+  >
     <div class="menu-header">
       <h4 class="h5 menu-title mt-0 mb-0">Notificaciones</h4>
 
-    <!--   <a href="#" (click)="$event.preventDefault(); notifications = []" [tcColor]="['#ed5564', '#8E333C']">Limpiar todo</a> -->
+      <!--   <a href="#" (click)="$event.preventDefault(); notifications = []" [tcColor]="['#ed5564', '#8E333C']">Limpiar todo</a> -->
     </div>
 
     <ul class="list">
       <ng-container *ngIf="notifications && notifications.length">
         <li *ngFor="let item of notifications">
-          <a href="#">
-            <span class="icon {{ item.icon }}"></span>
+          <a>
+            <span class="icon {{ getImgFromType(item.type) }}"></span>
 
             <div class="content">
-              <span class="desc">{{ item.title }}</span>
+              <span class="desc">{{getTitleFromType(item.type)}}</span>
 
               <span class="date">{{ item.date }}</span>
             </div>
@@ -28,8 +39,8 @@
         </li>
       </ng-container>
 
-      <li *ngIf="!notifications || (notifications.length === 0)">
-        <span class="empty-item">No notifications</span>
+      <li *ngIf="!notifications || notifications.length === 0">
+        <span class="empty-item">No tienes notificaciones</span>
       </li>
     </ul>
 
@@ -51,35 +62,51 @@
 <tc-dropdown class="item" [close]="closeDropdown">
   <tc-dropdown-button>
     <div class="d-flex align-items-center">
-      <tc-avatar [src]="(user && user.profile_pic) ? user.profile_pic : '/assets/content/avatar.jpeg'" class="mr-1"></tc-avatar>
+      <tc-avatar
+        [src]="
+          user && user.profile_pic
+            ? user.profile_pic
+            : '/assets/content/avatar.jpeg'
+        "
+        class="mr-1"
+      ></tc-avatar>
       <i class="icofont-simple-down"></i>
     </div>
   </tc-dropdown-button>
 
-  <tc-dropdown-content [align]="'right'" [animation]="'fadeInUp'" [offset]="[10, 0]" [width]="180">
+  <tc-dropdown-content
+    [align]="'right'"
+    [animation]="'fadeInUp'"
+    [offset]="[10, 0]"
+    [width]="180"
+  >
     <ul class="list">
       <li>
-        <a href="#" (click)="goTo($event, 'edit-account')" class="align-items-center">
+        <a
+          href="#"
+          (click)="goTo($event, 'edit-account')"
+          class="align-items-center"
+        >
           <span class="icon icofont-ui-home"></span>
           Editar cuenta
         </a>
       </li>
 
-     <!--  <li>
+      <!--  <li>
         <a href="#" (click)="goTo($event, 'user-profile')" class="align-items-center">
           <span class="icon icofont-ui-user"></span>
          Perfil
         </a>
       </li> -->
 
-    <!--   <li>
+      <!--   <li>
         <a href="#" (click)="goTo($event, 'events-calendar')" class="align-items-center">
           <span class="icon icofont-ui-calendar"></span>
           Calendar
         </a>
       </li> -->
 
-     <!--  <li>
+      <!--  <li>
         <a href="#" (click)="goTo($event, 'settings')" class="align-items-center">
           <span class="icon icofont-ui-settings"></span>
           Settings

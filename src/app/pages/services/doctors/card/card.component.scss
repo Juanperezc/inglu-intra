@@ -9,6 +9,10 @@ $_animation: $animation;
 $_sl-color: inherit;
 $_sl-color-hover: accent-palette(500);
 
+img{
+  height: 236px;
+}
+
 :host {
   background: $_bg;
   border-radius: $_shape;
@@ -16,6 +20,7 @@ $_sl-color-hover: accent-palette(500);
   display: block;
   margin: 0 auto $_module-rem * 2;
   max-width: 400px;
+  
   text-align: center;
   transition: box-shadow .2s $_animation;
 

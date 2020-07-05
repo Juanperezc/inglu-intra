@@ -83,14 +83,21 @@
 <ng-container>
   <ng-template #modalBodyTreatment>
     <form [formGroup]="treatmentForm" novalidate>
+     <!--  <h5>Notas</h5> -->
       <tc-form-group>
-        <span class="tc-placeholder"><b>Descripcion</b></span>
+        <span class="tc-placeholder"><b>Medicamentos</b></span>
+        <tc-textarea  formControlName="medicine"></tc-textarea>
+     </tc-form-group>
+      <!--   <h5>Tratamientos</h5>
+         -->
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Observación:</b></span>
         <tc-textarea  formControlName="description"></tc-textarea>
       </tc-form-group>
-      <tc-form-group>
+     <!--  <tc-form-group>
           <span class="tc-placeholder"><b>Medicamentos</b></span>
           <tc-textarea  formControlName="medicine"></tc-textarea>
-      </tc-form-group>
+      </tc-form-group> -->
     </form>
   </ng-template>
   <ng-template #modalFooterTreatment>

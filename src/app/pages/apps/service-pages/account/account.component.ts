@@ -36,6 +36,9 @@ export class PageAccountComponent extends BasePageComponent
   @ViewChild("modalFooterWorkspace") modalFooterWorkspace: ElementRef<any>;
 
   id: number | string;
+  headerAppointments = [];
+  selectedCars = [3];
+  pathologies = [];
   title: string = null;
   userMedicalInfo: any;
   userInfo: any;
@@ -77,11 +80,97 @@ export class PageAccountComponent extends BasePageComponent
     private formBuilder: FormBuilder
   ) {
     super(store, httpSv);
+
+    this.headerAppointments = [
+      {
+        columnName: "patient_id",
+        columnTitle: "Tipo",
+        formatter: (value) => {
+          return value ? "Estándar" : "Contacto"
+        },
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "text",
+        tcActions: [],
+      },
+      {
+        columnName: "date",
+        formatter: (value) => {
+          return GlobalService.formatDate(value, "DD-MM-YYYY HH:mm");
+        },
+        columnTitle: "Fecha",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "text",
+        tcActions: [],
+      },
+      {
+        columnName: "doctor",
+        columnTitle: "Medico",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "text",
+        tcActions: [],
+      },
+      {
+        columnName: "treatment_medicine",
+        columnTitle: "Tratamiento",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "text",
+        tcActions: [],
+      },
+      {
+        columnName: "treatment_description",
+        columnTitle: "Observaciones",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "text",
+        tcActions: [],
+      },
+      {
+        columnName: "condition",
+        columnTitle: "Condicion",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "text",
+        tcActions: [],
+      },
+      {
+        columnName: "status",
+        columnTitle: "Estatus",
+        iconClass: "appointment_event",
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "badge",
+        tcActions: [],
+      },
+      {
+        columnName: "updated_at",
+        columnTitle: "Ultima actualización",
+        formatter: (value) => {
+          return GlobalService.formatDate(value, "DD-MM-YYYY HH:mm");
+        },
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "text",
+        tcActions: [],
+      },
+    ];
+
+    
     const lastRoute =
       this.activatedRoute.snapshot &&
       this.activatedRoute.snapshot.url &&
       this.activatedRoute.snapshot.url[0].path;
-    this.id =
+      this.id =
       this.activatedRoute.snapshot &&
       this.activatedRoute.snapshot.params &&
       this.activatedRoute.snapshot.params["id"];
@@ -181,6 +270,10 @@ export class PageAccountComponent extends BasePageComponent
         value: "A+",
       },
       {
+        label: "A-",
+        value: "A-",
+      },
+      {
         label: "B+",
         value: "B+",
       },
@@ -195,14 +288,6 @@ export class PageAccountComponent extends BasePageComponent
       {
         label: "AB-",
         value: "AB-",
-      },
-      {
-        label: "OB+",
-        value: "OB+",
-      },
-      {
-        label: "OB-",
-        value: "OB-",
       },
     ];
     this.headersSpecialty = [
@@ -413,6 +498,9 @@ export class PageAccountComponent extends BasePageComponent
   }
   async ngOnInit() {
     this.max = new Date();
+
+    this.getData('assets/json/pathologies.json', 'pathologies', 'setLoaded');
+
     this.loadSpecialties();
     if (this.editMe) {
       this.userInfo = await UserStorage.getUser();
@@ -519,10 +607,10 @@ export class PageAccountComponent extends BasePageComponent
     console.log("data", data);
     this.userMedicalForm = this.formBuilder.group({
       blood_type: [data && data.blood_type],
-      patient_status: [data && data.patient_status],
+    /*   patient_status: [data && data.patient_status], */
       pathologies: [data && data.pathologies],
       treatments: [data && data.treatments],
-      record: [data && data.record],
+   /*    record: [data && data.record], */
     });
   }
   async loadSpecialties() {
@@ -759,7 +847,9 @@ export class PageAccountComponent extends BasePageComponent
   async saveMedicalData(form: FormGroup) {
     if (form.valid) {
       this.userMedicalInfo = form.value;
+      console.log('userMedicalInfo: ', this.userMedicalInfo);
       await this.updateMedicalUser(this.userInfo.id, this.userMedicalInfo);
+      
       /*  this.changes = false; */
     }
   }
