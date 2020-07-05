@@ -124,6 +124,9 @@ export class TableComponent implements OnInit {
            case 2: {
             return "Agendado";
           }
+          case 3: {
+            return "Rechazado";
+          }
          }
        }
       else if (type == "sc"){

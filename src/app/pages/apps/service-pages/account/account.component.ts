@@ -36,6 +36,7 @@ export class PageAccountComponent extends BasePageComponent
   @ViewChild("modalFooterWorkspace") modalFooterWorkspace: ElementRef<any>;
 
   id: number | string;
+  public user: any;
   headerAppointments = [];
   selectedCars = [3];
   pathologies = [];
@@ -86,7 +87,7 @@ export class PageAccountComponent extends BasePageComponent
         columnName: "patient_id",
         columnTitle: "Tipo",
         formatter: (value) => {
-          return value ? "Estándar" : "Contacto"
+          return value != 0 ? "Estándar" : "Contacto";
         },
         iconClass: null,
         tcColor: null,
@@ -473,9 +474,9 @@ export class PageAccountComponent extends BasePageComponent
     this.userWorkspaceForm = this.formBuilder.group({
       id: [data ? data.id : null],
       specialty: [data ? data.specialty : "", null],
-      location: [data ? data.location : "", Validators.required],
-      start_time: [data ? data.start_time : "", Validators.required],
-      end_time: [data ? data.end_time : "", Validators.required],
+      location: [data ? data.location : "", null],
+      start_time: [data ? data.start_time : "", null],
+      end_time: [data ? data.end_time : "", null],
       day: [data ? data.day : "", null],
     });
     console.log("initForm", this.userWorkspaceForm);
@@ -498,7 +499,7 @@ export class PageAccountComponent extends BasePageComponent
   }
   async ngOnInit() {
     this.max = new Date();
-
+    this.user =  await UserStorage.getUser();
     this.getData('assets/json/pathologies.json', 'pathologies', 'setLoaded');
 
     this.loadSpecialties();

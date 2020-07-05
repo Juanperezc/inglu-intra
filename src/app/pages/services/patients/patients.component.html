@@ -1,7 +1,7 @@
 
 <table-component [url]="'/user/index_patient'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
 
-<div class="add-action-box">
+<div class="add-action-box" *ngIf="user && user.rol[0] == 'admin'">
   <button
     tc-button
     [afterIcon]="'icofont-paralysis-disability'"

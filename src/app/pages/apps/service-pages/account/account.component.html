@@ -32,6 +32,7 @@
             [view]="'accent'"
             [outline]="true"
             (click)="fileInput.click()"
+            [disabled]="((user && user.rol[0] == 'admin') || (editMe)) ? false :true"
           >
             Cambiar foto
           </button>
@@ -55,13 +56,14 @@
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Nombre</tc-form-label>
-        <tc-input [placeholder]="'Nombre'" formControlName="name"></tc-input>
+        <tc-input [placeholder]="'Nombre'" formControlName="name" [disabled]="((user && user.rol[0] == 'admin') || (editMe)) ? false :true"></tc-input>
       </tc-form-group>
       <tc-form-group>
         <tc-form-label>Apellido</tc-form-label>
         <tc-input
           [placeholder]="'Apellido'"
           formControlName="last_name"
+          [disabled]="((user && user.rol[0] == 'admin') || (editMe)) ? false :true"
         ></tc-input>
       </tc-form-group>
       <div class="row">
@@ -72,6 +74,7 @@
               [placeholder]="'Fecha de nacimiento'"
               formControlName="date_of_birth"
               [max]="max"
+              [disabled]="((user && user.rol[0] == 'admin') || (editMe)) ? false :true"
             ></tc-datepicker>
           </tc-form-group>
         </div>
@@ -82,6 +85,7 @@
               [placeholder]="'Genero'"
               formControlName="gender"
               [options]="gender"
+              [disabled]="((user && user.rol[0] == 'admin') || (editMe)) ? false :true"
             ></tc-select>
           </tc-form-group>
         </div>
@@ -89,12 +93,18 @@
 
       <tc-form-group>
         <tc-form-label>Teléfono</tc-form-label>
-        <tc-input [placeholder]="'Teléfono'" formControlName="phone"></tc-input>
+        <tc-input 
+        [placeholder]="'Teléfono'" 
+        formControlName="phone"
+        [disabled]="((user && user.rol[0] == 'admin') || (editMe)) ? false :true"
+        ></tc-input>
       </tc-form-group>
 
       <tc-form-group>
         <tc-form-label>Dirección</tc-form-label>
-        <tc-textarea formControlName="address"></tc-textarea>
+        <tc-textarea 
+        formControlName="address"
+        [disabled]="((user && user.rol[0] == 'admin') || (editMe)) ? false :true"></tc-textarea>
       </tc-form-group>
 
       <!--     <tc-form-group>
@@ -102,16 +112,17 @@
         <tc-input [placeholder]="'Ultimas visitas'" formControlName="lastVisit" [readonly]="true"></tc-input>
       </tc-form-group> -->
 
-      <tc-form-group *ngIf="editPatient || editDoctor">
+      <tc-form-group *ngIf="(user && user.rol[0] == 'admin') && (editPatient || editDoctor)">
         <tc-form-label>Estatus</tc-form-label>
         <tc-select
           [placeholder]="'Estatus'"
           formControlName="status"
           [options]="status"
+          
         ></tc-select>
       </tc-form-group>
 
-      <div class="row">
+      <div *ngIf="(user && user.rol[0] == 'admin') || (editMe)"class="row">
         <div class="col">
           <button
             tc-button
@@ -217,7 +228,7 @@
     </div>
 
     <!-- Datos del personal medico -->
-    <div *ngIf="editDoctor">
+    <div *ngIf="editDoctor || editMe" >
       <h4>Datos del personal</h4>
       <div class="row">
         <div class="col-12 col-sm-12">
@@ -275,7 +286,7 @@
       </div>
   
     </div>
-    <div *ngIf="editMe || userInfo.rol[0] == 'admin' && (editPatient || editDoctor)">
+    <div *ngIf="editMe ||  ((user && user.rol[0] == 'admin') && (editPatient || editDoctor))">
       <h4>Cambiar contraseña</h4>
       <form 
         [formGroup]="passwordForm"

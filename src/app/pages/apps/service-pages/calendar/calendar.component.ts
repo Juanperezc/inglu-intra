@@ -11,6 +11,7 @@ import { Content } from '../../../../ui/interfaces/modal';
 import { GlobalService } from '../../../../services/util/GlobalService.service';
 import { EventUserService } from '../../../../services/http/EventUserService.service';
 import { AppointmentService } from '../../../../services/http/AppointmentService.service';
+import { UserStorage } from '../../../../services/util/UserStorage.service';
 
 @Component({
   selector: 'page-calendar',
@@ -18,6 +19,8 @@ import { AppointmentService } from '../../../../services/http/AppointmentService
   styleUrls: ['./calendar.component.scss']
 })
 export class PageCalendarComponent extends BasePageComponent implements OnInit, OnDestroy {
+  
+  user: any;
   calendarOptions: Options;
   calendarEvents: any[];
   eventBody: any;
@@ -133,7 +136,10 @@ export class PageCalendarComponent extends BasePageComponent implements OnInit, 
 
   async ngOnInit() {
     super.ngOnInit();
-     await this.loadEvents(); 
+    this.user = await UserStorage.getUser();
+    if (this.user.rol[0] == "admin"){
+      await this.loadEvents(); 
+    }
     await this.loadAppointments();
     setTimeout(() => {
       this.reloadCalendarOptions();

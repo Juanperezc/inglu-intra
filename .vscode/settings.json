@@ -4,6 +4,7 @@
         "current",
         "ngrx",
         "picture",
+        "spinner",
         "toastr"
     ],
     "cSpell.enableFiletypes": [

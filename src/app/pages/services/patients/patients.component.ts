@@ -12,6 +12,7 @@ import { IHandleAction } from '../../../interfaces/handle-action';
 import { IOption } from '../../../ui/interfaces/option';
 import { PatientService } from '../../../services/http/PatientService.service';
 import { Router } from '@angular/router';
+import { UserStorage } from '../../../services/util/UserStorage.service';
 
 @Component({
   selector: 'patients-component',
@@ -22,6 +23,7 @@ export class PagePatientsComponent extends BasePageComponent implements OnInit, 
   @ViewChild('modalBody') modalBody: ElementRef<any>;
   @ViewChild('modalFooter') modalFooter: ElementRef<any>;
 
+  user: any = null;
   data: any[];
   categoriesOption: Array<IOption> = new Array<IOption>();
   patientForm: FormGroup;
@@ -53,92 +55,7 @@ export class PagePatientsComponent extends BasePageComponent implements OnInit, 
       label: "Agendado",
       value: "2"
     })
-    this.headers = [
-      {
-        columnName: "name",
-        columnTitle: "Nombre",
-        iconClass: null,
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
-      },
-      {
-        columnName: "last_name",
-        columnTitle: "Apellido",
-        iconClass: null,
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
-      },
-      {
-        columnName: "email",
-        columnTitle: "Correo",
-        iconClass: null,
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
-      },
-      {
-        columnName: "profile_pic",
-        columnTitle: "Foto",
-        iconClass: null,
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'img',
-        tcActions: []
-      },
-      {
-        columnName: "phone",
-        columnTitle: "Teléfono",
-        iconClass: null,
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
-      },
-      {
-        columnName: "updated_at",
-        columnTitle: "Ultima actualización",
-        iconClass: null,
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'text',
-        tcActions: []
-      },
-      {
-        columnName: "status",
-        columnTitle: "Estatus",
-        iconClass: "user",
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'badge',
-        tcActions: []
-      },
-      {
-        columnName: "actions",
-        columnTitle: "Acciones",
-        iconClass: null,
-        tcColor: null,
-        tcFontSize: null,
-        tcType: 'actions',
-        tcActions: [
-          {
-          afterIcon: 'icofont-ui-edit',
-          view: 'info',
-          size: 'sm',
-          handleClick: 'edit'
-        } ,
-        {
-          afterIcon: 'icofont-ui-delete',
-          view: 'error',
-          size: 'sm',
-          handleClick: 'remove'
-        } ]
-      }
-    ];
+  
 
     this.pageData = {
     loaded: true,
@@ -161,6 +78,93 @@ export class PagePatientsComponent extends BasePageComponent implements OnInit, 
 
   async ngOnInit() {
    /*  await this.loadCategories(); */
+   this.user = await UserStorage.getUser();
+   this.headers = [
+    {
+      columnName: "name",
+      columnTitle: "Nombre",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
+      columnName: "last_name",
+      columnTitle: "Apellido",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
+      columnName: "email",
+      columnTitle: "Correo",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
+      columnName: "profile_pic",
+      columnTitle: "Foto",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'img',
+      tcActions: []
+    },
+    {
+      columnName: "phone",
+      columnTitle: "Teléfono",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
+      columnName: "updated_at",
+      columnTitle: "Ultima actualización",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'text',
+      tcActions: []
+    },
+    {
+      columnName: "status",
+      columnTitle: "Estatus",
+      iconClass: "user",
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'badge',
+      tcActions: []
+    },
+    {
+      columnName: "actions",
+      columnTitle: "Acciones",
+      iconClass: null,
+      tcColor: null,
+      tcFontSize: null,
+      tcType: 'actions',
+      tcActions: [
+        {
+        afterIcon: (this.user.rol[0] == 'admin') ? 'icofont-ui-edit' : 'icofont-eye-alt',
+        view: 'info',
+        size: 'sm',
+        handleClick: 'edit'
+      } ,
+      {
+        afterIcon: 'icofont-ui-delete',
+        view: 'error',
+        size: 'sm',
+        handleClick: 'remove'
+      } ]
+    }
+  ];
     super.ngOnInit();
     this.initForm(null);
     this.getData('assets/data/appointments.json', 'data', 'setLoaded');

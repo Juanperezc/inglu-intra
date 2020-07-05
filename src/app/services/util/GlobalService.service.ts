@@ -23,6 +23,16 @@ export class GlobalService {
     });
     return result;
   }
+  static async SwalWarning(text = "No puedes realizar esta acción") {
+    const result = Swal.fire({
+      heightAuto: false,
+      title: "Advertencia",
+      text: text,
+      type: "warning",
+    }
+    );
+    return result;
+  }
   static async SwalCreateItem() {
     const result = Swal.fire({
       heightAuto: false,

@@ -19,6 +19,7 @@ import { IOption } from "../../../ui/interfaces/option";
 import { ContactService } from "../../../services/http/ContactService.service";
 import { Router } from "@angular/router";
 import { UserService } from '../../../services/http/UserService.service';
+import { AppointmentService } from '../../../services/http/AppointmentService.service';
 
 @Component({
   selector: "contacts-component",
@@ -30,9 +31,15 @@ export class PageContactComponent extends BasePageComponent
   @ViewChild("modalBody") modalBody: ElementRef<any>;
   @ViewChild("modalFooter") modalFooter: ElementRef<any>;
 
+
+  @ViewChild("modalBodyContact") modalBodyContact: ElementRef<any>;
+  @ViewChild("modalFooterContact") modalFooterContact: ElementRef<any>;
+
+
   data: any[];
   categoriesOption: Array<IOption> = new Array<IOption>();
   appointmentForm: FormGroup;
+  workspaces: Array<IOption>;
   contactForm: FormGroup;
   statuses: Array<IOption>;
   doctors: Array<IOption>;
@@ -48,6 +55,7 @@ export class PageContactComponent extends BasePageComponent
     private formBuilder: FormBuilder,
     private contactService: ContactService,
     private router: Router,
+    private appointmentService: AppointmentService,
     private userService: UserService
   ) {
     super(store, httpSv);
@@ -64,6 +72,11 @@ export class PageContactComponent extends BasePageComponent
       label: "Agendado",
       value: "2",
     });
+    this.statuses.push({
+      label: "Rechazado",
+      value: "3",
+    });
+    
     this.headers = [
       {
         columnName: "name",
@@ -128,6 +141,12 @@ export class PageContactComponent extends BasePageComponent
         tcType: "actions",
         tcActions: [
           {
+            afterIcon: "icofont-stethoscope-alt",
+            view: "warning",
+            size: "sm",
+            handleClick: "appointment",
+          },
+          {
             afterIcon: "icofont-ui-edit",
             view: "info",
             size: "sm",
@@ -138,7 +157,7 @@ export class PageContactComponent extends BasePageComponent
             view: "error",
             size: "sm",
             handleClick: "remove",
-          },
+          }
         ],
       },
     ];
@@ -157,17 +176,21 @@ export class PageContactComponent extends BasePageComponent
       ],
     };
 
-    /*  this.doctors = []; */
+    this.doctors = [];
+    this.workspaces = [];
     this.defaultAvatar = "assets/content/avatar.jpeg";
     this.currentPhoto = this.defaultAvatar;
   }
 
+
   async ngOnInit() {
     /*  await this.loadCategories(); */
-    super.ngOnInit();
     this.initForm(null);
+    this.initFormContact(null);
     await this.loadDoctors();
+    super.ngOnInit();
     this.getData("assets/data/appointments.json", "data", "setLoaded");
+
   }
 
   ngOnDestroy() {
@@ -196,7 +219,7 @@ export class PageContactComponent extends BasePageComponent
     footer: any = null,
     data: any = null
   ) {
-    this.initForm(data);
+    this.initFormContact(data);
     this.modal.open({
       body: body,
       header: header,
@@ -204,18 +227,49 @@ export class PageContactComponent extends BasePageComponent
     });
   }
 
+    //loadDoctors
+  async loadWorkspaces(id) {
+      try {
+        GlobalService.ShowSweetLoading();
+        const workspaces: any = await this.userService.show_workspace(id);
+        const dataWorkspaces = workspaces.data;
+        if (dataWorkspaces) {
+          dataWorkspaces.forEach((workspace) => {
+            this.workspaces.push({
+              label:
+                workspace.location +
+                " " +
+                workspace.day +
+                " / " +
+                workspace.start_time +
+                "-" +
+                workspace.end_time,
+              value: workspace.id.toString(),
+            });
+          });
+        }
   
+        GlobalService.CloseSweet();
+      } catch (error) {
+        console.error("error", error);
+        GlobalService.CloseSweet();
+      }
+    }
 
   // edit appointment
   async editAppointment(row: any) {
-    await this.openModalAppointment(
-      this.modalBody,
-      "Editar cita",
-      this.modalFooter,
-      null
-    );
+      await this.openModalAppointment(
+        this.modalBodyContact,
+        "Crear cita",
+        this.modalFooterContact,
+        row
+      );
   }
 
+    async handleMedicSelected(event) {
+      await this.loadWorkspaces(event);
+      console.log(event);
+    }
 
     //loadDoctors
     async loadDoctors() {
@@ -242,17 +296,14 @@ export class PageContactComponent extends BasePageComponent
   async initFormContact(data: any) {
     console.log("data", data);
     this.appointmentForm = this.formBuilder.group({
-      id: [data ? data.id : null],
+      id: [null],
       condition: ["Primera cita"],
-      date: [ data ? GlobalService.formatDate(data.date.toString(), "YYYY-MM-DD HH:mm") : "", ],
-      contact_id: [data ? data.contact_id.toString() : ""],
-      medical_staff_id: [data ? data.medical_staff_id.toString() : ""],
-      user_workspace_id: [
-        data && data.user_workspace_id ? data.user_workspace_id.toString() : "",
-      ],
-      status: [data ? data.status.toString() : ""],
+      date: [""],
+      contact_id: [data ? data.id.toString() : ""],
+      medical_staff_id: [""],
+      user_workspace_id: [""],
+      status: [""],
     });
-   /*  console.log("this.appointmentForm", this.appointmentForm); */
   }
 
   // close modal window
@@ -269,6 +320,10 @@ export class PageContactComponent extends BasePageComponent
     const row = event.row;
     const type = event.type;
     switch (type) {
+      case "appointment": {
+        this.editAppointment(row);
+        break;
+      }
       case "edit": {
         this.edit(row);
         break;
@@ -287,17 +342,17 @@ export class PageContactComponent extends BasePageComponent
   initForm(data: any) {
     this.contactForm = this.formBuilder.group({
       id: [data ? data.id : null],
-      id_card: [data ? data.id_card : "", Validators.required],
-      gender: [data ? data.gender == "male" ? "Masculino" : "Femenino"  : "", Validators.required],
-      email: [data ? data.email : "", Validators.required],
-      name: [data ? data.name : "", Validators.required],
-      last_name: [data ? data.last_name : "", Validators.required],
-      type: [data ? data.type : "", Validators.required],
-      address: [data ? data.address : "", Validators.required],
-      phone: [data ? data.phone : "", Validators.required],
-      date_of_birth: [data ? data.date_of_birth : "", Validators.required],
-      message: [data ? data.message : "", Validators.required],
-      status: [data ? data.status.toString() : "", Validators.required],
+      id_card: [data ? data.id_card : ""],
+      gender: [data ? data.gender == "male" ? "Masculino" : "Femenino"  : ""],
+      email: [data ? data.email : ""],
+      name: [data ? data.name : ""],
+      last_name: [data ? data.last_name : ""],
+      type: [data ? data.type : ""],
+      address: [data ? data.address : ""],
+      phone: [data ? data.phone : ""],
+      date_of_birth: [data ? data.date_of_birth : ""],
+      message: [data ? data.message : ""],
+      status: [data ? data.status.toString() : ""],
     });
   }
 
@@ -321,6 +376,7 @@ export class PageContactComponent extends BasePageComponent
   async saveContact(form: FormGroup) {
     if (form.valid) {
       let contact: any = form.value;
+      contact.gender = contact.gender == "Masculino" ? "male" : "female";
       if (contact.id == null) {
         delete contact.id;
         await this.storeContact(contact);
@@ -333,29 +389,49 @@ export class PageContactComponent extends BasePageComponent
       this.closeModal();
     }
   }
-  async storeContact(contactData: any) {
+
+  async saveAppointment(form: FormGroup) {
+    if (form.valid) {
+      let appointment: any = form.value;
+      if (appointment.id == null) {
+        delete appointment.id;
+        console.log('form', appointment)
+        this.storeAppointment(appointment);
+      /*   await this.storeContact(contact); */
+      }
+      console.log(appointment);
+     /*  this.closeModal(); */
+    }
+  }
+
+  async storeAppointment(contactData: any) {
     try {
       GlobalService.ShowSweetLoading();
-      const contact: any = await this.contactService.store(contactData);
+      const contact: any = await this.appointmentService.store(contactData);
       GlobalService.SwalCreateItem();
       this.reload++;
+      this.closeModal();
       /*  GlobalService.CloseSweet(); */
     } catch (error) {
       console.error("error", error);
       GlobalService.CloseSweet();
     }
   }
-  async deleteContact(id) {
+
+  async storeContact(contactData: any) {
     try {
       GlobalService.ShowSweetLoading();
-      const contact: any = await this.contactService.delete(id);
-      GlobalService.SwalDeleteItem();
+      const contact: any = await this.contactService.store(contactData);
+      GlobalService.SwalCreateItem();
       this.reload++;
+      this.closeModal();
+      /*  GlobalService.CloseSweet(); */
     } catch (error) {
       console.error("error", error);
       GlobalService.CloseSweet();
     }
   }
+
   async updateContact(id, contactData: any) {
     try {
       GlobalService.ShowSweetLoading();
@@ -367,4 +443,17 @@ export class PageContactComponent extends BasePageComponent
       GlobalService.CloseSweet();
     }
   }
+
+  async deleteContact(id) {
+    try {
+      GlobalService.ShowSweetLoading();
+      const contact: any = await this.contactService.delete(id);
+      GlobalService.SwalDeleteItem();
+      this.reload++;
+    } catch (error) {
+      console.error("error", error);
+      GlobalService.CloseSweet();
+    }
+  }
+ 
 }

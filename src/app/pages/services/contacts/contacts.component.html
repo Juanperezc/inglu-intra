@@ -1,19 +1,57 @@
 
 <table-component [url]="'/contacts'" [reload]="reload" [headers]="headers" (handleActionEmit)="handleActionEmit($event)"></table-component>
 
-<!-- <div class="add-action-box">
-  <button
-    tc-button
-    [afterIcon]="'icofont-ui-contact-list'"
-    [view]="'accent'"
-    [square]="true"
-    [tcShape]="500"
-    (click)="createContact()"
-  ></button>
-</div>  -->
+<!-- Modal window -->
+<ng-container *ngIf="appointmentForm" >
+  <ng-template #modalBodyContact>
+    <form [formGroup]="appointmentForm" novalidate>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Medico</b></span>
+        <tc-select
+        [placeholder]="'Selecciona un medico'"
+        [options]="doctors"
+        [selected]="appointmentForm.value.medical_staff_id"
+        formControlName="medical_staff_id"
+        (valueSelected)="handleMedicSelected($event)"
+        ></tc-select>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Ubicación</b></span>
+        <tc-select
+        [placeholder]="'Selecciona una Ubicación'"
+        [options]="workspaces"
+        [selected]="appointmentForm.value.user_workspace_id"
+        formControlName="user_workspace_id"
+        ></tc-select>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Fecha de cita</b></span>
+        <tc-datepicker
+        [placeholder]="'Fecha de cita'"
+        formControlName="date"
+        [min]="minDate"
+        [pickerType]="'both'"
+      ></tc-datepicker>
+      </tc-form-group>
+      <tc-form-group>
+        <span class="tc-placeholder"><b>Condición</b></span>
+        <tc-input  formControlName="condition" [disabled]="true"></tc-input>
+      </tc-form-group>
+    </form>
+  </ng-template>
+  <ng-template #modalFooterContact>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Salir</button>
+      <button tc-button [view]="'info'" [disabled]="appointmentForm.invalid" (click)="saveAppointment(appointmentForm)">
+       Guardar
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->
 
 <!-- Modal window -->
-<ng-container  *ngIf="contactForm">
+<ng-container *ngIf="contactForm">
   <ng-template #modalBody>
     <form [formGroup]="contactForm" novalidate>
 

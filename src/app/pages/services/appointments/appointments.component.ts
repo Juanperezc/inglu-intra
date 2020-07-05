@@ -20,6 +20,7 @@ import { AppointmentService } from "../../../services/http/AppointmentService.se
 import { Router } from "@angular/router";
 import { UserService } from "../../../services/http/UserService.service";
 import { TreatmentService } from "../../../services/http/TreatmentService.service";
+import { UserStorage } from '../../../services/util/UserStorage.service';
 
 @Component({
   selector: "appointments-component",
@@ -34,6 +35,7 @@ export class PageAppointmentsComponent extends BasePageComponent
   @ViewChild("modalBodyTreatment") modalBodyTreatment: ElementRef<any>;
   @ViewChild("modalFooterTreatment") modalFooterTreatment: ElementRef<any>;
 
+  user: any;
   data: any[];
   categoriesOption: Array<IOption> = new Array<IOption>();
   appointmentForm: FormGroup;
@@ -79,6 +81,27 @@ export class PageAppointmentsComponent extends BasePageComponent
       label: "Culminado",
       value: "3",
     });
+
+
+    this.pageData = {
+      loaded: true,
+      title: "Citas medicas",
+      breadcrumbs: [
+        {
+          title: "Servicios",
+          route: "default-dashboard",
+        },
+        {
+          title: "Citas medicas",
+        },
+      ],
+    };
+    this.defaultAvatar = "assets/content/avatar.jpeg";
+    this.currentPhoto = this.defaultAvatar;
+  }
+
+  async ngOnInit() {
+    this.user = await UserStorage.getUser();
     this.headers = [
       {
         columnName: "photo",
@@ -102,7 +125,7 @@ export class PageAppointmentsComponent extends BasePageComponent
         columnName: "patient_id",
         columnTitle: "Tipo",
         formatter: (value) => {
-          return value ? "Estándar" : "Contacto"
+          return value != 0 ? "Estándar" : "Contacto";
         },
         iconClass: null,
         tcColor: null,
@@ -161,7 +184,10 @@ export class PageAppointmentsComponent extends BasePageComponent
         tcType: "text",
         tcActions: [],
       },
-      {
+     
+    ];
+    if (this.user.rol[0] == 'admin'){
+      this.headers.push( {
         columnName: "actions",
         columnTitle: "Acciones",
         iconClass: null,
@@ -188,27 +214,31 @@ export class PageAppointmentsComponent extends BasePageComponent
             handleClick: "remove",
           },
         ],
-      },
-    ];
-
-    this.pageData = {
-      loaded: true,
-      title: "Citas medicas",
-      breadcrumbs: [
-        {
-          title: "Servicios",
-          route: "default-dashboard",
-        },
-        {
-          title: "Citas medicas",
-        },
-      ],
-    };
-    this.defaultAvatar = "assets/content/avatar.jpeg";
-    this.currentPhoto = this.defaultAvatar;
-  }
-
-  async ngOnInit() {
+      })
+    }else{
+      this.headers.push( {
+        columnName: "actions",
+        columnTitle: "Acciones",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: "actions",
+        tcActions: [
+          {
+            afterIcon: "icofont-page",
+            view: "warning",
+            size: "sm",
+            handleClick: "treatment",
+          },
+          {
+            afterIcon: "icofont-ui-delete",
+            view: "error",
+            size: "sm",
+            handleClick: "remove",
+          },
+        ],
+      },)
+    }
     this.minDate = new Date();
     super.ngOnInit();
     await this.loadPatients();
@@ -273,12 +303,18 @@ export class PageAppointmentsComponent extends BasePageComponent
   }
 
   async handleActionEmit(event: IHandleAction) {
-    console.log("emit", event);
+    
     const row = event.row;
     const type = event.type;
     switch (type) {
       case "edit": {
-        this.editAppointment(row);
+        console.log('row.patient_id: ', row.patient_id);
+        if (row.patient_id != 0 && row.patient_id != '0'){
+          this.editAppointment(row);
+        }else{
+          const result = await GlobalService.SwalWarning();
+        }
+      
         break;
       }
       case "remove": {
@@ -315,7 +351,7 @@ export class PageAppointmentsComponent extends BasePageComponent
     /*  if (data && data.medical_staff_id){
      await this.loadWorkspaces(data.medical_staff_id);
     } */
-    console.log("data", data);
+    
 
     this.appointmentForm = this.formBuilder.group({
       id: [data ? data.id : null],
@@ -332,7 +368,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       ],
       status: [data ? data.status.toString() : ""],
     });
-    console.log("this.appointmentForm", this.appointmentForm);
+    
   }
 
   // initForm
@@ -344,12 +380,12 @@ export class PageAppointmentsComponent extends BasePageComponent
       description: [data && data.description ? data.description : ""],
       medicine: [data && data.medicine ? data.medicine : ""],
     });
-    console.log("this.appointmentForm", this.appointmentForm);
+    
   }
 
   async handleMedicSelected(event) {
     await this.loadWorkspaces(event);
-    console.log(event);
+    
   }
 
   //loadTreatment
@@ -360,11 +396,11 @@ export class PageAppointmentsComponent extends BasePageComponent
         appointment_id
       );
       const treatmentData = treatment.data;
-      console.log(treatmentData);
+      
       GlobalService.CloseSweet();
       return treatmentData;
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
     }
   }
@@ -382,10 +418,10 @@ export class PageAppointmentsComponent extends BasePageComponent
           });
         });
       }
-      console.log(dataPatients);
+      
       GlobalService.CloseSweet();
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
     }
   }
@@ -404,10 +440,10 @@ export class PageAppointmentsComponent extends BasePageComponent
           });
         });
       }
-      console.log(dataDoctors);
+      
       GlobalService.CloseSweet();
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
     }
   }
@@ -436,7 +472,7 @@ export class PageAppointmentsComponent extends BasePageComponent
 
       GlobalService.CloseSweet();
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
     }
   }
@@ -457,7 +493,7 @@ export class PageAppointmentsComponent extends BasePageComponent
   async saveTreatment(form: FormGroup) {
     if (form.valid) {
       let treatment: any = form.value;
-      console.log("treatmentForm", treatment);
+      
       if (treatment.id == null) {
         delete treatment.id;
         await this.storeTreatment(treatment);
@@ -466,7 +502,7 @@ export class PageAppointmentsComponent extends BasePageComponent
         delete treatment.id;
         await this.updateTreatment(id, treatment);
       }
-      console.log(treatment);
+      
       /*   this.closeModal(); */
     }
   }
@@ -481,7 +517,7 @@ export class PageAppointmentsComponent extends BasePageComponent
         delete appointment.id;
         await this.updateAppointment(id, appointment);
       }
-      console.log(appointment);
+      
       /*   this.closeModal(); */
     }
   }
@@ -494,7 +530,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       this.reload++;
       /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
       if (error.status == 430) {
       }
@@ -515,7 +551,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       this.reload++;
       /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
       if (error.status != 422) {
         this.closeModal();
@@ -529,7 +565,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       GlobalService.SwalDeleteItem();
       this.reload++;
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
     }
   }
@@ -543,7 +579,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       GlobalService.SwalUpdateItem();
       this.reload++;
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
     }
   }
@@ -557,7 +593,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       GlobalService.SwalUpdateItem();
       this.reload++;
     } catch (error) {
-      console.error("error", error);
+      
       GlobalService.CloseSweet();
     }
   }

@@ -7,6 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 import { UserStorage } from '../../services/util/UserStorage.service';
 import { Router } from '@angular/router';
+import { GlobalService } from '../../services/util/GlobalService.service';
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.component.html",
@@ -65,11 +66,14 @@ export class SignInComponent implements OnInit {
         if (!loginData.data){
         throw "Error data not found";
         }
-        console.log(loginData);
-        await UserStorage.setUser(loginData.data.user)
-        await UserStorage.setToken(loginData.data.token);
-        this.router.navigateByUrl('/vertical');
-        console.log(loginData);
+        if (loginData.data.user.type == "patient"){
+          await GlobalService.SwalWarning("No tienes permisos para ingresar a la aplicación");
+        }else{
+          console.log(loginData);
+          await UserStorage.setUser(loginData.data.user)
+          await UserStorage.setToken(loginData.data.token);
+          this.router.navigateByUrl('/vertical');
+        }
         this.spinner.hide();
       } catch (error) {
         console.error(error);
