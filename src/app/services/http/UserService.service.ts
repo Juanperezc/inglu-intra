@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { ILogin } from '../../interfaces/user/login';
@@ -20,8 +20,12 @@ export class UserService {
     return await this.http.get(environment.endpoint + `/user/workspace/` + id).toPromise();
   }
 
-  async index_doctors() {
-    return await this.http.get(environment.endpoint + `/user/index_doctors`).toPromise();
+  async index_doctors(per_page = 10) {
+    let params = new HttpParams();
+    params = params.append('per_page', per_page.toString());
+    return await this.http.get(environment.endpoint + `/user/index_doctors`,{
+      params: params
+    }).toPromise();
   }
 
   async login(data: ILogin) {
@@ -42,7 +46,7 @@ export class UserService {
   async update(id: number,data: any) {
     return await this.http.put(environment.endpoint + `/users/` + id, data).toPromise();
   }
-  
+
   async recover_password(data: any) {
     return await this.http.post(environment.endpoint + `/user/recover_password` , data).toPromise();
   }
@@ -76,5 +80,5 @@ export class UserService {
   async delete_workspace(data : any,id) {
     return await this.http.post(environment.endpoint + `/user/workspace_delete/${id}`, data).toPromise();
   }
-  
+
 }

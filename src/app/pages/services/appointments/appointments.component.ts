@@ -184,7 +184,7 @@ export class PageAppointmentsComponent extends BasePageComponent
         tcType: "text",
         tcActions: [],
       },
-     
+
     ];
     if (this.user.rol[0] == 'admin'){
       this.headers.push( {
@@ -303,7 +303,7 @@ export class PageAppointmentsComponent extends BasePageComponent
   }
 
   async handleActionEmit(event: IHandleAction) {
-    
+
     const row = event.row;
     const type = event.type;
     switch (type) {
@@ -314,7 +314,7 @@ export class PageAppointmentsComponent extends BasePageComponent
         }else{
           const result = await GlobalService.SwalWarning();
         }
-      
+
         break;
       }
       case "remove": {
@@ -351,7 +351,7 @@ export class PageAppointmentsComponent extends BasePageComponent
     /*  if (data && data.medical_staff_id){
      await this.loadWorkspaces(data.medical_staff_id);
     } */
-    
+
 
     this.appointmentForm = this.formBuilder.group({
       id: [data ? data.id : null],
@@ -368,7 +368,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       ],
       status: [data ? data.status.toString() : ""],
     });
-    
+
   }
 
   // initForm
@@ -380,12 +380,12 @@ export class PageAppointmentsComponent extends BasePageComponent
       description: [data && data.description ? data.description : ""],
       medicine: [data && data.medicine ? data.medicine : ""],
     });
-    
+
   }
 
   async handleMedicSelected(event) {
     await this.loadWorkspaces(event);
-    
+
   }
 
   //loadTreatment
@@ -396,11 +396,11 @@ export class PageAppointmentsComponent extends BasePageComponent
         appointment_id
       );
       const treatmentData = treatment.data;
-      
+
       GlobalService.CloseSweet();
       return treatmentData;
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
     }
   }
@@ -418,10 +418,10 @@ export class PageAppointmentsComponent extends BasePageComponent
           });
         });
       }
-      
+
       GlobalService.CloseSweet();
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
     }
   }
@@ -430,7 +430,7 @@ export class PageAppointmentsComponent extends BasePageComponent
   async loadDoctors() {
     try {
       GlobalService.ShowSweetLoading();
-      const doctors: any = await this.userService.index_doctors();
+      const doctors: any = await this.userService.index_doctors(99999);
       const dataDoctors = doctors.data;
       if (dataDoctors) {
         dataDoctors.forEach((doctor) => {
@@ -440,10 +440,10 @@ export class PageAppointmentsComponent extends BasePageComponent
           });
         });
       }
-      
+
       GlobalService.CloseSweet();
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
     }
   }
@@ -472,7 +472,7 @@ export class PageAppointmentsComponent extends BasePageComponent
 
       GlobalService.CloseSweet();
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
     }
   }
@@ -493,7 +493,7 @@ export class PageAppointmentsComponent extends BasePageComponent
   async saveTreatment(form: FormGroup) {
     if (form.valid) {
       let treatment: any = form.value;
-      
+
       if (treatment.id == null) {
         delete treatment.id;
         await this.storeTreatment(treatment);
@@ -502,7 +502,7 @@ export class PageAppointmentsComponent extends BasePageComponent
         delete treatment.id;
         await this.updateTreatment(id, treatment);
       }
-      
+
       /*   this.closeModal(); */
     }
   }
@@ -517,7 +517,7 @@ export class PageAppointmentsComponent extends BasePageComponent
         delete appointment.id;
         await this.updateAppointment(id, appointment);
       }
-      
+
       /*   this.closeModal(); */
     }
   }
@@ -530,7 +530,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       this.reload++;
       /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
       if (error.status == 430) {
       }
@@ -551,7 +551,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       this.reload++;
       /*  GlobalService.CloseSweet(); */
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
       if (error.status != 422) {
         this.closeModal();
@@ -565,7 +565,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       GlobalService.SwalDeleteItem();
       this.reload++;
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
     }
   }
@@ -579,7 +579,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       GlobalService.SwalUpdateItem();
       this.reload++;
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
     }
   }
@@ -593,7 +593,7 @@ export class PageAppointmentsComponent extends BasePageComponent
       GlobalService.SwalUpdateItem();
       this.reload++;
     } catch (error) {
-      
+
       GlobalService.CloseSweet();
     }
   }
