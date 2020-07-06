@@ -77,6 +77,10 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
       label: "Desactivado",
       value: "disabled"
     })
+    this.statuses.push({
+      label: "Culminado",
+      value: "terminated"
+    })
 
     this.headers = [{
       columnName: "name",
@@ -285,8 +289,25 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
 
   // init form
   initForm(data: any) {
-/*    console.log('data', data)
-   console.log('date', GlobalService.formatDate(data.date.toString(), "YYYY-MM-DD H:m")) */
+    let status = null;
+    if (data){
+      switch(data.status){
+        case 1:{
+          status = "enable";
+          break;
+        }
+        case 2:{
+          status = "disabled";
+          break;
+        }
+        case 3:{
+          status = "terminated";
+          break;
+        }
+      }
+    }
+    console.log('data', data);
+ /*   console.log('date', GlobalService.formatDate(data.date.toString(), "YYYY-MM-DD H:m")) */ 
     this.eventForm = this.formBuilder.group({
       id: [(data ? data.id : null)],
       picture: [(data ? data.picture : '')],
@@ -297,7 +318,7 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
       limit: [(data ? data.limit : '')],
       type: [(data ? data.type : '')],
       location: [(data ? data.location : '')],
-      status: [(data && data.status ? data.status.toString() : '')],
+      status: [(data && data.status ? status : '')],
     });
   }
 
@@ -325,7 +346,7 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
     /*   event.photo = this.currentPhoto; */
 
       console.log(event);
-      this.closeModal();
+     
     }
   }
   async storeEvent(eventData: any){
@@ -334,6 +355,7 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
       const event: any = await this.eventService.store(eventData);
       GlobalService.SwalCreateItem();
       this.reload++;
+      this.closeModal();
      /*  GlobalService.CloseSweet(); */
     } catch (error) {
       console.error('error', error);
@@ -357,7 +379,7 @@ export class PageEventsComponent extends BasePageComponent implements OnInit, On
       const event: any = await this.eventService.update(id,eventData);
       GlobalService.SwalUpdateItem();
       this.reload++;
-     
+      this.closeModal();
    /*    GlobalService.CloseSweet(); */
     } catch (error) {
       console.error('error', error)
