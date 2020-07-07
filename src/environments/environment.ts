@@ -8,7 +8,8 @@ export const environment = {
   production: false,
   appSettings: SETTINGS,
   googleMapApiKey: 'AIzaSyBSvo0x8v3C6aFWcSi2zooOC9tqGCOqCj4',
-  endpoint: "http://127.0.0.1:8000/api"
+  endpoint: "http://127.0.0.1:8000/api",
+  portal: "http://127.0.0.1:4200/"
 };
 
 /*

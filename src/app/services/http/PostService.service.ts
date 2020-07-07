@@ -10,7 +10,7 @@ export class PostService {
 
 
   async all_categories() {
-    return await this.http.get(environment.endpoint + `/post/categories`).toPromise();
+    return await this.http.get(environment.endpoint + `/post_category`).toPromise();
   }
 
   async update(id : number ,data : any) {

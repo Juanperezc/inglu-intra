@@ -12,6 +12,7 @@ import { IHandleAction } from '../../../interfaces/handle-action';
 import { IOption } from '../../../ui/interfaces/option';
 import { PostService } from '../../../services/http/PostService.service';
 import { FileService } from '../../../services/http/FileService.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'post-component',
@@ -179,6 +180,10 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
     const row = event.row;
     const type = event.type;
     switch(type){
+      case "view": {
+        window.open(environment.portal + 'blog/details/' + row.id, '_blank');
+        break;
+      }
       case "edit":{
         this.edit(row);
         break;
@@ -199,13 +204,13 @@ export class PagePostComponent extends BasePageComponent implements OnInit, OnDe
     /* console.log(data) */
     const category : any = data && this.categoriesOption &&
     this.categoriesOption.find((res) => res.label == data.category )
-   /*  console.log(data && category.value) */
+     console.log(category)
     this.postForm = this.formBuilder.group({
       id: [(data ? data.id : null)],
       photo: [(data ? data.photo : this.currentPhoto), Validators.required],
       title: [(data ? data.title : ''), Validators.required],
       description: [(data ? data.description : ''), Validators.required],
-      category_id: [(data ? category.value : ''), Validators.required],
+      category_id: [(data && category ? category.value : ''), Validators.required],
    /*    from: [(data ? data.fromTo.substring(0, (data.fromTo.indexOf('-') - 1)) : ''), Validators.required],
       to: [(data ? data.fromTo.substring((data.fromTo.indexOf('-') + 2), data.fromTo.length) : ''), Validators.required],
       number: [(data ? data.number : ''), Validators.required],
