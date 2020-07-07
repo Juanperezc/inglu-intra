@@ -171,6 +171,7 @@ export class PageAccountComponent extends BasePageComponent
       this.activatedRoute.snapshot &&
       this.activatedRoute.snapshot.url &&
       this.activatedRoute.snapshot.url[0].path;
+
       this.id =
       this.activatedRoute.snapshot &&
       this.activatedRoute.snapshot.params &&
@@ -500,11 +501,15 @@ export class PageAccountComponent extends BasePageComponent
   async ngOnInit() {
     this.max = new Date();
     this.user =  await UserStorage.getUser();
+  
     this.getData('assets/json/pathologies.json', 'pathologies', 'setLoaded');
 
     this.loadSpecialties();
     if (this.editMe) {
       this.userInfo = await UserStorage.getUser();
+      if (!this.id){
+        this.id = this.user.id
+      }
     } else if (this.editPatient || this.editDoctor) {
       this.userInfo = await this.loadUser(this.id);
       /*  if (editPatient){ */
