@@ -145,7 +145,7 @@ export class PageClaimTypesComponent extends BasePageComponent implements OnInit
   }
   createClaimTypes(){
     this.currentPhoto = null;
-    this.openModal(this.modalBody, 'Crear reclamo', this.modalFooter)
+    this.openModal(this.modalBody, 'Crear tipo de reclamo', this.modalFooter)
   }
   async handleActionEmit(event: IHandleAction){
     console.log('emit', event);
@@ -182,7 +182,7 @@ export class PageClaimTypesComponent extends BasePageComponent implements OnInit
 
   // edit appointment
   edit(row: any) {
-    this.openModal(this.modalBody, 'Editar Reclamo', this.modalFooter, row);
+    this.openModal(this.modalBody, 'Editar tipo de reclamo', this.modalFooter, row);
   }
 
 

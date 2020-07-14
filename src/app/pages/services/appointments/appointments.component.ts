@@ -134,6 +134,39 @@ export class PageAppointmentsComponent extends BasePageComponent
         tcActions: [],
       },
       {
+        columnName: "qualification",
+        formatter: (value) => {
+          if (value == 0){
+            return "No se encuentra calificación"
+          }else{
+            return value
+          }
+        },
+        columnTitle: "Calificación",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: [],
+      },
+      {
+        columnName: "comment",
+        // formatter: (value) => {
+        //   console.log(value,"test")
+        //   if (value == "" || value == null){
+        //     return "No se encuentra comentario"
+        //   }else{
+        //     return value
+        //   }
+        // },
+        columnTitle: "Comentarios",
+        iconClass: null,
+        tcColor: null,
+        tcFontSize: null,
+        tcType: 'text',
+        tcActions: [],
+      },
+      {
         columnName: "date",
         formatter: (value) => {
           return GlobalService.formatDate(value, "DD-MM-YYYY HH:mm");

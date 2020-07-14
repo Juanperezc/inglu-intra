@@ -182,7 +182,7 @@ export class PageSuggestionTypesComponent extends BasePageComponent implements O
 
   // edit appointment
   edit(row: any) {
-    this.openModal(this.modalBody, 'Editar Sugerencia', this.modalFooter, row);
+    this.openModal(this.modalBody, 'Editar tipos de sugerencia', this.modalFooter, row);
   }
 
 
