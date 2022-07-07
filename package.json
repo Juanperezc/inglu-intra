@@ -37,7 +37,7 @@
     "fullcalendar": "3.6.1",
     "leaflet": "1.4.0",
     "modernizr": "^3.7.1",
-    "moment": "^2.25.3",
+    "moment": "^2.29.4",
     "ng-fullcalendar": "1.7.1",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng-pick-datetime": "^7.0.0",
